@@ -6,7 +6,7 @@ import { Card } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
 import { Link } from '@/i18n/navigation';
-import type { InternalBrokerAccountDetailResponse } from '@/shared/api/generated/types.gen';
+import type { BrokerAccountDetailResponse } from '@/shared/api/generated/types.gen';
 
 import { useMyAccounts } from '../hooks/useMyAccounts';
 
@@ -15,7 +15,7 @@ export const DashboardSummaryCards = () => {
   const { data } = useMyAccounts();
 
   const accounts =
-    (data?.data as { items?: InternalBrokerAccountDetailResponse[] } | undefined)?.items ?? [];
+    (data?.data as { items?: BrokerAccountDetailResponse[] } | undefined)?.items ?? [];
   const approvedCount = accounts.filter((account) => account.status === 'approved').length;
 
   return (

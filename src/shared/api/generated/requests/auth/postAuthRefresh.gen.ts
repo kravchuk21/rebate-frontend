@@ -6,9 +6,8 @@ import type { PostAuthRefreshData, PostAuthRefreshResponse, PostAuthRefreshError
 
 import { instance } from "../../instance.gen";
 
-export type PostAuthRefreshRequestParams = FetchesRequestParams<PostAuthRefreshData>;
+export type PostAuthRefreshRequestParams = FetchesRequestParams<PostAuthRefreshData> | void;
 
-export const postAuthRefresh = ({ config, body }: PostAuthRefreshRequestParams): Promise<ApicraftFetchesResponse<PostAuthRefreshResponse, PostAuthRefreshError>> => instance.call("POST", "/auth/refresh", {
-    body,
+export const postAuthRefresh = ({ config }: PostAuthRefreshRequestParams = {}): Promise<ApicraftFetchesResponse<PostAuthRefreshResponse, PostAuthRefreshError>> => instance.call("POST", "/auth/refresh", {
     ...config
 });

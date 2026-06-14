@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-import { setAuthCookies } from '@/shared/lib/cookies';
+import { forwardSetCookieHeaders } from '@/shared/lib/proxyAuth';
 
 const API_URL = process.env.API_URL ?? 'http://localhost:8080';
 
@@ -24,14 +24,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(data);
   }
 
-  const accessToken = data.data?.access_token;
-  const refreshToken = data.data?.refresh_token;
-
-  if (!accessToken || !refreshToken) {
-    return NextResponse.json({ error: 'Invalid response from server' }, { status: 500 });
-  }
-
-  await setAuthCookies(accessToken, refreshToken);
-
-  return NextResponse.json({ success: true });
+  const nextRes = NextResponse.json(data);
+  forwardSetCookieHeaders(res, nextRes);
+  return nextRes;
 }

@@ -8,10 +8,10 @@ import { postAuthRefresh } from "../../requests/auth/postAuthRefresh.gen";
 
 export const postAuthRefreshQueryKey = "postAuthRefreshQueryKey";
 
-export const postAuthRefreshQueryOptions = (settings: TanstackQuerySettings<typeof postAuthRefresh>) => queryOptions({
-    queryKey: [postAuthRefreshQueryKey, ...(!!settings.request.path ? [settings.request.path] : []), ...(!!settings.request.query ? [settings.request.query] : []), ...(!!settings.request.body ? [settings.request.body] : [])],
-    queryFn: async () => postAuthRefresh({ ...settings.request }),
-    ...settings.params
+export const postAuthRefreshQueryOptions = (settings?: TanstackQuerySettings<typeof postAuthRefresh>) => queryOptions({
+    queryKey: [postAuthRefreshQueryKey, ...(!!settings?.request?.path ? [settings?.request?.path] : []), ...(!!settings?.request?.query ? [settings?.request?.query] : []), ...(!!settings?.request?.body ? [settings?.request?.body] : [])],
+    queryFn: async () => postAuthRefresh({ ...settings?.request }),
+    ...settings?.params
 });
 
 export const usePostAuthRefreshQuery = (...args: Parameters<typeof postAuthRefreshQueryOptions>) => useQuery(postAuthRefreshQueryOptions(...args));

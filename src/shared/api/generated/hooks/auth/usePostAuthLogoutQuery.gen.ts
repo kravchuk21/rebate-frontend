@@ -8,10 +8,10 @@ import { postAuthLogout } from "../../requests/auth/postAuthLogout.gen";
 
 export const postAuthLogoutQueryKey = "postAuthLogoutQueryKey";
 
-export const postAuthLogoutQueryOptions = (settings: TanstackQuerySettings<typeof postAuthLogout>) => queryOptions({
-    queryKey: [postAuthLogoutQueryKey, ...(!!settings.request.path ? [settings.request.path] : []), ...(!!settings.request.query ? [settings.request.query] : []), ...(!!settings.request.body ? [settings.request.body] : [])],
-    queryFn: async () => postAuthLogout({ ...settings.request }),
-    ...settings.params
+export const postAuthLogoutQueryOptions = (settings?: TanstackQuerySettings<typeof postAuthLogout>) => queryOptions({
+    queryKey: [postAuthLogoutQueryKey, ...(!!settings?.request?.path ? [settings?.request?.path] : []), ...(!!settings?.request?.query ? [settings?.request?.query] : []), ...(!!settings?.request?.body ? [settings?.request?.body] : [])],
+    queryFn: async () => postAuthLogout({ ...settings?.request }),
+    ...settings?.params
 });
 
 export const usePostAuthLogoutQuery = (...args: Parameters<typeof postAuthLogoutQueryOptions>) => useQuery(postAuthLogoutQueryOptions(...args));

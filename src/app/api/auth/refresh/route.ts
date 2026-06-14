@@ -1,34 +1,28 @@
 import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-import { clearAuthCookies, getRefreshToken, setAuthCookies } from '@/shared/lib/cookies';
+import { buildForwardCookieHeader, forwardSetCookieHeaders } from '@/shared/lib/proxyAuth';
 
 const API_URL = process.env.API_URL ?? 'http://localhost:8080';
 
-export async function POST() {
-  const refreshToken = await getRefreshToken();
-
-  if (!refreshToken) {
-    await clearAuthCookies();
-    return NextResponse.json({ error: 'No refresh token' }, { status: 401 });
-  }
-
+export async function POST(request: NextRequest) {
   const res = await fetch(`${API_URL}/auth/refresh`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ refresh_token: refreshToken }),
+    headers: {
+      'Content-Type': 'application/json',
+      Cookie: buildForwardCookieHeader(request),
+    },
   });
 
-  const data = await res.json();
-
-  const accessToken = data.data?.access_token;
-  const newRefreshToken = data.data?.refresh_token;
-
-  if (!res.ok || !accessToken || !newRefreshToken) {
-    await clearAuthCookies();
-    return NextResponse.json({ error: 'Refresh failed' }, { status: 401 });
+  if (!res.ok) {
+    const errData = await res.json().catch(() => ({ error: 'Refresh failed' }));
+    const nextRes = NextResponse.json(errData, { status: 401 });
+    forwardSetCookieHeaders(res, nextRes);
+    return nextRes;
   }
 
-  await setAuthCookies(accessToken, newRefreshToken);
-
-  return NextResponse.json({ success: true });
+  const data = await res.json();
+  const nextRes = NextResponse.json(data);
+  forwardSetCookieHeaders(res, nextRes);
+  return nextRes;
 }

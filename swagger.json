@@ -29,13 +29,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_auth.recoveryRequestsResponse"
+                                            "$ref": "#/definitions/AuthRecoveryRequestsResponse"
                                         }
                                     }
                                 }
@@ -45,19 +45,19 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -87,7 +87,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_auth.twoFARecoveryTokenBody"
+                            "$ref": "#/definitions/Auth2FARecoveryTokenBody"
                         }
                     }
                 ],
@@ -98,25 +98,25 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -146,7 +146,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_auth.twoFARecoveryTokenBody"
+                            "$ref": "#/definitions/Auth2FARecoveryTokenBody"
                         }
                     }
                 ],
@@ -157,25 +157,25 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -253,7 +253,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.PaginatedResponse"
+                                    "$ref": "#/definitions/PaginatedResponse"
                                 },
                                 {
                                     "type": "object",
@@ -261,7 +261,7 @@
                                         "items": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/internal_adminpanel.auditLogEntryResponse"
+                                                "$ref": "#/definitions/AdminAuditLogEntryResponse"
                                             }
                                         }
                                     }
@@ -272,19 +272,19 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -308,25 +308,25 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                            "$ref": "#/definitions/SuccessResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -363,7 +363,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_adminpanel.setConfigRequest"
+                            "$ref": "#/definitions/AdminSetConfigRequest"
                         }
                     }
                 ],
@@ -373,13 +373,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_adminpanel.configEntryResponse"
+                                            "$ref": "#/definitions/AdminConfigEntryResponse"
                                         }
                                     }
                                 }
@@ -389,25 +389,25 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -449,7 +449,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.PaginatedResponse"
+                                    "$ref": "#/definitions/PaginatedResponse"
                                 },
                                 {
                                     "type": "object",
@@ -457,7 +457,7 @@
                                         "items": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/internal_referral.adminReferralViewResponse"
+                                                "$ref": "#/definitions/ReferralAdminViewResponse"
                                             }
                                         }
                                     }
@@ -468,19 +468,19 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -515,13 +515,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_referral.adminReferralViewResponse"
+                                            "$ref": "#/definitions/ReferralAdminViewResponse"
                                         }
                                     }
                                 }
@@ -531,31 +531,31 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -615,7 +615,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.PaginatedResponse"
+                                    "$ref": "#/definitions/PaginatedResponse"
                                 },
                                 {
                                     "type": "object",
@@ -623,7 +623,7 @@
                                         "items": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/internal_adminpanel.adminUserResponse"
+                                                "$ref": "#/definitions/AdminUserResponse"
                                             }
                                         }
                                     }
@@ -634,19 +634,19 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -681,13 +681,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_adminpanel.adminUserResponse"
+                                            "$ref": "#/definitions/AdminUserResponse"
                                         }
                                     }
                                 }
@@ -697,31 +697,31 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -756,13 +756,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_withdrawal.balanceResponse"
+                                            "$ref": "#/definitions/WithdrawalBalanceResponse"
                                         }
                                     }
                                 }
@@ -772,31 +772,31 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -833,7 +833,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_adminpanel.adjustBalanceRequest"
+                            "$ref": "#/definitions/AdminAdjustBalanceRequest"
                         }
                     }
                 ],
@@ -844,31 +844,31 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -917,7 +917,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.PaginatedResponse"
+                                    "$ref": "#/definitions/PaginatedResponse"
                                 },
                                 {
                                     "type": "object",
@@ -925,7 +925,7 @@
                                         "items": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/internal_withdrawal.ledgerEntryResponse"
+                                                "$ref": "#/definitions/WithdrawalLedgerEntryResponse"
                                             }
                                         }
                                     }
@@ -936,25 +936,25 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -991,7 +991,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_adminpanel.changeReferrerRequest"
+                            "$ref": "#/definitions/AdminChangeReferrerRequest"
                         }
                     }
                 ],
@@ -1002,31 +1002,31 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -1062,31 +1062,31 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -1122,31 +1122,31 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -1200,7 +1200,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.PaginatedResponse"
+                                    "$ref": "#/definitions/PaginatedResponse"
                                 },
                                 {
                                     "type": "object",
@@ -1208,7 +1208,7 @@
                                         "items": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/internal_withdrawal.withdrawalResponse"
+                                                "$ref": "#/definitions/WithdrawalResponse"
                                             }
                                         }
                                     }
@@ -1219,19 +1219,19 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -1266,13 +1266,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_withdrawal.withdrawalResponse"
+                                            "$ref": "#/definitions/WithdrawalResponse"
                                         }
                                     }
                                 }
@@ -1282,31 +1282,31 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -1343,7 +1343,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_withdrawal.updateWithdrawalStatusRequest"
+                            "$ref": "#/definitions/WithdrawalAdminUpdateStatusRequest"
                         }
                     }
                 ],
@@ -1353,13 +1353,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_withdrawal.withdrawalResponse"
+                                            "$ref": "#/definitions/WithdrawalResponse"
                                         }
                                     }
                                 }
@@ -1369,31 +1369,31 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -1423,7 +1423,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_auth.twoFAConfirmRequest"
+                            "$ref": "#/definitions/Auth2FAConfirmRequest"
                         }
                     }
                 ],
@@ -1433,13 +1433,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_auth.twoFAConfirmResponse"
+                                            "$ref": "#/definitions/Auth2FAConfirmResponse"
                                         }
                                     }
                                 }
@@ -1449,19 +1449,19 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -1491,7 +1491,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_auth.twoFADisableRequest"
+                            "$ref": "#/definitions/Auth2FADisableRequest"
                         }
                     }
                 ],
@@ -1502,19 +1502,19 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -1540,13 +1540,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_auth.twoFAInitiateResponse"
+                                            "$ref": "#/definitions/Auth2FAInitiateResponse"
                                         }
                                     }
                                 }
@@ -1556,13 +1556,13 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -1587,7 +1587,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_auth.twoFARecoveryRequestBody"
+                            "$ref": "#/definitions/Auth2FARecoveryRequestBody"
                         }
                     }
                 ],
@@ -1595,19 +1595,19 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                            "$ref": "#/definitions/SuccessResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -1615,6 +1615,7 @@
         },
         "/auth/2fa/verify": {
             "post": {
+                "description": "Sets access_token and refresh_token cookies.",
                 "consumes": [
                     "application/json"
                 ],
@@ -1632,7 +1633,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_auth.twoFAVerifyRequest"
+                            "$ref": "#/definitions/Auth2FAVerifyRequest"
                         }
                     }
                 ],
@@ -1640,37 +1641,25 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/internal_auth.tokensResponse"
-                                        }
-                                    }
-                                }
-                            ]
+                            "$ref": "#/definitions/SuccessResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -1692,7 +1681,7 @@
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -1700,6 +1689,7 @@
         },
         "/auth/google/callback": {
             "get": {
+                "description": "Completes Google OAuth. Sets auth cookies and redirects to frontend dashboard.",
                 "produces": [
                     "application/json"
                 ],
@@ -1730,40 +1720,25 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/internal_auth.tokensResponse"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
+                    "307": {
+                        "description": "Temporary Redirect"
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -1771,7 +1746,7 @@
         },
         "/auth/login": {
             "post": {
-                "description": "Returns auth tokens, or a 2FA-required response if the account has 2FA enabled.",
+                "description": "Sets access_token and refresh_token cookies, or returns a 2FA-required response if the account has 2FA enabled.",
                 "consumes": [
                     "application/json"
                 ],
@@ -1789,7 +1764,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_auth.loginRequest"
+                            "$ref": "#/definitions/AuthLoginRequest"
                         }
                     }
                 ],
@@ -1799,13 +1774,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_auth.twoFAResponse"
+                                            "$ref": "#/definitions/AuthTwoFAResponse"
                                         }
                                     }
                                 }
@@ -1815,25 +1790,25 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -1841,9 +1816,7 @@
         },
         "/auth/logout": {
             "post": {
-                "consumes": [
-                    "application/json"
-                ],
+                "description": "Revokes refresh token cookie and clears auth cookies.",
                 "produces": [
                     "application/json"
                 ],
@@ -1851,31 +1824,14 @@
                     "auth"
                 ],
                 "summary": "Log out",
-                "parameters": [
-                    {
-                        "description": "Refresh token to revoke",
-                        "name": "body",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/internal_auth.logoutRequest"
-                        }
-                    }
-                ],
                 "responses": {
                     "204": {
                         "description": "No Content"
                     },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
-                        }
-                    },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -1883,9 +1839,7 @@
         },
         "/auth/refresh": {
             "post": {
-                "consumes": [
-                    "application/json"
-                ],
+                "description": "Reads refresh token from httpOnly cookie. Sets new token cookies.",
                 "produces": [
                     "application/json"
                 ],
@@ -1893,52 +1847,23 @@
                     "auth"
                 ],
                 "summary": "Refresh access token",
-                "parameters": [
-                    {
-                        "description": "Refresh token",
-                        "name": "body",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/internal_auth.refreshRequest"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/internal_auth.tokensResponse"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/SuccessResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -1963,7 +1888,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_auth.registerRequest"
+                            "$ref": "#/definitions/AuthRegisterRequest"
                         }
                     }
                 ],
@@ -1973,13 +1898,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_auth.registerResponse"
+                                            "$ref": "#/definitions/AuthRegisterResponse"
                                         }
                                     }
                                 }
@@ -1989,19 +1914,19 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "409": {
                         "description": "Conflict",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -2026,7 +1951,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_auth.verifyEmailRequest"
+                            "$ref": "#/definitions/AuthVerifyEmailRequest"
                         }
                     }
                 ],
@@ -2034,25 +1959,25 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                            "$ref": "#/definitions/SuccessResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -2078,13 +2003,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_withdrawal.balanceResponse"
+                                            "$ref": "#/definitions/WithdrawalBalanceResponse"
                                         }
                                     }
                                 }
@@ -2094,13 +2019,13 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -2142,7 +2067,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.PaginatedResponse"
+                                    "$ref": "#/definitions/PaginatedResponse"
                                 },
                                 {
                                     "type": "object",
@@ -2150,7 +2075,7 @@
                                         "items": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/internal_withdrawal.ledgerEntryResponse"
+                                                "$ref": "#/definitions/WithdrawalLedgerEntryResponse"
                                             }
                                         }
                                     }
@@ -2161,13 +2086,13 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -2221,7 +2146,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.PaginatedResponse"
+                                    "$ref": "#/definitions/PaginatedResponse"
                                 },
                                 {
                                     "type": "object",
@@ -2229,7 +2154,7 @@
                                         "items": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/internal_broker.accountDetailResponse"
+                                                "$ref": "#/definitions/BrokerAccountDetailResponse"
                                             }
                                         }
                                     }
@@ -2240,13 +2165,13 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -2274,7 +2199,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_broker.submitAccountRequest"
+                            "$ref": "#/definitions/BrokerSubmitAccountRequest"
                         }
                     }
                 ],
@@ -2284,13 +2209,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_broker.submitAccountResponse"
+                                            "$ref": "#/definitions/BrokerSubmitAccountResponse"
                                         }
                                     }
                                 }
@@ -2300,19 +2225,19 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -2347,13 +2272,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_broker.accountDetailResponse"
+                                            "$ref": "#/definitions/BrokerAccountDetailResponse"
                                         }
                                     }
                                 }
@@ -2363,25 +2288,25 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -2441,7 +2366,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.PaginatedResponse"
+                                    "$ref": "#/definitions/PaginatedResponse"
                                 },
                                 {
                                     "type": "object",
@@ -2449,7 +2374,7 @@
                                         "items": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/internal_broker.accountDetailResponse"
+                                                "$ref": "#/definitions/BrokerAccountDetailResponse"
                                             }
                                         }
                                     }
@@ -2460,19 +2385,19 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -2507,13 +2432,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_broker.accountDetailResponse"
+                                            "$ref": "#/definitions/BrokerAccountDetailResponse"
                                         }
                                     }
                                 }
@@ -2523,31 +2448,31 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -2583,31 +2508,31 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -2644,7 +2569,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_broker.rejectRequest"
+                            "$ref": "#/definitions/BrokerAdminRejectRequest"
                         }
                     }
                 ],
@@ -2655,31 +2580,31 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -2716,7 +2641,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_broker.revokeRequest"
+                            "$ref": "#/definitions/BrokerAdminRevokeRequest"
                         }
                     }
                 ],
@@ -2727,31 +2652,31 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -2770,13 +2695,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                            "$ref": "#/definitions/SuccessResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -2802,7 +2727,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
@@ -2810,7 +2735,7 @@
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/internal_withdrawal.payoutMethodResponse"
+                                                "$ref": "#/definitions/WithdrawalPayoutMethodResponse"
                                             }
                                         }
                                     }
@@ -2821,13 +2746,13 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -2855,7 +2780,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_withdrawal.createPayoutMethodRequest"
+                            "$ref": "#/definitions/WithdrawalCreatePayoutMethodRequest"
                         }
                     }
                 ],
@@ -2865,13 +2790,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_withdrawal.payoutMethodResponse"
+                                            "$ref": "#/definitions/WithdrawalPayoutMethodResponse"
                                         }
                                     }
                                 }
@@ -2881,19 +2806,19 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -2929,25 +2854,25 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -2982,7 +2907,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_withdrawal.updatePayoutMethodRequest"
+                            "$ref": "#/definitions/WithdrawalUpdatePayoutMethodRequest"
                         }
                     }
                 ],
@@ -2992,13 +2917,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_withdrawal.payoutMethodResponse"
+                                            "$ref": "#/definitions/WithdrawalPayoutMethodResponse"
                                         }
                                     }
                                 }
@@ -3008,25 +2933,25 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -3092,7 +3017,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.PaginatedResponse"
+                                    "$ref": "#/definitions/PaginatedResponse"
                                 },
                                 {
                                     "type": "object",
@@ -3100,7 +3025,7 @@
                                         "items": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/internal_rebate.calculationResponse"
+                                                "$ref": "#/definitions/RebateCalculationResponse"
                                             }
                                         }
                                     }
@@ -3111,19 +3036,19 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -3158,13 +3083,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_rebate.calculationResponse"
+                                            "$ref": "#/definitions/RebateCalculationResponse"
                                         }
                                     }
                                 }
@@ -3174,31 +3099,31 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -3235,7 +3160,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_rebate.adjustCalculationRequest"
+                            "$ref": "#/definitions/RebateAdminAdjustCalculationRequest"
                         }
                     }
                 ],
@@ -3243,37 +3168,37 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                            "$ref": "#/definitions/SuccessResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -3306,37 +3231,37 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                            "$ref": "#/definitions/SuccessResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -3366,7 +3291,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_rebate.importBrokerDataRequest"
+                            "$ref": "#/definitions/RebateAdminImportBrokerDataRequest"
                         }
                     }
                 ],
@@ -3374,31 +3299,31 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                            "$ref": "#/definitions/SuccessResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -3428,7 +3353,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_rebate.triggerCalculationRequest"
+                            "$ref": "#/definitions/RebateAdminTriggerCalculationRequest"
                         }
                     }
                 ],
@@ -3436,31 +3361,31 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                            "$ref": "#/definitions/SuccessResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -3526,7 +3451,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.PaginatedResponse"
+                                    "$ref": "#/definitions/PaginatedResponse"
                                 },
                                 {
                                     "type": "object",
@@ -3534,7 +3459,7 @@
                                         "items": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/internal_rebate.calculationResponse"
+                                                "$ref": "#/definitions/RebateCalculationResponse"
                                             }
                                         }
                                     }
@@ -3545,13 +3470,13 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -3586,13 +3511,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_rebate.calculationResponse"
+                                            "$ref": "#/definitions/RebateCalculationResponse"
                                         }
                                     }
                                 }
@@ -3602,31 +3527,31 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -3668,7 +3593,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.PaginatedResponse"
+                                    "$ref": "#/definitions/PaginatedResponse"
                                 },
                                 {
                                     "type": "object",
@@ -3676,7 +3601,7 @@
                                         "items": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/internal_referral.referralEntryResponse"
+                                                "$ref": "#/definitions/ReferralEntryResponse"
                                             }
                                         }
                                     }
@@ -3687,13 +3612,13 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -3719,13 +3644,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_referral.referralStatsResponse"
+                                            "$ref": "#/definitions/ReferralStatsResponse"
                                         }
                                     }
                                 }
@@ -3735,13 +3660,13 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -3789,7 +3714,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.PaginatedResponse"
+                                    "$ref": "#/definitions/PaginatedResponse"
                                 },
                                 {
                                     "type": "object",
@@ -3797,7 +3722,7 @@
                                         "items": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/internal_withdrawal.withdrawalResponse"
+                                                "$ref": "#/definitions/WithdrawalResponse"
                                             }
                                         }
                                     }
@@ -3808,13 +3733,13 @@
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -3842,7 +3767,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_withdrawal.createWithdrawalRequest"
+                            "$ref": "#/definitions/WithdrawalCreateRequest"
                         }
                     }
                 ],
@@ -3852,13 +3777,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_withdrawal.withdrawalResponse"
+                                            "$ref": "#/definitions/WithdrawalResponse"
                                         }
                                     }
                                 }
@@ -3868,19 +3793,19 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -3915,13 +3840,13 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse"
+                                    "$ref": "#/definitions/SuccessResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/internal_withdrawal.withdrawalResponse"
+                                            "$ref": "#/definitions/WithdrawalResponse"
                                         }
                                     }
                                 }
@@ -3931,25 +3856,25 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -3983,25 +3908,25 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -4009,39 +3934,7 @@
         }
     },
     "definitions": {
-        "github_com_vladislavkravchuk_rebate-backend_internal_shared_response.ErrorResponse": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "string"
-                },
-                "error": {
-                    "type": "string"
-                }
-            }
-        },
-        "github_com_vladislavkravchuk_rebate-backend_internal_shared_response.PaginatedResponse": {
-            "type": "object",
-            "properties": {
-                "items": {},
-                "limit": {
-                    "type": "integer"
-                },
-                "offset": {
-                    "type": "integer"
-                },
-                "total_count": {
-                    "type": "integer"
-                }
-            }
-        },
-        "github_com_vladislavkravchuk_rebate-backend_internal_shared_response.SuccessResponse": {
-            "type": "object",
-            "properties": {
-                "data": {}
-            }
-        },
-        "internal_adminpanel.adjustBalanceRequest": {
+        "AdminAdjustBalanceRequest": {
             "type": "object",
             "properties": {
                 "amount": {
@@ -4052,7 +3945,68 @@
                 }
             }
         },
-        "internal_adminpanel.adminUserResponse": {
+        "AdminAuditLogEntryResponse": {
+            "type": "object",
+            "properties": {
+                "action": {
+                    "type": "string"
+                },
+                "admin_email": {
+                    "type": "string"
+                },
+                "admin_id": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "entity_id": {
+                    "type": "string"
+                },
+                "entity_type": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "new_value": {},
+                "old_value": {}
+            }
+        },
+        "AdminChangeReferrerRequest": {
+            "type": "object",
+            "properties": {
+                "referrer_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "AdminConfigEntryResponse": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "updated_by": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "AdminSetConfigRequest": {
+            "type": "object",
+            "properties": {
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "AdminUserResponse": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -4087,68 +4041,78 @@
                 }
             }
         },
-        "internal_adminpanel.auditLogEntryResponse": {
+        "Auth2FAConfirmRequest": {
             "type": "object",
             "properties": {
-                "action": {
+                "code": {
                     "type": "string"
                 },
-                "admin_email": {
-                    "type": "string"
-                },
-                "admin_id": {
-                    "type": "string"
-                },
-                "created_at": {
-                    "type": "string"
-                },
-                "entity_id": {
-                    "type": "string"
-                },
-                "entity_type": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "new_value": {},
-                "old_value": {}
-            }
-        },
-        "internal_adminpanel.changeReferrerRequest": {
-            "type": "object",
-            "properties": {
-                "referrer_id": {
+                "password": {
                     "type": "string"
                 }
             }
         },
-        "internal_adminpanel.configEntryResponse": {
+        "Auth2FAConfirmResponse": {
             "type": "object",
             "properties": {
-                "key": {
+                "backup_codes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "Auth2FADisableRequest": {
+            "type": "object",
+            "properties": {
+                "code": {
                     "type": "string"
                 },
-                "updated_at": {
-                    "type": "string"
-                },
-                "updated_by": {
-                    "type": "string"
-                },
-                "value": {
+                "password": {
                     "type": "string"
                 }
             }
         },
-        "internal_adminpanel.setConfigRequest": {
+        "Auth2FAInitiateResponse": {
             "type": "object",
             "properties": {
-                "value": {
+                "qr_code_uri": {
+                    "type": "string"
+                },
+                "secret": {
                     "type": "string"
                 }
             }
         },
-        "internal_auth.loginRequest": {
+        "Auth2FARecoveryRequestBody": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "Auth2FARecoveryTokenBody": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "Auth2FAVerifyRequest": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "AuthLoginRequest": {
             "type": "object",
             "properties": {
                 "email": {
@@ -4159,15 +4123,7 @@
                 }
             }
         },
-        "internal_auth.logoutRequest": {
-            "type": "object",
-            "properties": {
-                "refresh_token": {
-                    "type": "string"
-                }
-            }
-        },
-        "internal_auth.recoveryRequestItem": {
+        "AuthRecoveryRequestItem": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -4184,26 +4140,18 @@
                 }
             }
         },
-        "internal_auth.recoveryRequestsResponse": {
+        "AuthRecoveryRequestsResponse": {
             "type": "object",
             "properties": {
                 "requests": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/internal_auth.recoveryRequestItem"
+                        "$ref": "#/definitions/AuthRecoveryRequestItem"
                     }
                 }
             }
         },
-        "internal_auth.refreshRequest": {
-            "type": "object",
-            "properties": {
-                "refresh_token": {
-                    "type": "string"
-                }
-            }
-        },
-        "internal_auth.registerRequest": {
+        "AuthRegisterRequest": {
             "type": "object",
             "properties": {
                 "email": {
@@ -4217,7 +4165,7 @@
                 }
             }
         },
-        "internal_auth.registerResponse": {
+        "AuthRegisterResponse": {
             "type": "object",
             "properties": {
                 "email": {
@@ -4231,78 +4179,7 @@
                 }
             }
         },
-        "internal_auth.tokensResponse": {
-            "type": "object",
-            "properties": {
-                "access_token": {
-                    "type": "string"
-                },
-                "refresh_token": {
-                    "type": "string"
-                }
-            }
-        },
-        "internal_auth.twoFAConfirmRequest": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "internal_auth.twoFAConfirmResponse": {
-            "type": "object",
-            "properties": {
-                "backup_codes": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
-            }
-        },
-        "internal_auth.twoFADisableRequest": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "internal_auth.twoFAInitiateResponse": {
-            "type": "object",
-            "properties": {
-                "qr_code_uri": {
-                    "type": "string"
-                },
-                "secret": {
-                    "type": "string"
-                }
-            }
-        },
-        "internal_auth.twoFARecoveryRequestBody": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                }
-            }
-        },
-        "internal_auth.twoFARecoveryTokenBody": {
-            "type": "object",
-            "properties": {
-                "token": {
-                    "type": "string"
-                }
-            }
-        },
-        "internal_auth.twoFAResponse": {
+        "AuthTwoFAResponse": {
             "type": "object",
             "properties": {
                 "2fa_required": {
@@ -4313,18 +4190,7 @@
                 }
             }
         },
-        "internal_auth.twoFAVerifyRequest": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "string"
-                },
-                "user_id": {
-                    "type": "string"
-                }
-            }
-        },
-        "internal_auth.verifyEmailRequest": {
+        "AuthVerifyEmailRequest": {
             "type": "object",
             "properties": {
                 "token": {
@@ -4332,14 +4198,14 @@
                 }
             }
         },
-        "internal_broker.accountDetailResponse": {
+        "BrokerAccountDetailResponse": {
             "type": "object",
             "properties": {
                 "approved_at": {
                     "type": "string"
                 },
                 "broker": {
-                    "$ref": "#/definitions/internal_broker.brokerResponse"
+                    "$ref": "#/definitions/BrokerResponse"
                 },
                 "broker_id": {
                     "type": "string"
@@ -4367,7 +4233,23 @@
                 }
             }
         },
-        "internal_broker.brokerResponse": {
+        "BrokerAdminRejectRequest": {
+            "type": "object",
+            "properties": {
+                "reason": {
+                    "type": "string"
+                }
+            }
+        },
+        "BrokerAdminRevokeRequest": {
+            "type": "object",
+            "properties": {
+                "reason": {
+                    "type": "string"
+                }
+            }
+        },
+        "BrokerResponse": {
             "type": "object",
             "properties": {
                 "id": {
@@ -4381,23 +4263,7 @@
                 }
             }
         },
-        "internal_broker.rejectRequest": {
-            "type": "object",
-            "properties": {
-                "reason": {
-                    "type": "string"
-                }
-            }
-        },
-        "internal_broker.revokeRequest": {
-            "type": "object",
-            "properties": {
-                "reason": {
-                    "type": "string"
-                }
-            }
-        },
-        "internal_broker.submitAccountRequest": {
+        "BrokerSubmitAccountRequest": {
             "type": "object",
             "properties": {
                 "broker_id": {
@@ -4408,7 +4274,7 @@
                 }
             }
         },
-        "internal_broker.submitAccountResponse": {
+        "BrokerSubmitAccountResponse": {
             "type": "object",
             "properties": {
                 "broker_id": {
@@ -4431,7 +4297,33 @@
                 }
             }
         },
-        "internal_rebate.adjustCalculationRequest": {
+        "ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "PaginatedResponse": {
+            "type": "object",
+            "properties": {
+                "items": {},
+                "limit": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "total_count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "RebateAdminAdjustCalculationRequest": {
             "type": "object",
             "properties": {
                 "new_gross_rebate": {
@@ -4442,7 +4334,35 @@
                 }
             }
         },
-        "internal_rebate.brokerAccountSummary": {
+        "RebateAdminImportBrokerDataRequest": {
+            "type": "object",
+            "properties": {
+                "broker_account_id": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "gross_rebate": {
+                    "type": "string"
+                },
+                "volume": {
+                    "type": "string"
+                }
+            }
+        },
+        "RebateAdminTriggerCalculationRequest": {
+            "type": "object",
+            "properties": {
+                "broker_account_id": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                }
+            }
+        },
+        "RebateBrokerAccountSummary": {
             "type": "object",
             "properties": {
                 "broker_name": {
@@ -4456,11 +4376,11 @@
                 }
             }
         },
-        "internal_rebate.calculationResponse": {
+        "RebateCalculationResponse": {
             "type": "object",
             "properties": {
                 "broker_account": {
-                    "$ref": "#/definitions/internal_rebate.brokerAccountSummary"
+                    "$ref": "#/definitions/RebateBrokerAccountSummary"
                 },
                 "broker_volume": {
                     "type": "number"
@@ -4497,35 +4417,7 @@
                 }
             }
         },
-        "internal_rebate.importBrokerDataRequest": {
-            "type": "object",
-            "properties": {
-                "broker_account_id": {
-                    "type": "string"
-                },
-                "date": {
-                    "type": "string"
-                },
-                "gross_rebate": {
-                    "type": "string"
-                },
-                "volume": {
-                    "type": "string"
-                }
-            }
-        },
-        "internal_rebate.triggerCalculationRequest": {
-            "type": "object",
-            "properties": {
-                "broker_account_id": {
-                    "type": "string"
-                },
-                "date": {
-                    "type": "string"
-                }
-            }
-        },
-        "internal_referral.adminReferralEntryResponse": {
+        "ReferralAdminEntryResponse": {
             "type": "object",
             "properties": {
                 "email": {
@@ -4545,7 +4437,7 @@
                 }
             }
         },
-        "internal_referral.adminReferralViewResponse": {
+        "ReferralAdminViewResponse": {
             "type": "object",
             "properties": {
                 "active_referrals": {
@@ -4557,7 +4449,7 @@
                 "referrals": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/internal_referral.adminReferralEntryResponse"
+                        "$ref": "#/definitions/ReferralAdminEntryResponse"
                     }
                 },
                 "referrer_email": {
@@ -4574,7 +4466,7 @@
                 }
             }
         },
-        "internal_referral.referralEntryResponse": {
+        "ReferralEntryResponse": {
             "type": "object",
             "properties": {
                 "email": {
@@ -4594,7 +4486,7 @@
                 }
             }
         },
-        "internal_referral.referralStatsResponse": {
+        "ReferralStatsResponse": {
             "type": "object",
             "properties": {
                 "active_referrals": {
@@ -4617,7 +4509,30 @@
                 }
             }
         },
-        "internal_withdrawal.balanceResponse": {
+        "SuccessResponse": {
+            "type": "object",
+            "properties": {
+                "data": {}
+            }
+        },
+        "WithdrawalAdminUpdateStatusRequest": {
+            "type": "object",
+            "properties": {
+                "admin_note": {
+                    "type": "string"
+                },
+                "reason": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "tx_hash": {
+                    "type": "string"
+                }
+            }
+        },
+        "WithdrawalBalanceResponse": {
             "type": "object",
             "properties": {
                 "available": {
@@ -4631,7 +4546,7 @@
                 }
             }
         },
-        "internal_withdrawal.createPayoutMethodRequest": {
+        "WithdrawalCreatePayoutMethodRequest": {
             "type": "object",
             "properties": {
                 "address": {
@@ -4645,7 +4560,7 @@
                 }
             }
         },
-        "internal_withdrawal.createWithdrawalRequest": {
+        "WithdrawalCreateRequest": {
             "type": "object",
             "properties": {
                 "amount_requested": {
@@ -4656,7 +4571,7 @@
                 }
             }
         },
-        "internal_withdrawal.ledgerEntryResponse": {
+        "WithdrawalLedgerEntryResponse": {
             "type": "object",
             "properties": {
                 "amount": {
@@ -4679,7 +4594,7 @@
                 }
             }
         },
-        "internal_withdrawal.payoutMethodResponse": {
+        "WithdrawalPayoutMethodResponse": {
             "type": "object",
             "properties": {
                 "address": {
@@ -4702,35 +4617,7 @@
                 }
             }
         },
-        "internal_withdrawal.updatePayoutMethodRequest": {
-            "type": "object",
-            "properties": {
-                "is_default": {
-                    "type": "boolean"
-                },
-                "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "internal_withdrawal.updateWithdrawalStatusRequest": {
-            "type": "object",
-            "properties": {
-                "admin_note": {
-                    "type": "string"
-                },
-                "reason": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "string"
-                },
-                "tx_hash": {
-                    "type": "string"
-                }
-            }
-        },
-        "internal_withdrawal.withdrawalResponse": {
+        "WithdrawalResponse": {
             "type": "object",
             "properties": {
                 "admin_note": {
@@ -4749,7 +4636,7 @@
                     "type": "number"
                 },
                 "payout_method": {
-                    "$ref": "#/definitions/internal_withdrawal.payoutMethodResponse"
+                    "$ref": "#/definitions/WithdrawalPayoutMethodResponse"
                 },
                 "processed_at": {
                     "type": "string"
@@ -4767,6 +4654,17 @@
                     "type": "string"
                 },
                 "tx_hash": {
+                    "type": "string"
+                }
+            }
+        },
+        "WithdrawalUpdatePayoutMethodRequest": {
+            "type": "object",
+            "properties": {
+                "is_default": {
+                    "type": "boolean"
+                },
+                "name": {
                     "type": "string"
                 }
             }

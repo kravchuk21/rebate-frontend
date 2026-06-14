@@ -5,7 +5,7 @@ import '@/shared/api/instance';
 import { Alert, Button, Card, Spinner, Table, Typography } from '@heroui/react';
 import { useLocale, useTranslations } from 'next-intl';
 
-import type { InternalBrokerAccountDetailResponse } from '@/shared/api/generated/types.gen';
+import type { BrokerAccountDetailResponse } from '@/shared/api/generated/types.gen';
 
 import { useMyAccounts } from '../hooks/useMyAccounts';
 import { AccountStatusChip } from './AccountStatusChip';
@@ -20,7 +20,7 @@ export const BrokerAccountsTable = ({ onAddAccount }: BrokerAccountsTableProps) 
   const { data, isLoading, isError, refetch } = useMyAccounts();
 
   const accounts =
-    (data?.data as { items?: InternalBrokerAccountDetailResponse[] } | undefined)?.items ?? [];
+    (data?.data as { items?: BrokerAccountDetailResponse[] } | undefined)?.items ?? [];
 
   if (isLoading) {
     return (

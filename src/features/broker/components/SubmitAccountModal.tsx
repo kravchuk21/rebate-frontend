@@ -19,7 +19,7 @@ import { useTranslations } from 'next-intl';
 import { Controller, useForm } from 'react-hook-form';
 
 import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
-import type { InternalBrokerBrokerResponse } from '@/shared/api/generated/types.gen';
+import type { BrokerResponse } from '@/shared/api/generated/types.gen';
 
 import { useBrokers } from '../hooks/useBrokers';
 import { useSubmitAccount } from '../hooks/useSubmitAccount';
@@ -37,8 +37,8 @@ export const SubmitAccountModal = ({ isOpen, onOpenChange }: SubmitAccountModalP
   const t = useTranslations();
   const { data: brokersData } = useBrokers();
   const brokers =
-    ((brokersData?.data as { data?: InternalBrokerBrokerResponse[] } | undefined)?.data as
-      | InternalBrokerBrokerResponse[]
+    ((brokersData?.data as { data?: BrokerResponse[] } | undefined)?.data as
+      | BrokerResponse[]
       | undefined) ?? [];
 
   const submitAccount = useSubmitAccount();

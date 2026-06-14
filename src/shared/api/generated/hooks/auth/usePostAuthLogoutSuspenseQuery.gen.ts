@@ -8,10 +8,10 @@ import { postAuthLogout } from "../../requests/auth/postAuthLogout.gen";
 
 export const postAuthLogoutSuspenseQueryKey = "postAuthLogoutSuspenseQueryKey";
 
-export const postAuthLogoutSuspenseQueryOptions = (settings: TanstackSuspenseQuerySettings<typeof postAuthLogout>) => queryOptions({
-    queryKey: [postAuthLogoutSuspenseQueryKey, ...(!!settings.request.path ? [settings.request.path] : []), ...(!!settings.request.query ? [settings.request.query] : []), ...(!!settings.request.body ? [settings.request.body] : [])],
-    queryFn: async () => postAuthLogout({ ...settings.request }),
-    ...settings.params
+export const postAuthLogoutSuspenseQueryOptions = (settings?: TanstackSuspenseQuerySettings<typeof postAuthLogout>) => queryOptions({
+    queryKey: [postAuthLogoutSuspenseQueryKey, ...(!!settings?.request?.path ? [settings?.request?.path] : []), ...(!!settings?.request?.query ? [settings?.request?.query] : []), ...(!!settings?.request?.body ? [settings?.request?.body] : [])],
+    queryFn: async () => postAuthLogout({ ...settings?.request }),
+    ...settings?.params
 });
 
 export const usePostAuthLogoutSuspenseQuery = (...args: Parameters<typeof postAuthLogoutSuspenseQueryOptions>) => useSuspenseQuery(postAuthLogoutSuspenseQueryOptions(...args));

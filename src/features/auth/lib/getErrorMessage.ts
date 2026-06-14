@@ -1,8 +1,8 @@
 import type { ResponseError } from '@siberiacancode/fetches';
 
-import type { GithubComVladislavkravchukRebateBackendInternalSharedResponseErrorResponse } from '@/shared/api/generated/types.gen';
+import type { ErrorResponse } from '@/shared/api/generated/types.gen';
 
-type ApiErrorResponse = GithubComVladislavkravchukRebateBackendInternalSharedResponseErrorResponse;
+type ApiErrorResponse = ErrorResponse;
 
 export const getErrorMessage = (error: unknown): string | undefined => {
   if (error && typeof error === 'object' && 'error' in error) {

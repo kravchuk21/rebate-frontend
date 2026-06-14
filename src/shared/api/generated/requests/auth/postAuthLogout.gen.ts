@@ -6,9 +6,8 @@ import type { PostAuthLogoutData, PostAuthLogoutError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
-export type PostAuthLogoutRequestParams = FetchesRequestParams<PostAuthLogoutData>;
+export type PostAuthLogoutRequestParams = FetchesRequestParams<PostAuthLogoutData> | void;
 
-export const postAuthLogout = ({ config, body }: PostAuthLogoutRequestParams): Promise<ApicraftFetchesResponse<never, PostAuthLogoutError>> => instance.call("POST", "/auth/logout", {
-    body,
+export const postAuthLogout = ({ config }: PostAuthLogoutRequestParams = {}): Promise<ApicraftFetchesResponse<never, PostAuthLogoutError>> => instance.call("POST", "/auth/logout", {
     ...config
 });

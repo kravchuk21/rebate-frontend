@@ -2,13 +2,13 @@
 
 import type { FetchesRequestParams, ApicraftFetchesResponse } from "@siberiacancode/apicraft";
 
-import type { GetAuthGoogleCallbackData, GetAuthGoogleCallbackResponse, GetAuthGoogleCallbackError } from "../../types.gen";
+import type { GetAuthGoogleCallbackData, GetAuthGoogleCallbackError } from "../../types.gen";
 
 import { instance } from "../../instance.gen";
 
 export type GetAuthGoogleCallbackRequestParams = FetchesRequestParams<GetAuthGoogleCallbackData>;
 
-export const getAuthGoogleCallback = ({ config, query }: GetAuthGoogleCallbackRequestParams): Promise<ApicraftFetchesResponse<GetAuthGoogleCallbackResponse, GetAuthGoogleCallbackError>> => instance.call("GET", "/auth/google/callback", {
+export const getAuthGoogleCallback = ({ config, query }: GetAuthGoogleCallbackRequestParams): Promise<ApicraftFetchesResponse<never, GetAuthGoogleCallbackError>> => instance.call("GET", "/auth/google/callback", {
     query,
     ...config
 });

@@ -8,10 +8,10 @@ import { postAuthRefresh } from "../../requests/auth/postAuthRefresh.gen";
 
 export const postAuthRefreshSuspenseQueryKey = "postAuthRefreshSuspenseQueryKey";
 
-export const postAuthRefreshSuspenseQueryOptions = (settings: TanstackSuspenseQuerySettings<typeof postAuthRefresh>) => queryOptions({
-    queryKey: [postAuthRefreshSuspenseQueryKey, ...(!!settings.request.path ? [settings.request.path] : []), ...(!!settings.request.query ? [settings.request.query] : []), ...(!!settings.request.body ? [settings.request.body] : [])],
-    queryFn: async () => postAuthRefresh({ ...settings.request }),
-    ...settings.params
+export const postAuthRefreshSuspenseQueryOptions = (settings?: TanstackSuspenseQuerySettings<typeof postAuthRefresh>) => queryOptions({
+    queryKey: [postAuthRefreshSuspenseQueryKey, ...(!!settings?.request?.path ? [settings?.request?.path] : []), ...(!!settings?.request?.query ? [settings?.request?.query] : []), ...(!!settings?.request?.body ? [settings?.request?.body] : [])],
+    queryFn: async () => postAuthRefresh({ ...settings?.request }),
+    ...settings?.params
 });
 
 export const usePostAuthRefreshSuspenseQuery = (...args: Parameters<typeof postAuthRefreshSuspenseQueryOptions>) => useSuspenseQuery(postAuthRefreshSuspenseQueryOptions(...args));

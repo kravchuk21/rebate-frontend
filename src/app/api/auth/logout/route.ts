@@ -1,21 +1,26 @@
 import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-import { clearAuthCookies, getRefreshToken } from '@/shared/lib/cookies';
+import { buildForwardCookieHeader, forwardSetCookieHeaders } from '@/shared/lib/proxyAuth';
 
 const API_URL = process.env.API_URL ?? 'http://localhost:8080';
 
-export async function POST() {
-  const refreshToken = await getRefreshToken();
+export async function POST(request: NextRequest) {
+  const res = await fetch(`${API_URL}/auth/logout`, {
+    method: 'POST',
+    headers: {
+      Cookie: buildForwardCookieHeader(request),
+    },
+  }).catch(() => undefined);
 
-  if (refreshToken) {
-    await fetch(`${API_URL}/auth/logout`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ refresh_token: refreshToken }),
-    }).catch(() => undefined);
+  const nextRes = NextResponse.json(
+    { success: true },
+    { status: res && res.status !== 204 ? res.status : 200 }
+  );
+
+  if (res) {
+    forwardSetCookieHeaders(res, nextRes);
   }
 
-  await clearAuthCookies();
-
-  return NextResponse.json({ success: true });
+  return nextRes;
 }
