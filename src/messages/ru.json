@@ -1,0 +1,43 @@
+{
+  "auth": {
+    "login": {
+      "title": "Вход",
+      "subtitle": "С возвращением",
+      "email": "Email",
+      "password": "Пароль",
+      "submit": "Войти",
+      "loading": "Вхожу...",
+      "noAccount": "Нет аккаунта?",
+      "register": "Зарегистрироваться",
+      "googleLogin": "Войти через Google",
+      "registeredSuccess": "Регистрация прошла успешно. Проверьте почту."
+    },
+    "register": {
+      "title": "Регистрация",
+      "subtitle": "Начните сегодня",
+      "email": "Email",
+      "password": "Пароль",
+      "referralCode": "Реферальный код (необязательно)",
+      "submit": "Зарегистрироваться",
+      "loading": "Создаю аккаунт...",
+      "hasAccount": "Уже есть аккаунт?",
+      "login": "Войти",
+      "successMessage": "Проверьте почту для подтверждения регистрации"
+    },
+    "verifyEmail": {
+      "loading": "Подтверждаем email...",
+      "success": "Email подтверждён!",
+      "successAction": "Войти",
+      "error": "Ссылка недействительна или устарела.",
+      "errorAction": "Назад к входу"
+    },
+    "errors": {
+      "email": "Введите корректный email",
+      "passwordMin": "Минимум 8 символов",
+      "generic": "Произошла ошибка. Попробуйте снова."
+    }
+  },
+  "dashboard": {
+    "title": "Панель управления"
+  }
+}
