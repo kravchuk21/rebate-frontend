@@ -107,5 +107,135 @@
       "submitFailed": "Не удалось отправить аккаунт",
       "retry": "Повторить"
     }
+  },
+  "withdrawal": {
+    "title": "Выводы",
+    "tabs": {
+      "overview": "Обзор",
+      "history": "История",
+      "payoutMethods": "Методы выплат"
+    },
+    "balance": {
+      "title": "Баланс",
+      "total": "Всего",
+      "frozen": "Заморожено",
+      "available": "Доступно",
+      "frozenHint": "Замороженные средства ожидают обработки вывода",
+      "errors": {
+        "loadFailed": "Не удалось загрузить баланс"
+      }
+    },
+    "ledger": {
+      "title": "История транзакций",
+      "empty": "Транзакций пока нет",
+      "type": {
+        "rebate_credit": "Ребейт",
+        "referral_credit": "Реферальный бонус",
+        "withdrawal_debit": "Вывод",
+        "withdrawal_freeze": "Заморозка",
+        "withdrawal_unfreeze": "Разморозка",
+        "adjustment": "Корректировка"
+      },
+      "columns": {
+        "type": "Тип",
+        "amount": "Сумма",
+        "date": "Дата"
+      },
+      "errors": {
+        "loadFailed": "Не удалось загрузить историю транзакций"
+      }
+    },
+    "payoutMethods": {
+      "title": "Методы выплат",
+      "add": "Добавить метод",
+      "empty": "Методы выплат не добавлены",
+      "emptyDesc": "Добавьте криптоадрес для получения выводов",
+      "default": "По умолчанию",
+      "setDefault": "Сделать основным",
+      "delete": "Удалить",
+      "deleteConfirm": "Удалить этот метод выплат?",
+      "deleteConfirmDesc": "Это действие нельзя отменить.",
+      "confirm": "Подтвердить",
+      "cancel": "Отмена",
+      "form": {
+        "title": "Добавить метод выплат",
+        "name": "Название",
+        "namePlaceholder": "например: Мой USDT TRC20",
+        "network": "Сеть",
+        "networkPlaceholder": "Выберите сеть",
+        "address": "Адрес кошелька",
+        "addressPlaceholder": "Введите адрес кошелька",
+        "submit": "Добавить метод",
+        "submitting": "Добавляю...",
+        "validation": {
+          "name": "Введите название",
+          "network": "Выберите сеть",
+          "address": "Введите адрес кошелька",
+          "addressInvalid": "Неверный формат адреса для выбранной сети"
+        }
+      },
+      "networks": {
+        "TRC20": "USDT TRC20 (Tron)",
+        "ERC20": "USDT ERC20 (Ethereum)",
+        "BEP20": "USDT BEP20 (BSC)",
+        "SOL": "USDT SOL (Solana)"
+      },
+      "errors": {
+        "loadFailed": "Не удалось загрузить методы выплат",
+        "deleteFailed": "Не удалось удалить метод выплат",
+        "addFailed": "Не удалось добавить метод выплат",
+        "updateFailed": "Не удалось обновить метод выплат",
+        "activeWithdrawal": "Невозможно удалить: есть активный вывод с этим методом"
+      }
+    },
+    "request": {
+      "title": "Запросить вывод",
+      "method": "Метод выплаты",
+      "methodPlaceholder": "Выберите метод выплаты",
+      "amount": "Сумма (USDT)",
+      "amountPlaceholder": "0.00",
+      "fee": "Комиссия сети",
+      "feeNote": "Комиссия сети будет вычтена",
+      "youReceive": "Вы получите",
+      "submit": "Запросить вывод",
+      "submitting": "Запрашиваю...",
+      "noMethods": "Сначала добавьте метод выплаты",
+      "validation": {
+        "method": "Выберите метод выплаты",
+        "amount": "Введите сумму",
+        "amountMin": "Сумма должна быть больше комиссии сети",
+        "insufficientBalance": "Недостаточно средств на балансе"
+      },
+      "errors": {
+        "failed": "Не удалось создать запрос на вывод",
+        "activeExists": "У вас уже есть запрос на вывод в обработке"
+      }
+    },
+    "history": {
+      "title": "История выводов",
+      "empty": "Запросов на вывод пока нет",
+      "columns": {
+        "method": "Метод",
+        "amount": "Запрошено",
+        "fee": "Комиссия",
+        "youReceive": "К получению",
+        "status": "Статус",
+        "date": "Дата",
+        "txHash": "TX Hash"
+      },
+      "status": {
+        "pending": "Ожидает",
+        "processing": "Обрабатывается",
+        "completed": "Выполнен",
+        "rejected": "Отклонён",
+        "cancelled": "Отменён"
+      },
+      "cancel": "Отменить",
+      "cancelConfirm": "Отменить этот запрос на вывод?",
+      "errors": {
+        "loadFailed": "Не удалось загрузить историю выводов",
+        "cancelFailed": "Не удалось отменить вывод"
+      }
+    }
   }
 }

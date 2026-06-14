@@ -1,0 +1,188 @@
+'use client';
+
+import '@/shared/api/instance';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  Alert,
+  Button,
+  FieldError,
+  Form,
+  Input,
+  Label,
+  ListBox,
+  Modal,
+  Select,
+  TextField,
+} from '@heroui/react';
+import { useTranslations } from 'next-intl';
+import { Controller, useForm, useWatch } from 'react-hook-form';
+
+import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
+
+import { useCreatePayoutMethod } from '../hooks/useCreatePayoutMethod';
+import {
+  createPayoutMethodSchema,
+  type PayoutMethodFormValues,
+} from '../schemas/payoutMethodSchema';
+
+interface AddPayoutMethodModalProps {
+  isOpen: boolean;
+  onOpenChange: (isOpen: boolean) => void;
+}
+
+const networks = ['TRC20', 'ERC20', 'BEP20', 'SOL'] as const;
+
+export const AddPayoutMethodModal = ({ isOpen, onOpenChange }: AddPayoutMethodModalProps) => {
+  const t = useTranslations();
+  const createPayoutMethod = useCreatePayoutMethod();
+
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<PayoutMethodFormValues>({
+    resolver: zodResolver(createPayoutMethodSchema(t)),
+    defaultValues: { name: '', network: 'TRC20', address: '' },
+  });
+
+  const selectedNetwork = useWatch({ control, name: 'network' });
+
+  const onSubmit = (data: PayoutMethodFormValues) => {
+    createPayoutMethod.mutate(
+      { body: data },
+      {
+        onSuccess: () => {
+          reset();
+          onOpenChange(false);
+        },
+      },
+    );
+  };
+
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      reset();
+      createPayoutMethod.reset();
+    }
+    onOpenChange(open);
+  };
+
+  return (
+    <Modal isOpen={isOpen} onOpenChange={handleOpenChange}>
+      <Modal.Backdrop>
+        <Modal.Container>
+          <Modal.Dialog className="sm:max-w-[420px]">
+            <Modal.CloseTrigger />
+            <Modal.Header>
+              <Modal.Heading>{t('withdrawal.payoutMethods.form.title')}</Modal.Heading>
+            </Modal.Header>
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <Modal.Body className="flex flex-col gap-4">
+                <Controller
+                  control={control}
+                  name="name"
+                  render={({ field }) => (
+                    <TextField
+                      name={field.name}
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                      isInvalid={!!errors.name}
+                      fullWidth
+                    >
+                      <Label>{t('withdrawal.payoutMethods.form.name')}</Label>
+                      <Input placeholder={t('withdrawal.payoutMethods.form.namePlaceholder')} />
+                      <FieldError>{errors.name?.message}</FieldError>
+                    </TextField>
+                  )}
+                />
+
+                <Controller
+                  control={control}
+                  name="network"
+                  render={({ field }) => (
+                    <Select
+                      className="w-full"
+                      placeholder={t('withdrawal.payoutMethods.form.networkPlaceholder')}
+                      selectedKey={field.value || null}
+                      onSelectionChange={(key) => field.onChange(key ? String(key) : '')}
+                      isInvalid={!!errors.network}
+                    >
+                      <Label>{t('withdrawal.payoutMethods.form.network')}</Label>
+                      <Select.Trigger>
+                        <Select.Value />
+                        <Select.Indicator />
+                      </Select.Trigger>
+                      <Select.Popover>
+                        <ListBox>
+                          {networks.map((network) => (
+                            <ListBox.Item
+                              key={network}
+                              id={network}
+                              textValue={t(`withdrawal.payoutMethods.networks.${network}`)}
+                            >
+                              {t(`withdrawal.payoutMethods.networks.${network}`)}
+                              <ListBox.ItemIndicator />
+                            </ListBox.Item>
+                          ))}
+                        </ListBox>
+                      </Select.Popover>
+                      <FieldError>{errors.network?.message}</FieldError>
+                    </Select>
+                  )}
+                />
+
+                <Controller
+                  control={control}
+                  name="address"
+                  render={({ field }) => (
+                    <TextField
+                      name={field.name}
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                      isInvalid={!!errors.address}
+                      fullWidth
+                    >
+                      <Label>{t('withdrawal.payoutMethods.form.address')}</Label>
+                      <Input placeholder={t('withdrawal.payoutMethods.form.addressPlaceholder')} />
+                      {!errors.address && (
+                        <p className="text-sm text-muted">
+                          {t(`withdrawal.payoutMethods.networks.${selectedNetwork}`)}
+                        </p>
+                      )}
+                      <FieldError>{errors.address?.message}</FieldError>
+                    </TextField>
+                  )}
+                />
+
+                {createPayoutMethod.isError && (
+                  <Alert status="danger">
+                    <Alert.Content>
+                      <Alert.Description>
+                        {getErrorMessage(createPayoutMethod.error) ??
+                          t('withdrawal.payoutMethods.errors.addFailed')}
+                      </Alert.Description>
+                    </Alert.Content>
+                  </Alert>
+                )}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="tertiary" slot="close">
+                  {t('withdrawal.payoutMethods.cancel')}
+                </Button>
+                <Button type="submit" variant="primary" isDisabled={createPayoutMethod.isPending}>
+                  {createPayoutMethod.isPending
+                    ? t('withdrawal.payoutMethods.form.submitting')
+                    : t('withdrawal.payoutMethods.form.submit')}
+                </Button>
+              </Modal.Footer>
+            </Form>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
+    </Modal>
+  );
+};

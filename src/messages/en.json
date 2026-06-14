@@ -107,5 +107,135 @@
       "submitFailed": "Failed to submit account",
       "retry": "Retry"
     }
+  },
+  "withdrawal": {
+    "title": "Withdrawals",
+    "tabs": {
+      "overview": "Overview",
+      "history": "History",
+      "payoutMethods": "Payout Methods"
+    },
+    "balance": {
+      "title": "Balance",
+      "total": "Total",
+      "frozen": "Frozen",
+      "available": "Available",
+      "frozenHint": "Frozen funds are pending withdrawal processing",
+      "errors": {
+        "loadFailed": "Failed to load balance"
+      }
+    },
+    "ledger": {
+      "title": "Transaction History",
+      "empty": "No transactions yet",
+      "type": {
+        "rebate_credit": "Rebate",
+        "referral_credit": "Referral Bonus",
+        "withdrawal_debit": "Withdrawal",
+        "withdrawal_freeze": "Freeze",
+        "withdrawal_unfreeze": "Unfreeze",
+        "adjustment": "Adjustment"
+      },
+      "columns": {
+        "type": "Type",
+        "amount": "Amount",
+        "date": "Date"
+      },
+      "errors": {
+        "loadFailed": "Failed to load transaction history"
+      }
+    },
+    "payoutMethods": {
+      "title": "Payout Methods",
+      "add": "Add Payout Method",
+      "empty": "No payout methods added",
+      "emptyDesc": "Add a crypto address to receive your withdrawals",
+      "default": "Default",
+      "setDefault": "Set as default",
+      "delete": "Delete",
+      "deleteConfirm": "Delete this payout method?",
+      "deleteConfirmDesc": "This action cannot be undone.",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "form": {
+        "title": "Add Payout Method",
+        "name": "Name",
+        "namePlaceholder": "e.g. My USDT TRC20",
+        "network": "Network",
+        "networkPlaceholder": "Select network",
+        "address": "Wallet Address",
+        "addressPlaceholder": "Enter wallet address",
+        "submit": "Add Method",
+        "submitting": "Adding...",
+        "validation": {
+          "name": "Name is required",
+          "network": "Please select a network",
+          "address": "Wallet address is required",
+          "addressInvalid": "Invalid address format for selected network"
+        }
+      },
+      "networks": {
+        "TRC20": "USDT TRC20 (Tron)",
+        "ERC20": "USDT ERC20 (Ethereum)",
+        "BEP20": "USDT BEP20 (BSC)",
+        "SOL": "USDT SOL (Solana)"
+      },
+      "errors": {
+        "loadFailed": "Failed to load payout methods",
+        "deleteFailed": "Failed to delete payout method",
+        "addFailed": "Failed to add payout method",
+        "updateFailed": "Failed to update payout method",
+        "activeWithdrawal": "Cannot delete: there is an active withdrawal using this method"
+      }
+    },
+    "request": {
+      "title": "Request Withdrawal",
+      "method": "Payout Method",
+      "methodPlaceholder": "Select payout method",
+      "amount": "Amount (USDT)",
+      "amountPlaceholder": "0.00",
+      "fee": "Network fee",
+      "feeNote": "Network fee will be deducted",
+      "youReceive": "You will receive",
+      "submit": "Request Withdrawal",
+      "submitting": "Requesting...",
+      "noMethods": "Add a payout method first",
+      "validation": {
+        "method": "Please select a payout method",
+        "amount": "Amount is required",
+        "amountMin": "Amount must be greater than network fee",
+        "insufficientBalance": "Insufficient available balance"
+      },
+      "errors": {
+        "failed": "Failed to create withdrawal request",
+        "activeExists": "You already have a pending withdrawal"
+      }
+    },
+    "history": {
+      "title": "Withdrawal History",
+      "empty": "No withdrawal requests yet",
+      "columns": {
+        "method": "Method",
+        "amount": "Amount",
+        "fee": "Fee",
+        "youReceive": "You Receive",
+        "status": "Status",
+        "date": "Date",
+        "txHash": "TX Hash"
+      },
+      "status": {
+        "pending": "Pending",
+        "processing": "Processing",
+        "completed": "Completed",
+        "rejected": "Rejected",
+        "cancelled": "Cancelled"
+      },
+      "cancel": "Cancel",
+      "cancelConfirm": "Cancel this withdrawal request?",
+      "errors": {
+        "loadFailed": "Failed to load withdrawals",
+        "cancelFailed": "Failed to cancel withdrawal"
+      }
+    }
   }
 }
