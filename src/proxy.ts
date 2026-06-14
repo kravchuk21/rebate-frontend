@@ -6,6 +6,7 @@ import { routing } from '@/i18n/routing';
 
 const intlMiddleware = createMiddleware(routing);
 
+const PUBLIC_PATHS = ['/', '/verify-email'];
 const PROTECTED_SEGMENTS = ['/dashboard'];
 
 export function proxy(request: NextRequest) {
@@ -18,7 +19,7 @@ export function proxy(request: NextRequest) {
 
   if (isProtected && !request.cookies.get('access_token')) {
     const locale = pathname.match(/^\/(en|ru)(?=\/|$)/)?.[1] ?? routing.defaultLocale;
-    return NextResponse.redirect(new URL(`/${locale}/login`, request.url));
+    return NextResponse.redirect(new URL(`/${locale}?modal=login`, request.url));
   }
 
   return intlMiddleware(request);

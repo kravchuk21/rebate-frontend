@@ -1,6 +1,7 @@
 import { redirect } from '@/i18n/navigation';
 import { getAccessToken } from '@/shared/lib/cookies';
-import { LocaleSwitcher } from '@/shared/components/LocaleSwitcher';
+import { DashboardHeader } from '@/shared/components/dashboard/DashboardHeader';
+import { Sidebar } from '@/shared/components/dashboard/Sidebar';
 
 export default async function DashboardLayout({
   children,
@@ -13,15 +14,16 @@ export default async function DashboardLayout({
   const accessToken = await getAccessToken();
 
   if (!accessToken) {
-    redirect({ href: '/login', locale });
+    redirect({ href: '/?modal=login', locale });
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="flex justify-end p-4">
-        <LocaleSwitcher />
-      </header>
-      <main className="flex-1">{children}</main>
+    <div className="flex min-h-screen flex-col">
+      <DashboardHeader />
+      <div className="flex flex-1 flex-col md:flex-row">
+        <Sidebar />
+        <main className="flex-1">{children}</main>
+      </div>
     </div>
   );
 }

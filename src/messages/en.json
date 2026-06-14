@@ -1,4 +1,10 @@
 {
+  "landing": {
+    "tagline": "Earn rebates from your trading. Automatically.",
+    "description": "Connect your broker account and receive daily rebate payouts in crypto.",
+    "signIn": "Sign In",
+    "getStarted": "Get Started"
+  },
   "auth": {
     "login": {
       "title": "Sign In",
@@ -10,7 +16,9 @@
       "noAccount": "Don't have an account?",
       "register": "Create account",
       "googleLogin": "Sign in with Google",
-      "registeredSuccess": "Registration successful. Please check your email."
+      "registeredSuccess": "Registration successful. Please check your email.",
+      "or": "or",
+      "continueWithGoogle": "Continue with Google"
     },
     "register": {
       "title": "Create Account",
@@ -22,7 +30,11 @@
       "loading": "Creating account...",
       "hasAccount": "Already have an account?",
       "login": "Sign in",
-      "successMessage": "Please check your email to confirm your registration"
+      "successMessage": "Please check your email to confirm your registration",
+      "or": "or",
+      "continueWithGoogle": "Continue with Google",
+      "switchToLogin": "Already have an account?",
+      "signIn": "Sign in"
     },
     "verifyEmail": {
       "loading": "Verifying your email...",
@@ -37,7 +49,63 @@
       "generic": "An error occurred. Please try again."
     }
   },
+  "common": {
+    "logout": "Logout"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "accounts": "Broker Accounts",
+    "rebate": "Rebate History",
+    "withdrawal": "Withdrawals",
+    "referrals": "Referrals"
+  },
   "dashboard": {
-    "title": "Dashboard"
+    "title": "Dashboard",
+    "welcome": "Welcome back",
+    "cards": {
+      "accounts": "Broker Accounts",
+      "balance": "Available Balance",
+      "referralCode": "Referral Code"
+    }
+  },
+  "accounts": {
+    "title": "Broker Accounts",
+    "addAccount": "Add Account",
+    "noAccounts": "No broker accounts yet",
+    "noAccountsDesc": "Add your first broker account to start earning rebates",
+    "table": {
+      "broker": "Broker",
+      "uid": "UID",
+      "status": "Status",
+      "createdAt": "Created",
+      "actions": "Actions"
+    },
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "revoked": "Revoked"
+    },
+    "submit": {
+      "title": "Add Broker Account",
+      "broker": "Broker",
+      "brokerPlaceholder": "Select a broker",
+      "uid": "Trading Account UID",
+      "uidPlaceholder": "Enter your UID from the broker",
+      "uidHint": "Find your UID in your broker account settings",
+      "submit": "Submit for Review",
+      "submitting": "Submitting...",
+      "success": "Account submitted successfully. Awaiting admin review.",
+      "cancel": "Cancel",
+      "validation": {
+        "broker": "Please select a broker",
+        "uid": "UID is required"
+      }
+    },
+    "errors": {
+      "loadFailed": "Failed to load accounts",
+      "submitFailed": "Failed to submit account",
+      "retry": "Retry"
+    }
   }
 }

@@ -31,7 +31,7 @@ let refreshQueue: Array<(accessToken: string) => void> = [];
 const redirectToLogin = () => {
   refreshQueue = [];
   if (typeof window !== 'undefined') {
-    window.location.href = '/login';
+    window.location.href = '/?modal=login';
   }
 };
 

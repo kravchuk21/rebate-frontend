@@ -1,25 +1,22 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  Alert,
-  Button,
-  Card,
-  FieldError,
-  Form,
-  Input,
-  Label,
-  TextField,
-} from '@heroui/react';
+import { Avatar, Button, Form, toast, Typography, Link } from '@heroui/react';
 import { useTranslations } from 'next-intl';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
+import { FormField } from '@/shared/components/FormField';
 import { getErrorMessage } from '../lib/getErrorMessage';
+import { useAuthModal } from '../hooks/useAuthModal';
 import { useLogin } from '../hooks/useLogin';
 import { createLoginSchema, type LoginFormValues } from '../schemas/loginSchema';
+import { AuthDivider } from './AuthDivider';
+import { GoogleAuthButton } from './GoogleAuthButton';
 
 export const LoginForm = () => {
   const t = useTranslations();
+  const { switchTo } = useAuthModal();
+  const login = useLogin();
 
   const {
     control,
@@ -30,77 +27,66 @@ export const LoginForm = () => {
     defaultValues: { email: '', password: '' },
   });
 
-  const login = useLogin();
-
   const onSubmit = (data: LoginFormValues) => {
-    login.mutate(data);
+    login.mutate(data, {
+      onError: (error) => {
+        toast.danger(getErrorMessage(error) ?? t('auth.errors.generic'));
+      },
+    });
   };
 
   return (
-    <Card>
-      <Card.Header>
-        <Card.Title>{t('auth.login.title')}</Card.Title>
-        <Card.Description>{t('auth.login.subtitle')}</Card.Description>
-      </Card.Header>
-      <Card.Content>
-        <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <Controller
-            control={control}
-            name="email"
-            render={({ field }) => (
-              <TextField
-                type="email"
-                name={field.name}
-                value={field.value}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-                isInvalid={!!errors.email}
-                isRequired
-                fullWidth
-              >
-                <Label>{t('auth.login.email')}</Label>
-                <Input placeholder="you@example.com" />
-                <FieldError>{errors.email?.message}</FieldError>
-              </TextField>
-            )}
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-col items-center gap-1">
+        <Avatar>
+          <Avatar.Image
+            alt="Avatar"
+            src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg"
           />
+          <Avatar.Fallback>AV</Avatar.Fallback>
+        </Avatar>
+        <Typography type="h4">
+          {t('auth.login.title')}
+        </Typography>
+        <Typography type="body-sm">
+          {t('auth.login.subtitle')}
+        </Typography>
+      </div>
 
-          <Controller
-            control={control}
-            name="password"
-            render={({ field }) => (
-              <TextField
-                type="password"
-                name={field.name}
-                value={field.value}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-                isInvalid={!!errors.password}
-                isRequired
-                fullWidth
-              >
-                <Label>{t('auth.login.password')}</Label>
-                <Input placeholder="••••••••" />
-                <FieldError>{errors.password?.message}</FieldError>
-              </TextField>
-            )}
-          />
+      <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
+        <FormField
+          control={control}
+          name="email"
+          label={t('auth.login.email')}
+          placeholder="you@example.com"
+          type="email"
+          error={errors.email?.message}
+          isRequired
+        />
+        <FormField
+          control={control}
+          name="password"
+          label={t('auth.login.password')}
+          placeholder="••••••••"
+          type="password"
+          error={errors.password?.message}
+          isRequired
+        />
+        <Button type="submit" variant="primary" fullWidth isDisabled={login.isPending}>
+          {login.isPending ? t('auth.login.loading') : t('auth.login.submit')}
+        </Button>
+      </Form>
 
-          {login.isError && (
-            <Alert status="danger">
-              <Alert.Content>
-                <Alert.Description>
-                  {getErrorMessage(login.error) ?? t('auth.errors.generic')}
-                </Alert.Description>
-              </Alert.Content>
-            </Alert>
-          )}
+      <AuthDivider translationKey="auth.login.or" />
 
-          <Button type="submit" variant="primary" fullWidth isDisabled={login.isPending}>
-            {login.isPending ? t('auth.login.loading') : t('auth.login.submit')}
-          </Button>
-        </Form>
-      </Card.Content>
-    </Card>
+      <GoogleAuthButton />
+
+      <Typography.Paragraph size="sm" align="center">
+        {t('auth.login.noAccount')}{' '}
+        <Link onPress={() => switchTo('register')}>
+          {t('auth.login.register')}
+        </Link>
+      </Typography.Paragraph>
+    </div>
   );
 };

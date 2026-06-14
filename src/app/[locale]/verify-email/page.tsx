@@ -51,7 +51,7 @@ const VerifyEmailContent = () => {
             <Alert.Content>
               <Alert.Description>
                 {t('success')}{' '}
-                <Link href="/login" className="underline">
+                <Link href="/?modal=login" className="underline">
                   {t('successAction')}
                 </Link>
               </Alert.Description>
@@ -64,7 +64,7 @@ const VerifyEmailContent = () => {
             <Alert.Content>
               <Alert.Description>
                 {error ?? t('error')}{' '}
-                <Link href="/login" className="underline">
+                <Link href="/?modal=login" className="underline">
                   {t('errorAction')}
                 </Link>
               </Alert.Description>

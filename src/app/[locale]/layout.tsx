@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import { Toast } from '@heroui/react';
 
 import { routing } from '@/i18n/routing';
 import QueryProvider from '@/providers/QueryProvider';
@@ -29,7 +30,10 @@ export default async function LocaleLayout({
     <html lang={locale} suppressHydrationWarning>
       <body>
         <NextIntlClientProvider messages={messages}>
-          <QueryProvider>{children}</QueryProvider>
+          <QueryProvider>
+            <Toast.Provider />
+            {children}
+          </QueryProvider>
         </NextIntlClientProvider>
       </body>
     </html>

@@ -10,7 +10,7 @@ export const useLogout = () => {
     mutationFn: () => fetch('/api/auth/logout', { method: 'POST' }),
     onSettled: () => {
       queryClient.clear();
-      router.push('/login');
+      router.push('/');
     },
   });
 };

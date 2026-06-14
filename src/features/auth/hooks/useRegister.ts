@@ -1,11 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { useRouter } from '@/i18n/navigation';
 import type { InternalAuthRegisterRequest } from '@/shared/api/generated/types.gen';
 
 export const useRegister = () => {
-  const router = useRouter();
-
   return useMutation({
     mutationFn: async (data: InternalAuthRegisterRequest) => {
       const res = await fetch('/api/auth/register', {
@@ -21,9 +18,6 @@ export const useRegister = () => {
       }
 
       return body;
-    },
-    onSuccess: () => {
-      router.push('/login?registered=true');
     },
   });
 };

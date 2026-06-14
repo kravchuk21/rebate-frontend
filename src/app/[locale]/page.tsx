@@ -1,13 +1,27 @@
+import { Suspense } from 'react';
 import { redirect } from '@/i18n/navigation';
 import { getAccessToken } from '@/shared/lib/cookies';
+import { LandingClient } from '@/features/landing/components/LandingClient';
 
-export default async function Home({
+export default async function HomePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ modal?: string; ref?: string }>;
 }) {
   const { locale } = await params;
-  const accessToken = await getAccessToken();
+  const token = await getAccessToken();
 
-  redirect({ href: accessToken ? '/dashboard' : '/login', locale });
+  if (token) {
+    redirect({ href: '/dashboard', locale });
+  }
+
+  const { ref } = await searchParams;
+
+  return (
+    <Suspense fallback={null}>
+      <LandingClient defaultReferralCode={ref} />
+    </Suspense>
+  );
 }
