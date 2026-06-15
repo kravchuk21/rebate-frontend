@@ -4,6 +4,7 @@ import { Modal } from '@heroui/react';
 import { useAuthModal } from '../hooks/useAuthModal';
 import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
+import { TwoFAModal } from './TwoFAModal';
 
 interface AuthModalProps {
   defaultReferralCode?: string;
@@ -30,6 +31,7 @@ export const AuthModal = ({ defaultReferralCode }: AuthModalProps) => {
             {currentModal === 'register' && (
               <RegisterForm defaultReferralCode={defaultReferralCode} />
             )}
+            {currentModal === 'twoFa' && <TwoFAModal />}
           </Modal.Dialog>
         </Modal.Container>
       </Modal.Backdrop>

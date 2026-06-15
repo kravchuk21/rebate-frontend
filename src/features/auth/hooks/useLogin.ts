@@ -2,9 +2,11 @@ import { useMutation } from '@tanstack/react-query';
 
 import { useRouter } from '@/i18n/navigation';
 import type { AuthLoginRequest, AuthTwoFaResponse } from '@/shared/api/generated/types.gen';
+import { useAuthModal } from './useAuthModal';
 
 export const useLogin = () => {
   const router = useRouter();
+  const { open } = useAuthModal();
 
   return useMutation({
     mutationFn: async (data: AuthLoginRequest) => {
@@ -23,8 +25,8 @@ export const useLogin = () => {
       return body as { success?: boolean; data?: AuthTwoFaResponse };
     },
     onSuccess: (data) => {
-      if (data.data?.['2fa_required']) {
-        router.push(`/2fa?user_id=${data.data.user_id}`);
+      if (data.data?.['2fa_required'] && data.data.user_id) {
+        open('twoFa', { user_id: data.data.user_id });
         return;
       }
 

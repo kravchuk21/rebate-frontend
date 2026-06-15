@@ -2,7 +2,7 @@
 import { useRouter, usePathname } from '@/i18n/navigation'
 import { useSearchParams } from 'next/navigation'
 
-export type ModalType = 'login' | 'register' | null
+export type ModalType = 'login' | 'register' | 'twoFa' | null
 
 export const useAuthModal = () => {
   const router = useRouter()
@@ -12,20 +12,26 @@ export const useAuthModal = () => {
   const currentModal: ModalType =
     (searchParams.get('modal') as ModalType) ?? null
 
-  const open = (modal: 'login' | 'register') => {
+  const userId = searchParams.get('user_id')
+
+  const open = (modal: 'login' | 'register' | 'twoFa', extra?: Record<string, string>) => {
     const params = new URLSearchParams(searchParams.toString())
     params.set('modal', modal)
+    if (extra) {
+      Object.entries(extra).forEach(([key, value]) => params.set(key, value))
+    }
     router.push(`${pathname}?${params.toString()}`)
   }
 
   const close = () => {
     const params = new URLSearchParams(searchParams.toString())
     params.delete('modal')
+    params.delete('user_id')
     const qs = params.toString()
     router.push(qs ? `${pathname}?${qs}` : pathname)
   }
 
   const switchTo = (modal: 'login' | 'register') => open(modal)
 
-  return { currentModal, open, close, switchTo }
+  return { currentModal, userId, open, close, switchTo }
 }
