@@ -312,5 +312,245 @@
     "errors": {
       "loadFailed": "Не удалось загрузить данные о рефералах"
     }
+  },
+  "admin": {
+    "nav": {
+      "overview": "Обзор",
+      "users": "Пользователи",
+      "brokerAccounts": "Брокерские счета",
+      "withdrawals": "Выводы",
+      "rebate": "Рибейт",
+      "config": "Настройки",
+      "auditLog": "Журнал действий",
+      "backToDashboard": "Назад в кабинет"
+    },
+    "overview": {
+      "title": "Обзор администратора"
+    },
+    "users": {
+      "title": "Пользователи",
+      "search": "Поиск по email",
+      "columns": {
+        "email": "Email",
+        "role": "Роль",
+        "status": "Статус",
+        "twoFa": "2FA",
+        "createdAt": "Дата создания",
+        "actions": "Действия"
+      },
+      "actions": {
+        "suspend": "Заблокировать",
+        "unsuspend": "Разблокировать",
+        "adjustBalance": "Изменить баланс",
+        "changeReferrer": "Изменить реферера"
+      },
+      "suspend": {
+        "confirmTitle": "Блокировка пользователя",
+        "confirmDesc": "Вы уверены, что хотите заблокировать этого пользователя? Он не сможет войти в систему.",
+        "confirm": "Заблокировать",
+        "cancel": "Отмена"
+      },
+      "adjustBalance": {
+        "title": "Изменить баланс",
+        "amount": "Сумма",
+        "amountPlaceholder": "Введите сумму (отрицательное значение — списание)",
+        "reason": "Причина",
+        "reasonPlaceholder": "Введите причину изменения",
+        "submit": "Изменить",
+        "validation": {
+          "amount": "Сумма обязательна",
+          "amountNonZero": "Сумма не должна быть равна нулю",
+          "reason": "Причина обязательна"
+        }
+      },
+      "changeReferrer": {
+        "title": "Изменить реферера",
+        "currentReferrer": "Текущий реферер",
+        "none": "Нет",
+        "newReferrerID": "ID нового реферера",
+        "newReferrerIDPlaceholder": "Введите ID пользователя-реферера",
+        "remove": "Удалить реферера",
+        "submit": "Обновить реферера"
+      },
+      "errors": {
+        "loadFailed": "Не удалось загрузить пользователей",
+        "suspendFailed": "Не удалось заблокировать пользователя",
+        "adjustFailed": "Не удалось изменить баланс",
+        "referrerFailed": "Не удалось изменить реферера"
+      }
+    },
+    "brokerAccounts": {
+      "title": "Брокерские счета",
+      "tabs": {
+        "pending": "На проверке",
+        "all": "Все"
+      },
+      "columns": {
+        "broker": "Брокер",
+        "uid": "UID",
+        "status": "Статус",
+        "submittedAt": "Дата подачи",
+        "actions": "Действия"
+      },
+      "actions": {
+        "approve": "Подтвердить",
+        "reject": "Отклонить",
+        "revoke": "Отозвать"
+      },
+      "reject": {
+        "title": "Отклонить брокерский счёт",
+        "reason": "Причина",
+        "reasonPlaceholder": "Введите причину отказа",
+        "submit": "Отклонить",
+        "cancel": "Отмена",
+        "validation": {
+          "reason": "Причина отказа обязательна"
+        }
+      },
+      "revoke": {
+        "title": "Отозвать брокерский счёт",
+        "reason": "Причина",
+        "reasonPlaceholder": "Введите причину отзыва",
+        "submit": "Отозвать",
+        "validation": {
+          "reason": "Причина отзыва обязательна"
+        }
+      },
+      "errors": {
+        "loadFailed": "Не удалось загрузить брокерские счета",
+        "rejectFailed": "Не удалось отклонить брокерский счёт",
+        "revokeFailed": "Не удалось отозвать брокерский счёт"
+      }
+    },
+    "withdrawals": {
+      "title": "Выводы средств",
+      "tabs": {
+        "pending": "На проверке",
+        "all": "Все"
+      },
+      "columns": {
+        "method": "Метод",
+        "amount": "Сумма",
+        "toSend": "К отправке",
+        "status": "Статус",
+        "requestedAt": "Дата запроса",
+        "txHash": "Хэш транзакции",
+        "actions": "Действия"
+      },
+      "updateStatus": {
+        "title": "Обновить статус",
+        "status": "Статус",
+        "statuses": {
+          "processing": "В обработке",
+          "completed": "Выполнено",
+          "rejected": "Отклонено"
+        },
+        "txHash": "Хэш транзакции",
+        "txHashPlaceholder": "Введите хэш транзакции",
+        "reason": "Причина",
+        "reasonPlaceholder": "Введите причину отказа",
+        "adminNote": "Заметка администратора",
+        "submit": "Обновить",
+        "validation": {
+          "status": "Статус обязателен",
+          "txHash": "Хэш транзакции обязателен для выполненных выводов",
+          "reason": "Причина обязательна для отклонённых выводов"
+        }
+      },
+      "errors": {
+        "loadFailed": "Не удалось загрузить выводы",
+        "updateFailed": "Не удалось обновить статус вывода"
+      }
+    },
+    "rebate": {
+      "title": "Расчёты рибейта",
+      "columns": {
+        "broker": "Брокер",
+        "uid": "UID",
+        "period": "Период",
+        "grossRebate": "Брутто рибейт",
+        "payout": "Выплата пользователю",
+        "status": "Статус",
+        "actions": "Действия"
+      },
+      "import": {
+        "title": "Импорт данных брокера",
+        "brokerAccount": "ID брокерского счёта",
+        "date": "Дата",
+        "volume": "Объём",
+        "grossRebate": "Брутто рибейт",
+        "submit": "Импортировать",
+        "validation": {
+          "brokerAccount": "ID брокерского счёта обязателен",
+          "date": "Дата обязательна",
+          "grossRebate": "Брутто рибейт обязателен"
+        }
+      },
+      "trigger": {
+        "title": "Запустить расчёт",
+        "brokerAccount": "ID брокерского счёта",
+        "date": "Дата",
+        "submit": "Запустить"
+      },
+      "adjust": {
+        "title": "Скорректировать расчёт",
+        "newGrossRebate": "Новый брутто рибейт",
+        "reason": "Причина",
+        "reasonPlaceholder": "Введите причину корректировки",
+        "submit": "Скорректировать",
+        "validation": {
+          "newGrossRebate": "Новый брутто рибейт обязателен",
+          "reason": "Причина обязательна"
+        }
+      },
+      "errors": {
+        "loadFailed": "Не удалось загрузить расчёты",
+        "importFailed": "Не удалось импортировать данные брокера",
+        "triggerFailed": "Не удалось запустить расчёт",
+        "adjustFailed": "Не удалось скорректировать расчёт"
+      }
+    },
+    "config": {
+      "title": "Конфигурация системы",
+      "labels": {
+        "our_fee_rate": "Наша комиссия",
+        "referral_rate": "Реферальная ставка",
+        "min_withdrawal_amount": "Минимальная сумма вывода",
+        "network_fee_TRC20": "Комиссия сети (TRC20)",
+        "network_fee_ERC20": "Комиссия сети (ERC20)",
+        "network_fee_BEP20": "Комиссия сети (BEP20)",
+        "network_fee_SOL": "Комиссия сети (SOL)"
+      },
+      "save": "Сохранить",
+      "saved": "Сохранено",
+      "saveFailed": "Не удалось сохранить",
+      "errors": {
+        "loadFailed": "Не удалось загрузить конфигурацию"
+      }
+    },
+    "auditLog": {
+      "title": "Журнал действий",
+      "filters": {
+        "action": "Действие",
+        "entityType": "Тип объекта"
+      },
+      "columns": {
+        "admin": "Администратор",
+        "action": "Действие",
+        "entityType": "Тип объекта",
+        "entityId": "ID объекта",
+        "date": "Дата",
+        "details": "Подробности"
+      },
+      "details": {
+        "title": "Детали записи журнала",
+        "oldValue": "Старое значение",
+        "newValue": "Новое значение",
+        "close": "Закрыть"
+      },
+      "errors": {
+        "loadFailed": "Не удалось загрузить журнал действий"
+      }
+    }
   }
 }

@@ -312,5 +312,245 @@
     "errors": {
       "loadFailed": "Failed to load referral data"
     }
+  },
+  "admin": {
+    "nav": {
+      "overview": "Overview",
+      "users": "Users",
+      "brokerAccounts": "Broker Accounts",
+      "withdrawals": "Withdrawals",
+      "rebate": "Rebate",
+      "config": "Config",
+      "auditLog": "Audit Log",
+      "backToDashboard": "Back to Dashboard"
+    },
+    "overview": {
+      "title": "Admin Overview"
+    },
+    "users": {
+      "title": "Users",
+      "search": "Search by email",
+      "columns": {
+        "email": "Email",
+        "role": "Role",
+        "status": "Status",
+        "twoFa": "2FA",
+        "createdAt": "Created At",
+        "actions": "Actions"
+      },
+      "actions": {
+        "suspend": "Suspend",
+        "unsuspend": "Unsuspend",
+        "adjustBalance": "Adjust Balance",
+        "changeReferrer": "Change Referrer"
+      },
+      "suspend": {
+        "confirmTitle": "Suspend User",
+        "confirmDesc": "Are you sure you want to suspend this user? They will not be able to log in.",
+        "confirm": "Suspend",
+        "cancel": "Cancel"
+      },
+      "adjustBalance": {
+        "title": "Adjust Balance",
+        "amount": "Amount",
+        "amountPlaceholder": "Enter amount (use negative to deduct)",
+        "reason": "Reason",
+        "reasonPlaceholder": "Enter reason for adjustment",
+        "submit": "Adjust",
+        "validation": {
+          "amount": "Amount is required",
+          "amountNonZero": "Amount must not be zero",
+          "reason": "Reason is required"
+        }
+      },
+      "changeReferrer": {
+        "title": "Change Referrer",
+        "currentReferrer": "Current Referrer",
+        "none": "None",
+        "newReferrerID": "New Referrer ID",
+        "newReferrerIDPlaceholder": "Enter referrer user ID",
+        "remove": "Remove Referrer",
+        "submit": "Update Referrer"
+      },
+      "errors": {
+        "loadFailed": "Failed to load users",
+        "suspendFailed": "Failed to suspend user",
+        "adjustFailed": "Failed to adjust balance",
+        "referrerFailed": "Failed to change referrer"
+      }
+    },
+    "brokerAccounts": {
+      "title": "Broker Accounts",
+      "tabs": {
+        "pending": "Pending",
+        "all": "All"
+      },
+      "columns": {
+        "broker": "Broker",
+        "uid": "UID",
+        "status": "Status",
+        "submittedAt": "Submitted At",
+        "actions": "Actions"
+      },
+      "actions": {
+        "approve": "Approve",
+        "reject": "Reject",
+        "revoke": "Revoke"
+      },
+      "reject": {
+        "title": "Reject Broker Account",
+        "reason": "Reason",
+        "reasonPlaceholder": "Enter rejection reason",
+        "submit": "Reject",
+        "cancel": "Cancel",
+        "validation": {
+          "reason": "Rejection reason is required"
+        }
+      },
+      "revoke": {
+        "title": "Revoke Broker Account",
+        "reason": "Reason",
+        "reasonPlaceholder": "Enter revocation reason",
+        "submit": "Revoke",
+        "validation": {
+          "reason": "Revocation reason is required"
+        }
+      },
+      "errors": {
+        "loadFailed": "Failed to load broker accounts",
+        "rejectFailed": "Failed to reject broker account",
+        "revokeFailed": "Failed to revoke broker account"
+      }
+    },
+    "withdrawals": {
+      "title": "Withdrawals",
+      "tabs": {
+        "pending": "Pending",
+        "all": "All"
+      },
+      "columns": {
+        "method": "Method",
+        "amount": "Amount",
+        "toSend": "To Send",
+        "status": "Status",
+        "requestedAt": "Requested At",
+        "txHash": "Tx Hash",
+        "actions": "Actions"
+      },
+      "updateStatus": {
+        "title": "Update Status",
+        "status": "Status",
+        "statuses": {
+          "processing": "Processing",
+          "completed": "Completed",
+          "rejected": "Rejected"
+        },
+        "txHash": "Transaction Hash",
+        "txHashPlaceholder": "Enter transaction hash",
+        "reason": "Reason",
+        "reasonPlaceholder": "Enter rejection reason",
+        "adminNote": "Admin Note",
+        "submit": "Update",
+        "validation": {
+          "status": "Status is required",
+          "txHash": "Transaction hash is required for completed withdrawals",
+          "reason": "Reason is required for rejected withdrawals"
+        }
+      },
+      "errors": {
+        "loadFailed": "Failed to load withdrawals",
+        "updateFailed": "Failed to update withdrawal status"
+      }
+    },
+    "rebate": {
+      "title": "Rebate Calculations",
+      "columns": {
+        "broker": "Broker",
+        "uid": "UID",
+        "period": "Period",
+        "grossRebate": "Gross Rebate",
+        "payout": "User Payout",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "import": {
+        "title": "Import Broker Data",
+        "brokerAccount": "Broker Account ID",
+        "date": "Date",
+        "volume": "Volume",
+        "grossRebate": "Gross Rebate",
+        "submit": "Import",
+        "validation": {
+          "brokerAccount": "Broker account ID is required",
+          "date": "Date is required",
+          "grossRebate": "Gross rebate is required"
+        }
+      },
+      "trigger": {
+        "title": "Trigger Calculation",
+        "brokerAccount": "Broker Account ID",
+        "date": "Date",
+        "submit": "Trigger"
+      },
+      "adjust": {
+        "title": "Adjust Calculation",
+        "newGrossRebate": "New Gross Rebate",
+        "reason": "Reason",
+        "reasonPlaceholder": "Enter reason for adjustment",
+        "submit": "Adjust",
+        "validation": {
+          "newGrossRebate": "New gross rebate is required",
+          "reason": "Reason is required"
+        }
+      },
+      "errors": {
+        "loadFailed": "Failed to load calculations",
+        "importFailed": "Failed to import broker data",
+        "triggerFailed": "Failed to trigger calculation",
+        "adjustFailed": "Failed to adjust calculation"
+      }
+    },
+    "config": {
+      "title": "System Configuration",
+      "labels": {
+        "our_fee_rate": "Our Fee Rate",
+        "referral_rate": "Referral Rate",
+        "min_withdrawal_amount": "Minimum Withdrawal Amount",
+        "network_fee_TRC20": "Network Fee (TRC20)",
+        "network_fee_ERC20": "Network Fee (ERC20)",
+        "network_fee_BEP20": "Network Fee (BEP20)",
+        "network_fee_SOL": "Network Fee (SOL)"
+      },
+      "save": "Save",
+      "saved": "Saved",
+      "saveFailed": "Failed to save",
+      "errors": {
+        "loadFailed": "Failed to load configuration"
+      }
+    },
+    "auditLog": {
+      "title": "Audit Log",
+      "filters": {
+        "action": "Action",
+        "entityType": "Entity Type"
+      },
+      "columns": {
+        "admin": "Admin",
+        "action": "Action",
+        "entityType": "Entity Type",
+        "entityId": "Entity ID",
+        "date": "Date",
+        "details": "Details"
+      },
+      "details": {
+        "title": "Audit Log Details",
+        "oldValue": "Old Value",
+        "newValue": "New Value",
+        "close": "Close"
+      },
+      "errors": {
+        "loadFailed": "Failed to load audit log"
+      }
+    }
   }
 }
