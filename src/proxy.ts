@@ -6,7 +6,7 @@ import { routing } from '@/i18n/routing';
 
 const intlMiddleware = createMiddleware(routing);
 
-const PUBLIC_PATHS = ['/', '/verify-email'];
+const PUBLIC_PATHS = ['/', '/verify-email', '/2fa'];
 const PROTECTED_SEGMENTS = ['/dashboard', '/accounts', '/rebate', '/withdrawal', '/referrals', '/admin'];
 
 export function proxy(request: NextRequest) {

@@ -57,7 +57,89 @@
     "accounts": "Broker Accounts",
     "rebate": "Rebate History",
     "withdrawal": "Withdrawals",
-    "referrals": "Referrals"
+    "referrals": "Referrals",
+    "profile": "Profile"
+  },
+  "twoFA": {
+    "title": "Two-Factor Authentication",
+    "subtitle": "Enter the code from your authenticator app or a backup code",
+    "codePlaceholder": "Enter 6-digit code or backup code",
+    "codeLabel": "Authentication Code",
+    "submit": "Verify",
+    "submitting": "Verifying...",
+    "backToLogin": "← Back to sign in",
+    "invalidSession": "Invalid session. Please sign in again.",
+    "errors": {
+      "codeRequired": "Code is required (min 6 characters)",
+      "invalidCode": "Invalid code. Please try again.",
+      "generic": "Verification failed. Please try again."
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "cancel": "Cancel",
+    "account": {
+      "title": "Account Information",
+      "email": "Email",
+      "role": "Role",
+      "referralCode": "Referral Code",
+      "copied": "Copied!"
+    },
+    "twoFA": {
+      "title": "Two-Factor Authentication",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "enableBtn": "Enable 2FA",
+      "disableBtn": "Disable 2FA",
+      "setup": {
+        "step1Title": "Scan QR Code",
+        "step1Desc": "Scan this QR code with your authenticator app (Google Authenticator, Authy, etc.)",
+        "manualEntry": "Or enter this code manually:",
+        "step2Title": "Confirm Setup",
+        "step2Desc": "Enter the 6-digit code from your authenticator app to confirm",
+        "password": "Current Password",
+        "code": "Authenticator Code",
+        "submit": "Enable 2FA",
+        "submitting": "Enabling..."
+      },
+      "backupCodes": {
+        "title": "Save Your Backup Codes",
+        "desc": "Store these codes in a safe place. Each code can only be used once.",
+        "warning": "These codes will not be shown again.",
+        "confirm": "I've saved my backup codes",
+        "done": "Done"
+      },
+      "disable": {
+        "title": "Disable Two-Factor Authentication",
+        "desc": "Enter your password and authenticator code to disable 2FA.",
+        "password": "Current Password",
+        "code": "Authenticator Code",
+        "submit": "Disable 2FA",
+        "submitting": "Disabling..."
+      }
+    },
+    "password": {
+      "title": "Change Password",
+      "current": "Current Password",
+      "new": "New Password",
+      "confirm": "Confirm New Password",
+      "submit": "Change Password",
+      "notAvailable": "Password change is not yet available. Please contact support.",
+      "validation": {
+        "current": "Current password is required",
+        "new": "New password must be at least 8 characters",
+        "confirm": "Passwords do not match"
+      }
+    }
+  },
+  "errors": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. Please try again or return to the dashboard.",
+    "errorId": "Error ID",
+    "tryAgain": "Try again",
+    "goHome": "Go to Dashboard",
+    "notFound": "Page not found",
+    "notFoundDesc": "The page you're looking for doesn't exist or has been moved."
   },
   "dashboard": {
     "title": "Dashboard",

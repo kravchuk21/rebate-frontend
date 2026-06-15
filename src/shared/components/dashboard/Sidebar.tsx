@@ -12,6 +12,7 @@ const navItems = [
   { href: '/rebate', labelKey: 'rebate', icon: '💰' },
   { href: '/withdrawal', labelKey: 'withdrawal', icon: '💸' },
   { href: '/referrals', labelKey: 'referrals', icon: '🔗' },
+  { href: '/profile', labelKey: 'profile', icon: '👤' },
 ] as const;
 
 export const Sidebar = () => {
