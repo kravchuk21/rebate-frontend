@@ -50,7 +50,8 @@
     }
   },
   "common": {
-    "logout": "Logout"
+    "logout": "Logout",
+    "openMenu": "Open menu"
   },
   "nav": {
     "dashboard": "Dashboard",

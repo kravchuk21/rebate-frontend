@@ -1,5 +1,7 @@
 import { Typography } from '@heroui/react';
 import { getTranslations } from 'next-intl/server';
+import { SidebarToggle } from '@/shared/components/dashboard/SidebarToggle';
+
 
 import { DashboardSummaryCards } from '@/features/broker/components/DashboardSummaryCards';
 
@@ -8,7 +10,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-6 p-8">
-      <Typography.Heading>{t('title')}</Typography.Heading>
+      <div className="flex"><SidebarToggle/> <Typography.Heading>{t('title')}</Typography.Heading></div>
       <DashboardSummaryCards />
     </div>
   );

@@ -1,7 +1,8 @@
 import { redirect } from '@/i18n/navigation';
 import { getAccessToken } from '@/shared/lib/cookies';
-import { DashboardHeader } from '@/shared/components/dashboard/DashboardHeader';
+import { decodeAccessToken } from '@/shared/lib/decodeToken';
 import { Sidebar } from '@/shared/components/dashboard/Sidebar';
+import { SidebarProvider } from '@/shared/components/dashboard/SidebarContext';
 
 export default async function DashboardLayout({
   children,
@@ -17,13 +18,18 @@ export default async function DashboardLayout({
     redirect({ href: '/?modal=login', locale });
   }
 
+  const claims = decodeAccessToken(accessToken!);
+
+  if (!claims) {
+    redirect({ href: '/?modal=login', locale });
+  }
+
   return (
-    <div className="flex min-h-screen flex-col">
-      <DashboardHeader />
-      <div className="flex flex-1 flex-col md:flex-row">
-        <Sidebar />
+    <SidebarProvider>
+      <div className="flex min-h-screen flex-col md:flex-row">
+        <Sidebar email={claims!.email} role={claims!.role} />
         <main className="flex-1">{children}</main>
       </div>
-    </div>
+    </SidebarProvider>
   );
 }
