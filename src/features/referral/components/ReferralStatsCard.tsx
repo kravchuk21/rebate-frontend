@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, Skeleton } from '@heroui/react';
+import { Card, Skeleton, Typography } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
 import type { ReferralStatsResponse } from '@/shared/api/generated/types.gen';
@@ -15,43 +15,39 @@ export const ReferralStatsCard = () => {
   const stats = data?.data as ReferralStatsResponse | undefined;
 
   return (
-    <Card>
+    <Card variant="secondary">
       <Card.Header>
         <Card.Title>{t('title')}</Card.Title>
       </Card.Header>
-      <Card.Content>
+      <Card.Content className="flex flex-col gap-2">
         {isError ? (
-          <p className="text-sm text-danger">—</p>
+          <Typography.Paragraph size="sm" className="text-danger">—</Typography.Paragraph>
         ) : isLoading ? (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            <Skeleton className="h-12 w-full" />
-            <Skeleton className="h-12 w-full" />
-            <Skeleton className="h-12 w-full" />
-            <Skeleton className="h-12 w-full" />
-          </div>
+          <>
+            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full" />
+          </>
         ) : (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            <div className="flex flex-col gap-1">
-              <span className="text-sm text-muted">{t('totalReferrals')}</span>
-              <span className="text-2xl font-semibold">{stats?.total_referrals ?? 0}</span>
+          <>
+            <div className="flex items-center justify-between">
+              <Typography.Paragraph size="sm" color="muted">{t('totalReferrals')}</Typography.Paragraph>
+              <Typography type="body-sm">{stats?.total_referrals ?? 0}</Typography>
             </div>
-            <div className="flex flex-col gap-1">
-              <span className="text-sm text-muted">{t('activeReferrals')}</span>
-              <span className="text-2xl font-semibold">{stats?.active_referrals ?? 0}</span>
+            <div className="flex items-center justify-between">
+              <Typography.Paragraph size="sm" color="muted">{t('activeReferrals')}</Typography.Paragraph>
+              <Typography type="body-sm">{stats?.active_referrals ?? 0}</Typography>
             </div>
-            <div className="flex flex-col gap-1">
-              <span className="text-sm text-muted">{t('totalEarned')}</span>
-              <span className="text-2xl font-semibold">
-                {formatAmount(stats?.total_earned)} USDT
-              </span>
+            <div className="flex items-center justify-between">
+              <Typography.Paragraph size="sm" color="muted">{t('totalEarned')}</Typography.Paragraph>
+              <Typography type="body-sm">{formatAmount(stats?.total_earned)} USDT</Typography>
             </div>
-            <div className="flex flex-col gap-1">
-              <span className="text-sm text-muted">{t('pendingEarned')}</span>
-              <span className="text-2xl font-semibold">
-                {formatAmount(stats?.pending_earned)} USDT
-              </span>
+            <div className="flex items-center justify-between">
+              <Typography.Paragraph size="sm" color="muted">{t('pendingEarned')}</Typography.Paragraph>
+              <Typography type="body-sm">{formatAmount(stats?.pending_earned)} USDT</Typography>
             </div>
-          </div>
+          </>
         )}
       </Card.Content>
     </Card>

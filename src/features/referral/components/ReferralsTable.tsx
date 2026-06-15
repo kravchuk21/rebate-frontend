@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Alert, Button, Card, Chip, Skeleton, Table } from '@heroui/react';
+import { Alert, Button, Card, Chip, Skeleton, Table, Typography } from '@heroui/react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import type { ReferralEntryResponse } from '@/shared/api/generated/types.gen';
@@ -40,7 +40,7 @@ export const ReferralsTable = () => {
 
   if (isLoading) {
     return (
-      <Card>
+      <Card variant="secondary">
         <Card.Content className="flex flex-col gap-3 py-4">
           <Skeleton className="h-6 w-full" />
           <Skeleton className="h-6 w-full" />
@@ -52,13 +52,13 @@ export const ReferralsTable = () => {
 
   if (items.length === 0 && offset === 0) {
     return (
-      <Card>
+      <Card variant="secondary">
         <Card.Header>
           <Card.Title>{t('title')}</Card.Title>
         </Card.Header>
-        <Card.Content className="flex flex-col items-center justify-center gap-1 py-12 text-center">
-          <p className="font-medium">{t('empty')}</p>
-          <p className="text-sm text-muted">{t('emptyDesc')}</p>
+        <Card.Content className="flex flex-col items-center justify-center py-12 text-center">
+          <Typography.Paragraph>{t('empty')}</Typography.Paragraph>
+          <Typography.Paragraph size="sm" color="muted">{t('emptyDesc')}</Typography.Paragraph>
         </Card.Content>
       </Card>
     );

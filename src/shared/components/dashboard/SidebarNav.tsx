@@ -10,6 +10,7 @@ const navItems = [
   { href: '/rebate', labelKey: 'rebate' },
   { href: '/withdrawal', labelKey: 'withdrawal' },
   { href: '/referrals', labelKey: 'referrals' },
+  { href: '/profile', labelKey: 'profile' },
 ] as const;
 
 interface SidebarNavProps {

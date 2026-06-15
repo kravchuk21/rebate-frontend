@@ -11,7 +11,7 @@ export const SidebarUserProfile = ({ email, role }: SidebarUserProfileProps) => 
   const initial = email.charAt(0).toUpperCase();
 
   return (
-    <Link href="/profile" className="flex items-center gap-3 px-1 py-1">
+    <Link href="/profile" className="flex items-center gap-3">
       <Avatar>
         <Avatar.Image
           alt="Avatar"

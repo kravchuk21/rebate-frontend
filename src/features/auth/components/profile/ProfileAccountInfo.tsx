@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Card, Typography } from '@heroui/react';
+import { Button, Card, Input, Typography } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
 import { useReferralStats } from '@/features/referral/hooks/useReferralStats';
@@ -30,31 +30,25 @@ export const ProfileAccountInfo = ({ email, role }: ProfileAccountInfoProps) => 
   };
 
   return (
-    <Card>
+    <Card variant="secondary">
       <Card.Header>
         <Card.Title>{t('title')}</Card.Title>
       </Card.Header>
-      <Card.Content className="flex flex-col gap-3">
+      <Card.Content className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
-          <Typography type="body-sm" color="muted">
-            {t('email')}
-          </Typography>
-          <Typography type="body-sm">{email}</Typography>
+          <Typography.Paragraph size="sm" color="muted">{t('email')}</Typography.Paragraph>
+          <Typography.Paragraph size="sm">{email}</Typography.Paragraph>
         </div>
         <div className="flex items-center justify-between">
-          <Typography type="body-sm" color="muted">
-            {t('role')}
-          </Typography>
+          <Typography.Paragraph size="sm" color="muted">{t('role')}</Typography.Paragraph>
           <Typography type="body-sm">{role}</Typography>
         </div>
         {referralCode && (
           <div className="flex items-center justify-between">
-            <Typography type="body-sm" color="muted">
-              {t('referralCode')}
-            </Typography>
+            <Typography.Paragraph size="sm" color="muted">{t('referralCode')}</Typography.Paragraph>
             <div className="flex items-center gap-2">
-              <Typography type="body-sm">{referralCode}</Typography>
-              <Button variant="tertiary" size="sm" onPress={handleCopy}>
+              <Input value={referralCode} disabled />
+              <Button size="sm" onPress={handleCopy}>
                 {copied ? t('copied') : tReferrals('copy')}
               </Button>
             </div>
