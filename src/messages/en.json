@@ -237,5 +237,80 @@
         "cancelFailed": "Failed to cancel withdrawal"
       }
     }
+  },
+  "rebate": {
+    "title": "Rebate History",
+    "empty": "No rebate calculations yet",
+    "emptyDesc": "Rebates are calculated daily once your broker account is approved",
+    "columns": {
+      "broker": "Broker",
+      "uid": "UID",
+      "period": "Period",
+      "volume": "Volume",
+      "grossRebate": "Gross Rebate",
+      "ourFee": "Service Fee",
+      "referrerAmount": "Referral Share",
+      "yourPayout": "Your Payout",
+      "status": "Status"
+    },
+    "status": {
+      "calculated": "Calculated",
+      "paid": "Paid",
+      "pending_data": "Pending Data",
+      "adjusted": "Adjusted"
+    },
+    "filters": {
+      "allStatuses": "All statuses",
+      "dateFrom": "From",
+      "dateTo": "To"
+    },
+    "pagination": {
+      "prev": "Previous",
+      "next": "Next"
+    },
+    "errors": {
+      "loadFailed": "Failed to load rebate history"
+    },
+    "tooltips": {
+      "grossRebate": "Total rebate received from broker",
+      "ourFee": "Service fee deducted from gross rebate",
+      "referrerAmount": "Share paid to your referrer",
+      "yourPayout": "Amount credited to your balance"
+    }
+  },
+  "referrals": {
+    "title": "Referrals",
+    "stats": {
+      "title": "Your Referral Stats",
+      "totalReferrals": "Total Referrals",
+      "activeReferrals": "Active Referrals",
+      "totalEarned": "Total Earned",
+      "pendingEarned": "Pending"
+    },
+    "link": {
+      "title": "Your Referral Link",
+      "description": "Share this link to invite others. You earn a percentage of their trading rebates.",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "codeLabel": "Your code"
+    },
+    "table": {
+      "title": "Referred Users",
+      "empty": "No referred users yet",
+      "emptyDesc": "Share your referral link to start earning bonuses",
+      "columns": {
+        "email": "Email",
+        "joinedAt": "Joined",
+        "status": "Status",
+        "earned": "You Earned"
+      },
+      "pagination": {
+        "prev": "Previous",
+        "next": "Next"
+      }
+    },
+    "errors": {
+      "loadFailed": "Failed to load referral data"
+    }
   }
 }
