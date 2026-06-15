@@ -4,6 +4,7 @@ export interface TokenClaims {
   role: string;
   exp: number;
   iat: number;
+  two_fa_enabled?: boolean;
 }
 
 export const decodeAccessToken = (token: string): TokenClaims | null => {

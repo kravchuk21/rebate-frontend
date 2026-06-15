@@ -1,5 +1,6 @@
 import { Typography } from '@heroui/react';
 import { getTranslations } from 'next-intl/server';
+import { SidebarToggle } from '@/shared/components/dashboard/SidebarToggle';
 
 import { redirect } from '@/i18n/navigation';
 import { getAccessToken } from '@/shared/lib/cookies';
@@ -31,10 +32,13 @@ export default async function ProfilePage({
   const t = await getTranslations('profile');
 
   return (
-    <div className="flex flex-col gap-6 p-8 max-w-2xl">
-      <Typography.Heading>{t('title')}</Typography.Heading>
+    <div className="flex flex-col gap-6 p-5">
+      <div className="flex items-center gap-4">
+        <SidebarToggle/>
+        <Typography type="h4">{t('title')}</Typography>
+      </div>
       <ProfileAccountInfo email={claims.email} role={claims.role} />
-      <TwoFASection />
+      <TwoFASection initialEnabled={claims.two_fa_enabled ?? false} />
       <ChangePasswordSection />
     </div>
   );

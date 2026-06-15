@@ -12,6 +12,16 @@ const getAccessTokenFromCookie = (): string | undefined => {
   return match ? decodeURIComponent(match[1]) : undefined;
 };
 
+instance.interceptors.response.use((response) => {
+  const body = response.data as unknown;
+
+  if (body && typeof body === 'object' && 'data' in body) {
+    response.data = (body as { data: unknown }).data as typeof response.data;
+  }
+
+  return response;
+});
+
 instance.interceptors.request.use((config) => {
   const accessToken = getAccessTokenFromCookie();
 

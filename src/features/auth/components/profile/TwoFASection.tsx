@@ -7,9 +7,13 @@ import { useTranslations } from 'next-intl';
 import { TwoFADisableModal } from './TwoFADisableModal';
 import { TwoFASetupModal } from './TwoFASetupModal';
 
-export const TwoFASection = () => {
+interface TwoFASectionProps {
+  initialEnabled?: boolean;
+}
+
+export const TwoFASection = ({ initialEnabled = false }: TwoFASectionProps) => {
   const t = useTranslations('profile.twoFA');
-  const [enabled, setEnabled] = useState(false);
+  const [enabled, setEnabled] = useState(initialEnabled);
 
   const setupModal = useOverlayState();
   const disableModal = useOverlayState();

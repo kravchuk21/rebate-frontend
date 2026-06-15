@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Card, Skeleton } from '@heroui/react';
+import { Button, Card, Skeleton, Input } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
 import type { ReferralStatsResponse } from '@/shared/api/generated/types.gen';
@@ -24,7 +24,7 @@ export const ReferralLinkCard = () => {
   };
 
   return (
-    <Card>
+    <Card variant="secondary">
       <Card.Header>
         <Card.Title>{t('title')}</Card.Title>
         <Card.Description>{t('description')}</Card.Description>
@@ -33,23 +33,11 @@ export const ReferralLinkCard = () => {
         {isLoading ? (
           <Skeleton className="h-10 w-full" />
         ) : (
-          <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-1">
-              <span className="text-sm text-muted">{t('codeLabel')}</span>
-              <span className="font-medium">{stats?.referral_code ?? '—'}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="flex-1 truncate rounded-md border border-default px-3 py-2 text-sm">
-                {stats?.referral_url ?? '—'}
-              </span>
-              <Button
-                variant="secondary"
-                onPress={handleCopy}
-                isDisabled={!stats?.referral_url}
-              >
-                {copied ? t('copied') : t('copy')}
-              </Button>
-            </div>
+          <div className="flex items-center gap-2 mt-auto">
+            <Input className="flex-1" value={stats?.referral_url ?? '—'} disabled />
+            <Button onPress={handleCopy} isDisabled={!stats?.referral_url}>
+              {copied ? t('copied') : t('copy')}
+            </Button>
           </div>
         )}
       </Card.Content>

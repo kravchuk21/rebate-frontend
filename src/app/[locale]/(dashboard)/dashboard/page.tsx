@@ -4,14 +4,19 @@ import { SidebarToggle } from '@/shared/components/dashboard/SidebarToggle';
 
 
 import { DashboardSummaryCards } from '@/features/broker/components/DashboardSummaryCards';
+import { ReferralLinkCard } from '@/features/referral/components/ReferralLinkCard';
 
 export default async function DashboardPage() {
   const t = await getTranslations('dashboard');
 
   return (
-    <div className="flex flex-col gap-6 p-8">
-      <div className="flex"><SidebarToggle/> <Typography.Heading>{t('title')}</Typography.Heading></div>
+    <div className="flex flex-col gap-6 p-5">
+      <div className="flex items-center gap-4">
+        <SidebarToggle/>
+        <Typography type="h4">{t('title')}</Typography>
+      </div>
       <DashboardSummaryCards />
+      <ReferralLinkCard />
     </div>
   );
 }
