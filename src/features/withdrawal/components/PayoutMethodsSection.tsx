@@ -1,14 +1,15 @@
 'use client';
 
 import '@/shared/api/instance';
-import {Copy, TrashBin, Tray, Star, StarFill} from '@gravity-ui/icons';
+import {Copy, TrashBin, Star, StarFill} from '@gravity-ui/icons';
 
 import { useEffect, useState } from 'react';
-import { AlertDialog, Button, ButtonGroup, Card, Chip, EmptyState, Skeleton, Table, toast, Typography } from '@heroui/react';
+import { AlertDialog, Button, ButtonGroup, Card, Chip, Skeleton, Table, toast, Typography } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
 import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
 import type { WithdrawalPayoutMethodResponse } from '@/shared/api/generated/types.gen';
+import { TableEmptyState } from '@/shared/components/TableEmptyState';
 
 import { useDeletePayoutMethod } from '../hooks/useDeletePayoutMethod';
 import { usePayoutMethods } from '../hooks/usePayoutMethods';
@@ -139,12 +140,7 @@ export const PayoutMethodsSection = () => {
                 <Table.Column>{t('columns.actions')}</Table.Column>
               </Table.Header>
               <Table.Body
-                renderEmptyState={() => (
-                  <EmptyState className="flex h-full w-full flex-col items-center justify-center gap-4 py-12 text-center">
-                    <Tray className='size-6'/>
-                    <Typography.Paragraph size='sm' color='muted'>{t('emptyDesc')}</Typography.Paragraph>
-                  </EmptyState>
-                )}
+                renderEmptyState={() => <TableEmptyState label={t('emptyDesc')} />}
               >
                 {methods.map((method) => (
                   <Table.Row key={method.id}>

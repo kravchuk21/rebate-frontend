@@ -463,6 +463,7 @@
         "remove": "Remove Referrer",
         "submit": "Update Referrer"
       },
+      "emptyDesc": "No users found",
       "errors": {
         "loadFailed": "Failed to load users",
         "suspendFailed": "Failed to suspend user",

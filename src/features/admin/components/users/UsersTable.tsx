@@ -2,12 +2,22 @@
 
 import '@/shared/api/instance';
 
-import { useEffect, useState } from 'react';
-import { AlertDialog, Alert, Button, Card, Input, Skeleton, Table } from '@heroui/react';
+import type { SortDescriptor } from '@heroui/react';
+import type { SortingState } from '@tanstack/react-table';
+
+import { useEffect, useMemo, useState } from 'react';
+import { AlertDialog, Alert, Button, Card, Input, Pagination, Skeleton, Table, toast } from '@heroui/react';
 import { useLocale, useTranslations } from 'next-intl';
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
 
 import type { AdminUserResponse } from '@/shared/api/generated/types.gen';
 
+import { TableEmptyState } from '@/shared/components/TableEmptyState';
 import { getAdminErrorMessage } from '../../lib/getAdminErrorMessage';
 import { useAdminSuspendUser } from '../../hooks/useAdminSuspendUser';
 import { useAdminUnsuspendUser } from '../../hooks/useAdminUnsuspendUser';
@@ -18,12 +28,23 @@ import { UserStatusChip } from './UserStatusChip';
 
 const LIMIT = 20;
 
+function toSortDescriptor(sorting: SortingState): SortDescriptor | undefined {
+  const first = sorting[0];
+  if (!first) return undefined;
+  return { column: first.id, direction: first.desc ? 'descending' : 'ascending' };
+}
+
+function toSortingState(descriptor: SortDescriptor): SortingState {
+  return [{ id: descriptor.column as string, desc: descriptor.direction === 'descending' }];
+}
+
 export const UsersTable = () => {
   const t = useTranslations('admin.users');
   const locale = useLocale();
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [offset, setOffset] = useState(0);
+  const [sorting, setSorting] = useState<SortingState>([]);
   const [suspendTarget, setSuspendTarget] = useState<string | null>(null);
   const [adjustBalanceTarget, setAdjustBalanceTarget] = useState<string | null>(null);
   const [referrerTarget, setReferrerTarget] = useState<AdminUserResponse | null>(null);
@@ -33,7 +54,6 @@ export const UsersTable = () => {
       setDebouncedSearch(search);
       setOffset(0);
     }, 300);
-
     return () => clearTimeout(timeout);
   }, [search]);
 
@@ -43,26 +63,124 @@ export const UsersTable = () => {
     offset,
   });
 
+  useEffect(() => {
+    if (isError) toast.danger(t('errors.loadFailed'));
+  }, [isError, t]);
+
   const suspendUser = useAdminSuspendUser();
   const unsuspendUser = useAdminUnsuspendUser();
 
-  const users = (data?.data as { items?: AdminUserResponse[] } | undefined)?.items ?? [];
+  const responseData = data?.data as ({ items?: AdminUserResponse[]; total_count?: number } | undefined);
+  const users = responseData?.items ?? [];
+  const totalCount = responseData?.total_count ?? 0;
 
-  const dateFormatter = new Intl.DateTimeFormat(locale, {
-    dateStyle: 'medium',
+  const dateFormatter = useMemo(
+    () => new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }),
+    [locale],
+  );
+
+  const columnHelper = createColumnHelper<AdminUserResponse>();
+
+  const columns = useMemo(
+    () => [
+      columnHelper.accessor('email', {
+        header: t('columns.email'),
+        enableSorting: true,
+      }),
+      columnHelper.accessor('role', {
+        header: t('columns.role'),
+        enableSorting: true,
+      }),
+      columnHelper.accessor('status', {
+        header: t('columns.status'),
+        cell: (info) => <UserStatusChip status={info.getValue() ?? ''} />,
+        enableSorting: false,
+      }),
+      columnHelper.accessor('two_fa_enabled', {
+        header: t('columns.twoFa'),
+        cell: (info) => (info.getValue() ? 'Yes' : 'No'),
+        enableSorting: false,
+      }),
+      columnHelper.accessor('created_at', {
+        header: t('columns.createdAt'),
+        cell: (info) => {
+          const v = info.getValue();
+          return v ? dateFormatter.format(new Date(v)) : '—';
+        },
+        enableSorting: true,
+      }),
+      columnHelper.display({
+        id: 'actions',
+        header: t('columns.actions'),
+        cell: ({ row }) => {
+          const user = row.original;
+          return (
+            <div className="flex flex-wrap gap-2">
+              {user.status === 'suspended' ? (
+                <Button
+                  variant="tertiary"
+                  size="sm"
+                  onPress={() => user.id && unsuspendUser.mutate({ path: { userID: user.id } })}
+                >
+                  {t('actions.unsuspend')}
+                </Button>
+              ) : (
+                <Button
+                  variant="tertiary"
+                  size="sm"
+                  onPress={() => setSuspendTarget(user.id ?? null)}
+                >
+                  {t('actions.suspend')}
+                </Button>
+              )}
+              <Button
+                variant="tertiary"
+                size="sm"
+                onPress={() => setAdjustBalanceTarget(user.id ?? null)}
+              >
+                {t('actions.adjustBalance')}
+              </Button>
+              <Button
+                variant="tertiary"
+                size="sm"
+                onPress={() => setReferrerTarget(user)}
+              >
+                {t('actions.changeReferrer')}
+              </Button>
+            </div>
+          );
+        },
+      }),
+    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [t, dateFormatter],
+  );
+
+  const table = useReactTable({
+    data: users,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    manualSorting: true,
+    onSortingChange: setSorting,
+    state: { sorting },
   });
+
+  const sortDescriptor = useMemo(() => toSortDescriptor(sorting), [sorting]);
+
+  const pageCount = Math.ceil(totalCount / LIMIT);
+  const pageIndex = Math.floor(offset / LIMIT);
+  const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
+  const start = offset + 1;
+  const end = Math.min(offset + LIMIT, totalCount);
 
   const handleSuspend = (userID: string) => {
     suspendUser.mutate(
       { path: { userID } },
       {
         onSuccess: () => setSuspendTarget(null),
+        onError: (error) => toast.danger(getAdminErrorMessage(error) ?? t('errors.suspendFailed')),
       },
     );
-  };
-
-  const handleUnsuspend = (userID: string) => {
-    unsuspendUser.mutate({ path: { userID } });
   };
 
   return (
@@ -73,14 +191,6 @@ export const UsersTable = () => {
         placeholder={t('search')}
         className="max-w-sm"
       />
-
-      {isError && (
-        <Alert status="danger">
-          <Alert.Content>
-            <Alert.Description>{t('errors.loadFailed')}</Alert.Description>
-          </Alert.Content>
-        </Alert>
-      )}
 
       {isLoading && (
         <Card>
@@ -93,91 +203,81 @@ export const UsersTable = () => {
       )}
 
       {!isLoading && !isError && (
-        <>
-          <Table>
-            <Table.ScrollContainer>
-              <Table.Content aria-label={t('title')}>
-                <Table.Header>
-                  <Table.Column isRowHeader>{t('columns.email')}</Table.Column>
-                  <Table.Column>{t('columns.role')}</Table.Column>
-                  <Table.Column>{t('columns.status')}</Table.Column>
-                  <Table.Column>{t('columns.twoFa')}</Table.Column>
-                  <Table.Column>{t('columns.createdAt')}</Table.Column>
-                  <Table.Column>{t('columns.actions')}</Table.Column>
-                </Table.Header>
-                <Table.Body>
-                  {users.map((user) => (
-                    <Table.Row key={user.id}>
-                      <Table.Cell>{user.email}</Table.Cell>
-                      <Table.Cell>{user.role}</Table.Cell>
-                      <Table.Cell>
-                        <UserStatusChip status={user.status ?? ''} />
+        <Table>
+          <Table.ScrollContainer>
+            <Table.Content
+              aria-label={t('title')}
+              sortDescriptor={sortDescriptor}
+              onSortChange={(d) => setSorting(toSortingState(d))}
+            >
+              <Table.Header>
+                {table.getHeaderGroups()[0]!.headers.map((header) => (
+                  <Table.Column
+                    key={header.id}
+                    id={header.id}
+                    allowsSorting={header.column.getCanSort()}
+                    isRowHeader={header.id === 'email'}
+                  >
+                    {flexRender(header.column.columnDef.header, header.getContext())}
+                  </Table.Column>
+                ))}
+              </Table.Header>
+              <Table.Body
+                renderEmptyState={() => <TableEmptyState label={t('emptyDesc')} />}
+              >
+                {table.getRowModel().rows.map((row) => (
+                  <Table.Row key={row.id} id={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <Table.Cell key={cell.id}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </Table.Cell>
-                      <Table.Cell>{user.two_fa_enabled ? 'Yes' : 'No'}</Table.Cell>
-                      <Table.Cell>
-                        {user.created_at ? dateFormatter.format(new Date(user.created_at)) : '—'}
-                      </Table.Cell>
-                      <Table.Cell>
-                        <div className="flex flex-wrap gap-2">
-                          {user.status === 'suspended' ? (
-                            <Button
-                              variant="tertiary"
-                              size="sm"
-                              onPress={() => user.id && handleUnsuspend(user.id)}
-                            >
-                              {t('actions.unsuspend')}
-                            </Button>
-                          ) : (
-                            <Button
-                              variant="tertiary"
-                              size="sm"
-                              onPress={() => setSuspendTarget(user.id ?? null)}
-                            >
-                              {t('actions.suspend')}
-                            </Button>
-                          )}
-                          <Button
-                            variant="tertiary"
-                            size="sm"
-                            onPress={() => setAdjustBalanceTarget(user.id ?? null)}
-                          >
-                            {t('actions.adjustBalance')}
-                          </Button>
-                          <Button
-                            variant="tertiary"
-                            size="sm"
-                            onPress={() => setReferrerTarget(user)}
-                          >
-                            {t('actions.changeReferrer')}
-                          </Button>
-                        </div>
-                      </Table.Cell>
-                    </Table.Row>
-                  ))}
-                </Table.Body>
-              </Table.Content>
-            </Table.ScrollContainer>
-          </Table>
+                    ))}
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table.Content>
+          </Table.ScrollContainer>
 
-          <div className="flex items-center justify-end gap-2">
-            <Button
-              variant="tertiary"
-              size="sm"
-              isDisabled={offset === 0}
-              onPress={() => setOffset(Math.max(0, offset - LIMIT))}
-            >
-              ←
-            </Button>
-            <Button
-              variant="tertiary"
-              size="sm"
-              isDisabled={users.length < LIMIT}
-              onPress={() => setOffset(offset + LIMIT)}
-            >
-              →
-            </Button>
-          </div>
-        </>
+          {pageCount > 1 && (
+            <Table.Footer>
+              <Pagination size="sm">
+                <Pagination.Summary>
+                  {start} to {end} of {totalCount} results
+                </Pagination.Summary>
+                <Pagination.Content>
+                  <Pagination.Item>
+                    <Pagination.Previous
+                      isDisabled={pageIndex === 0}
+                      onPress={() => setOffset(Math.max(0, offset - LIMIT))}
+                    >
+                      <Pagination.PreviousIcon />
+                      Prev
+                    </Pagination.Previous>
+                  </Pagination.Item>
+                  {pages.map((p) => (
+                    <Pagination.Item key={p}>
+                      <Pagination.Link
+                        isActive={p === pageIndex + 1}
+                        onPress={() => setOffset((p - 1) * LIMIT)}
+                      >
+                        {p}
+                      </Pagination.Link>
+                    </Pagination.Item>
+                  ))}
+                  <Pagination.Item>
+                    <Pagination.Next
+                      isDisabled={pageIndex >= pageCount - 1}
+                      onPress={() => setOffset(offset + LIMIT)}
+                    >
+                      Next
+                      <Pagination.NextIcon />
+                    </Pagination.Next>
+                  </Pagination.Item>
+                </Pagination.Content>
+              </Pagination>
+            </Table.Footer>
+          )}
+        </Table>
       )}
 
       <AlertDialog
@@ -190,17 +290,8 @@ export const UsersTable = () => {
               <AlertDialog.Header>
                 <AlertDialog.Heading>{t('suspend.confirmTitle')}</AlertDialog.Heading>
               </AlertDialog.Header>
-              <AlertDialog.Body className="flex flex-col gap-3">
+              <AlertDialog.Body>
                 <p>{t('suspend.confirmDesc')}</p>
-                {suspendUser.isError && (
-                  <Alert status="danger">
-                    <Alert.Content>
-                      <Alert.Description>
-                        {getAdminErrorMessage(suspendUser.error) ?? t('errors.suspendFailed')}
-                      </Alert.Description>
-                    </Alert.Content>
-                  </Alert>
-                )}
               </AlertDialog.Body>
               <AlertDialog.Footer>
                 <Button variant="tertiary" slot="close">
@@ -219,8 +310,14 @@ export const UsersTable = () => {
         </AlertDialog.Backdrop>
       </AlertDialog>
 
-      <AdjustBalanceModal userID={adjustBalanceTarget} onOpenChange={(open) => !open && setAdjustBalanceTarget(null)} />
-      <ChangeReferrerModal user={referrerTarget} onOpenChange={(open) => !open && setReferrerTarget(null)} />
+      <AdjustBalanceModal
+        userID={adjustBalanceTarget}
+        onOpenChange={(open) => !open && setAdjustBalanceTarget(null)}
+      />
+      <ChangeReferrerModal
+        user={referrerTarget}
+        onOpenChange={(open) => !open && setReferrerTarget(null)}
+      />
     </div>
   );
 };
