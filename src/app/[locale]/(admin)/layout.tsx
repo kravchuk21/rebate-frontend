@@ -1,7 +1,8 @@
 import { redirect } from '@/i18n/navigation';
 import { getAccessToken } from '@/shared/lib/cookies';
-import { AdminHeader } from '@/features/admin/components/AdminHeader';
+import { decodeAccessToken } from '@/shared/lib/decodeToken';
 import { AdminSidebar } from '@/features/admin/components/AdminSidebar';
+import { SidebarProvider } from '@/shared/components/dashboard/SidebarContext';
 
 export default async function AdminLayout({
   children,
@@ -18,23 +19,19 @@ export default async function AdminLayout({
     return;
   }
 
-  try {
-    const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64url').toString());
+  const claims = decodeAccessToken(token);
 
-    if (payload.role !== 'admin') {
-      redirect({ href: '/dashboard', locale });
-    }
-  } catch {
-    redirect({ href: '/?modal=login', locale });
+  if (!claims || claims.role !== 'admin') {
+    redirect({ href: '/dashboard', locale });
+    return;
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <AdminHeader />
-      <div className="flex flex-1 flex-col md:flex-row">
-        <AdminSidebar />
-        <main className="flex-1 p-8">{children}</main>
+    <SidebarProvider>
+      <div className="flex min-h-screen flex-col md:flex-row">
+        <AdminSidebar email={claims.email} role={claims.role} />
+        <main className="flex-1 flex flex-col gap-6 p-5">{children}</main>
       </div>
-    </div>
+    </SidebarProvider>
   );
 }

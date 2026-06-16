@@ -1,45 +1,41 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { Tab, TabIndicator, TabList, TabListContainer, TabsRoot } from '@heroui/react';
 import { useRouter, usePathname } from '@/i18n/navigation';
 
-const navItems = [
-  { href: '/dashboard', labelKey: 'dashboard' },
-  { href: '/accounts', labelKey: 'accounts' },
-  { href: '/rebate', labelKey: 'rebate' },
-  { href: '/withdrawal', labelKey: 'withdrawal' },
-  { href: '/referrals', labelKey: 'referrals' },
-  { href: '/profile', labelKey: 'profile' },
-] as const;
+export interface SidebarNavItem {
+  href: string;
+  label: string;
+}
 
 interface SidebarNavProps {
+  items: readonly SidebarNavItem[];
+  ariaLabel?: string;
   onNavigate?: () => void;
 }
 
-export const SidebarNav = ({ onNavigate }: SidebarNavProps) => {
-  const t = useTranslations('nav');
+export const SidebarNav = ({ items, ariaLabel = 'Navigation', onNavigate }: SidebarNavProps) => {
   const pathname = usePathname();
   const router = useRouter();
 
   const activeItem =
-    navItems.find((item) => pathname === item.href || pathname.startsWith(`${item.href}/`)) ??
-    navItems[0];
+    items.find((item) => pathname === item.href || pathname.startsWith(`${item.href}/`)) ??
+    items[0];
 
   return (
     <TabsRoot
       orientation="vertical"
-      selectedKey={activeItem.href}
+      selectedKey={activeItem?.href}
       onSelectionChange={(key) => {
         router.push(key as string);
         onNavigate?.();
       }}
     >
       <TabListContainer className="w-full">
-        <TabList aria-label="Dashboard navigation" className="w-full">
-          {navItems.map((item) => (
+        <TabList aria-label={ariaLabel} className="w-full">
+          {items.map((item) => (
             <Tab key={item.href} id={item.href} className="justify-start">
-              {t(item.labelKey)}
+              {item.label}
               <TabIndicator />
             </Tab>
           ))}
