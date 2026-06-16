@@ -1,6 +1,5 @@
-import { Typography } from '@heroui/react';
 import { getTranslations } from 'next-intl/server';
-import { SidebarToggle } from '@/shared/components/dashboard/SidebarToggle';
+import { PageHeader } from '@/shared/components/dashboard/PageHeader';
 
 import { WithdrawalPageClient } from '@/features/withdrawal/components/WithdrawalPageClient';
 
@@ -9,10 +8,7 @@ export default async function WithdrawalPage() {
 
   return (
     <>
-      <div className="flex items-center gap-4">
-        <SidebarToggle/>
-        <Typography type="h4">{t('title')}</Typography>
-      </div>
+      <PageHeader title={t('title')} />
       <WithdrawalPageClient />
     </>
   );

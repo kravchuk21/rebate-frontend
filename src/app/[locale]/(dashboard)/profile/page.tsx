@@ -1,6 +1,5 @@
-import { Typography } from '@heroui/react';
 import { getTranslations } from 'next-intl/server';
-import { SidebarToggle } from '@/shared/components/dashboard/SidebarToggle';
+import { PageHeader } from '@/shared/components/dashboard/PageHeader';
 
 import { redirect } from '@/i18n/navigation';
 import { getAccessToken } from '@/shared/lib/cookies';
@@ -33,10 +32,7 @@ export default async function ProfilePage({
 
   return (
     <>
-      <div className="flex items-center gap-4">
-        <SidebarToggle/>
-        <Typography type="h4">{t('title')}</Typography>
-      </div>
+      <PageHeader title={t('title')} />
       <ProfileAccountInfo email={claims.email} role={claims.role} />
       <TwoFASection initialEnabled={claims.two_fa_enabled ?? false} />
       <ChangePasswordSection />
