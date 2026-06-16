@@ -4,7 +4,7 @@ import '@/shared/api/instance';
 import {Copy, TrashBin} from '@gravity-ui/icons';
 
 import { useEffect, useState } from 'react';
-import { AlertDialog, Button, Card, Skeleton, Table, toast, Typography } from '@heroui/react';
+import { AlertDialog, Button, Table, toast, Typography } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
 import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
@@ -102,16 +102,7 @@ export const PayoutMethodsSection = () => {
         <Button onPress={() => setIsModalOpen(true)}>{t('add')}</Button>
       </div>
 
-      {isLoading && (
-        <Card>
-          <Card.Content className="flex flex-col gap-3 py-4">
-            <Skeleton className="h-6 w-full" />
-            <Skeleton className="h-6 w-full" />
-          </Card.Content>
-        </Card>
-      )}
-
-      {!isLoading && !isError && (
+      {!isError && (
         <Table>
           <Table.ScrollContainer>
             <Table.Content aria-label={t('title')}>

@@ -244,6 +244,7 @@
       "cancel": "Cancel",
       "form": {
         "title": "Add Payout Method",
+        "description": "Enter a name, select a network, and provide your wallet address.",
         "name": "Name",
         "namePlaceholder": "e.g. My USDT TRC20",
         "network": "Network",

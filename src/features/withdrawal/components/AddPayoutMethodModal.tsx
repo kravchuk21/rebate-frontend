@@ -12,9 +12,10 @@ import {
   Modal,
   Select,
   toast,
+  Typography,
 } from '@heroui/react';
 import { useTranslations } from 'next-intl';
-import { Controller, useForm, useWatch } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
 import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
 import { FormField } from '@/shared/components/FormField';
@@ -45,8 +46,6 @@ export const AddPayoutMethodModal = ({ isOpen, onOpenChange }: AddPayoutMethodMo
     resolver: zodResolver(createPayoutMethodSchema(t)),
     defaultValues: { name: '', network: 'TRC20', address: '' },
   });
-
-  const selectedNetwork = useWatch({ control, name: 'network' });
 
   const onSubmit = (data: PayoutMethodFormValues) => {
     createPayoutMethod.mutate(
@@ -79,6 +78,9 @@ export const AddPayoutMethodModal = ({ isOpen, onOpenChange }: AddPayoutMethodMo
             <Modal.CloseTrigger />
             <Modal.Header>
               <Modal.Heading>{t('withdrawal.payoutMethods.form.title')}</Modal.Heading>
+              <Typography.Paragraph size='sm' color='muted'>
+                {t('withdrawal.payoutMethods.form.description')}
+              </Typography.Paragraph>
             </Modal.Header>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Modal.Body className="flex flex-col gap-4">
@@ -93,12 +95,10 @@ export const AddPayoutMethodModal = ({ isOpen, onOpenChange }: AddPayoutMethodMo
                 <Controller
                   control={control}
                   name="network"
-                  render={({ field }) => (
+                  render={() => (
                     <Select
                       className="w-full"
                       placeholder={t('withdrawal.payoutMethods.form.networkPlaceholder')}
-                      selectedKey={field.value || null}
-                      onSelectionChange={(key) => field.onChange(key ? String(key) : '')}
                       isInvalid={!!errors.network}
                       variant="secondary"
                     >
@@ -133,11 +133,6 @@ export const AddPayoutMethodModal = ({ isOpen, onOpenChange }: AddPayoutMethodMo
                   placeholder={t('withdrawal.payoutMethods.form.addressPlaceholder')}
                   error={errors.address?.message}
                 />
-                {!errors.address && (
-                  <p className="text-sm text-muted">
-                    {t(`withdrawal.payoutMethods.networks.${selectedNetwork}`)}
-                  </p>
-                )}
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="tertiary" slot="close">
