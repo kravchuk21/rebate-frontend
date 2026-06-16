@@ -128,7 +128,7 @@ export const TwoFASetupModal = ({ isOpen, onOpenChange, onEnabled }: TwoFASetupM
                     <>
                       <Typography type="body-sm">{t('profile.twoFA.setup.step1Desc')}</Typography>
                       <div className="flex justify-center">
-                        <QRCodeSVG value={initiate.data.qr_code_uri ?? ''} size={200} />
+                        <QRCodeSVG marginSize={4} value={initiate.data.qr_code_uri ?? ''} size={200} />
                       </div>
                       <Typography type="body-sm" color="muted">
                         {t('profile.twoFA.setup.manualEntry')}
