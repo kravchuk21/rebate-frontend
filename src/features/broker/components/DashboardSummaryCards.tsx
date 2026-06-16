@@ -38,7 +38,7 @@ export const DashboardSummaryCards = () => {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
       <Link href="/accounts">
-        <Card>
+        <Card variant='secondary'>
           <Card.Header>
             <Card.Title>{t('accounts')}</Card.Title>
           </Card.Header>

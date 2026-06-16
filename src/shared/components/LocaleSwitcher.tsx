@@ -26,8 +26,7 @@ export const LocaleSwitcher = () => {
       {routing.locales.map((cur, index) => (
         <Button
           key={cur}
-          // variant={cur === locale ? 'primary' : 'outline'}
-          variant="tertiary"
+          variant={cur === locale ? 'secondary' : 'tertiary'}
           onPress={() => handleChange(cur)}
         >
           {index > 0 && <ButtonGroup.Separator />}
