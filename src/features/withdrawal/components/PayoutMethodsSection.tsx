@@ -1,10 +1,10 @@
 'use client';
 
 import '@/shared/api/instance';
-import {Copy, TrashBin, Star, StarFill} from '@gravity-ui/icons';
+import {Copy, TrashBin} from '@gravity-ui/icons';
 
 import { useEffect, useState } from 'react';
-import { AlertDialog, Button, ButtonGroup, Card, Chip, Skeleton, Table, toast, Typography } from '@heroui/react';
+import { AlertDialog, Button, Card, Skeleton, Table, toast, Typography } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
 import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
@@ -13,7 +13,6 @@ import { TableEmptyState } from '@/shared/components/TableEmptyState';
 
 import { useDeletePayoutMethod } from '../hooks/useDeletePayoutMethod';
 import { usePayoutMethods } from '../hooks/usePayoutMethods';
-import { useUpdatePayoutMethod } from '../hooks/useUpdatePayoutMethod';
 import { truncateAddress } from '../lib/validateAddress';
 import { AddPayoutMethodModal } from './AddPayoutMethodModal';
 
@@ -25,16 +24,7 @@ const RowActions = ({ method }: RowActionsProps) => {
   const t = useTranslations('withdrawal.payoutMethods');
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
-  const updatePayoutMethod = useUpdatePayoutMethod();
   const deletePayoutMethod = useDeletePayoutMethod();
-
-  const handleSetDefault = () => {
-    if (!method.id) return;
-    updatePayoutMethod.mutate(
-      { path: { methodID: method.id }, body: { is_default: true } },
-      { onError: (error) => toast.danger(getErrorMessage(error) ?? t('errors.updateFailed')) },
-    );
-  };
 
   const handleDelete = () => {
     if (!method.id) return;
@@ -78,15 +68,9 @@ const RowActions = ({ method }: RowActionsProps) => {
           </AlertDialog.Container>
         </AlertDialog.Backdrop>
       </AlertDialog>
-      <ButtonGroup variant="tertiary">
-          <Button isIconOnly size="sm" onPress={handleSetDefault} isDisabled={updatePayoutMethod.isPending}>
-            { !method.is_default ? <Star /> : <StarFill/> }
-          </Button>
-        <Button isIconOnly size="sm" variant="danger-soft" onPress={() => setIsDeleteOpen(true)} isDisabled={deletePayoutMethod.isPending}>
-          {/* {!method.is_default && <ButtonGroup.Separator />} */}
-          <TrashBin />
-        </Button>
-      </ButtonGroup>
+      <Button isIconOnly size="sm" variant="danger-soft" onPress={() => setIsDeleteOpen(true)} isDisabled={deletePayoutMethod.isPending}>
+        <TrashBin />
+      </Button>
     </>
   );
 };
@@ -96,9 +80,7 @@ export const PayoutMethodsSection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data, isLoading, isError } = usePayoutMethods();
 
-  const methods = [...((data?.data as WithdrawalPayoutMethodResponse[] | undefined) ?? [])].sort(
-    (a, b) => (b.is_default ? 1 : 0) - (a.is_default ? 1 : 0),
-  );
+  const methods = (data?.data as WithdrawalPayoutMethodResponse[] | undefined) ?? [];
 
   useEffect(() => {
     if (isError) toast.danger(t('errors.loadFailed'));
@@ -137,19 +119,14 @@ export const PayoutMethodsSection = () => {
                 <Table.Column isRowHeader>{t('columns.name')}</Table.Column>
                 <Table.Column>{t('columns.network')}</Table.Column>
                 <Table.Column>{t('columns.address')}</Table.Column>
-                <Table.Column>{t('columns.actions')}</Table.Column>
+                <Table.Column className='text-right'>{t('columns.actions')}</Table.Column>
               </Table.Header>
               <Table.Body
                 renderEmptyState={() => <TableEmptyState label={t('emptyDesc')} />}
               >
                 {methods.map((method) => (
                   <Table.Row key={method.id}>
-                    <Table.Cell>
-                      <div className="flex items-center gap-2">
-                        {method.name}
-                        {method.is_default && <Chip color="accent">{t('default')}</Chip>}
-                      </div>
-                    </Table.Cell>
+                    <Table.Cell className='truncate'>{method.name}</Table.Cell>
                     <Table.Cell>{method.network}</Table.Cell>
                     <Table.Cell>
                       <div className="flex items-center gap-2">
@@ -161,7 +138,7 @@ export const PayoutMethodsSection = () => {
                         )}
                       </div>
                     </Table.Cell>
-                    <Table.Cell>
+                    <Table.Cell className='text-right'>
                       <RowActions method={method} />
                     </Table.Cell>
                   </Table.Row>
