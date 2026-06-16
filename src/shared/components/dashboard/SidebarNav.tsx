@@ -19,8 +19,9 @@ export const SidebarNav = ({ items, ariaLabel = 'Navigation', onNavigate }: Side
   const router = useRouter();
 
   const activeItem =
-    items.find((item) => pathname === item.href || pathname.startsWith(`${item.href}/`)) ??
-    items[0];
+    items
+      .filter((item) => pathname === item.href || pathname.startsWith(`${item.href}/`))
+      .sort((a, b) => b.href.length - a.href.length)[0] ?? items[0];
 
   return (
     <TabsRoot
