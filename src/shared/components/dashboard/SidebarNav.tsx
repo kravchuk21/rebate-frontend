@@ -1,6 +1,6 @@
 'use client';
 
-import { Tabs } from '@heroui/react';
+import { Button } from '@heroui/react';
 import { useRouter, usePathname } from '@/i18n/navigation';
 
 export interface SidebarNavItem {
@@ -14,34 +14,33 @@ interface SidebarNavProps {
   onNavigate?: () => void;
 }
 
-export const SidebarNav = ({ items, ariaLabel = 'Navigation', onNavigate }: SidebarNavProps) => {
+export const SidebarNav = ({ items, onNavigate }: SidebarNavProps) => {
   const pathname = usePathname();
   const router = useRouter();
 
+  const cleanPathname = pathname.split('?')[0];
+
   const activeItem =
     items
-      .filter((item) => pathname === item.href || pathname.startsWith(`${item.href}/`))
+      .filter((item) => cleanPathname === item.href || cleanPathname.startsWith(`${item.href}/`))
       .sort((a, b) => b.href.length - a.href.length)[0] ?? items[0];
 
   return (
-    <Tabs
-      orientation="vertical"
-      selectedKey={activeItem?.href}
-      onSelectionChange={(key) => {
-        router.push(key as string);
-        onNavigate?.();
-      }}
-    >
-      <Tabs.ListContainer className="w-full">
-        <Tabs.List aria-label={ariaLabel} className="w-full">
-          {items.map((item) => (
-            <Tabs.Tab key={item.href} id={item.href} className="justify-start">
-              {item.label}
-              <Tabs.Indicator />
-            </Tabs.Tab>
-          ))}
-        </Tabs.List>
-      </Tabs.ListContainer>
-    </Tabs>
+    <div className="w-full flex flex-col gap-1">
+      {items.map((item) => (
+        <Button
+          key={item.href}
+          variant={item.href === activeItem?.href ? 'tertiary' : 'ghost'}
+          fullWidth
+          className="justify-start"
+          onPress={() => {
+            router.push(item.href);
+            onNavigate?.();
+          }}
+        >
+          {item.label}
+        </Button>
+      ))}
+    </div>
   );
 };
