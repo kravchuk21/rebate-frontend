@@ -15,36 +15,38 @@ export const WithdrawalPageClient = () => {
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
 
   return (
-    <Tabs>
-      <Tabs.ListContainer>
-        <Tabs.List>
-          <Tabs.Tab id="overview">{t('tabs.overview')}<Tabs.Indicator /></Tabs.Tab>
-          <Tabs.Tab id="history">{t('tabs.history')}<Tabs.Indicator /></Tabs.Tab>
-          <Tabs.Tab id="payoutMethods">{t('tabs.payoutMethods')}<Tabs.Indicator /></Tabs.Tab>
-        </Tabs.List>
-      </Tabs.ListContainer>
+    <>
+      <Tabs>
+        <Tabs.ListContainer>
+          <Tabs.List>
+            <Tabs.Tab id="overview">{t('tabs.overview')}<Tabs.Indicator /></Tabs.Tab>
+            <Tabs.Tab id="history">{t('tabs.history')}<Tabs.Indicator /></Tabs.Tab>
+            <Tabs.Tab id="payoutMethods">{t('tabs.payoutMethods')}<Tabs.Indicator /></Tabs.Tab>
+          </Tabs.List>
+        </Tabs.ListContainer>
 
-      <Tabs.Panel id="overview">
-        <div className="flex flex-col gap-6">
-          <BalanceCard />
-          <div className="flex items-center justify-end">
-            <Button onPress={() => setIsWithdrawModalOpen(true)}>
-              {t('request.title')}
-            </Button>
+        <Tabs.Panel id="overview">
+          <div className="flex flex-col gap-6">
+            <BalanceCard />
+            <div className="flex items-center justify-end">
+              <Button onPress={() => setIsWithdrawModalOpen(true)}>
+                {t('request.title')}
+              </Button>
+            </div>
+            <LedgerTable limit={10} />
           </div>
-          <LedgerTable limit={10} />
-        </div>
-      </Tabs.Panel>
+        </Tabs.Panel>
 
-      <Tabs.Panel id="history">
-        <WithdrawalsTable />
-      </Tabs.Panel>
+        <Tabs.Panel id="history">
+          <WithdrawalsTable />
+        </Tabs.Panel>
 
-      <Tabs.Panel id="payoutMethods">
-        <PayoutMethodsSection />
-      </Tabs.Panel>
+        <Tabs.Panel id="payoutMethods">
+          <PayoutMethodsSection />
+        </Tabs.Panel>
+      </Tabs>
 
       <CreateWithdrawalModal isOpen={isWithdrawModalOpen} onOpenChange={setIsWithdrawModalOpen} />
-    </Tabs>
+    </>
   );
 };
