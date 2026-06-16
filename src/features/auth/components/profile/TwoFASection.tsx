@@ -19,9 +19,9 @@ export const TwoFASection = ({ initialEnabled = false }: TwoFASectionProps) => {
   const disableModal = useOverlayState();
 
   return (
-    <Card variant="secondary">
+    <Card variant="secondary" className='h-full'>
       <Card.Header>
-        <Card.Title className="flex gap-2">
+        <Card.Title className="flex gap-2 items-start">
           {t('title')}
           <Chip color={enabled ? 'success' : 'danger'}>
             <Chip.Label>{enabled ? t('enabled') : t('disabled')}</Chip.Label>
@@ -30,15 +30,19 @@ export const TwoFASection = ({ initialEnabled = false }: TwoFASectionProps) => {
         <Card.Description>{t('description')}</Card.Description>
       </Card.Header>
 
-      {enabled ? (
-        <Button variant="danger" onPress={disableModal.open}>
-          {t('disableBtn')}
-        </Button>
-      ) : (
-        <Button variant="primary" onPress={setupModal.open}>
-          {t('enableBtn')}
-        </Button>
-      )}
+      <Card.Content>
+        <div className="mt-auto">
+          {enabled ? (
+            <Button variant="danger" onPress={disableModal.open}>
+              {t('disableBtn')}
+            </Button>
+          ) : (
+            <Button variant="primary" onPress={setupModal.open}>
+              {t('enableBtn')}
+            </Button>
+          )}
+        </div>
+      </Card.Content>
 
       <TwoFASetupModal
         isOpen={setupModal.isOpen}

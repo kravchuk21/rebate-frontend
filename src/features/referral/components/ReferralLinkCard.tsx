@@ -24,7 +24,7 @@ export const ReferralLinkCard = () => {
   };
 
   return (
-    <Card variant="secondary">
+    <Card variant="secondary" className="h-full">
       <Card.Header>
         <Card.Title>{t('title')}</Card.Title>
         <Card.Description>{t('description')}</Card.Description>

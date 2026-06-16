@@ -6,7 +6,7 @@ import type { SortDescriptor } from '@heroui/react';
 import type { SortingState } from '@tanstack/react-table';
 
 import { useEffect, useMemo, useState } from 'react';
-import { AlertDialog, Alert, Button, Card, Input, Pagination, Skeleton, Table, toast } from '@heroui/react';
+import { AlertDialog, Alert, Button, Card, Input, Skeleton, Table, toast } from '@heroui/react';
 import { useLocale, useTranslations } from 'next-intl';
 import {
   createColumnHelper,
@@ -18,6 +18,7 @@ import {
 import type { AdminUserResponse } from '@/shared/api/generated/types.gen';
 
 import { TableEmptyState } from '@/shared/components/TableEmptyState';
+import { TablePagination } from '@/shared/components/TablePagination';
 import { getAdminErrorMessage } from '../../lib/getAdminErrorMessage';
 import { useAdminSuspendUser } from '../../hooks/useAdminSuspendUser';
 import { useAdminUnsuspendUser } from '../../hooks/useAdminUnsuspendUser';
@@ -167,12 +168,6 @@ export const UsersTable = () => {
 
   const sortDescriptor = useMemo(() => toSortDescriptor(sorting), [sorting]);
 
-  const pageCount = Math.ceil(totalCount / LIMIT);
-  const pageIndex = Math.floor(offset / LIMIT);
-  const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
-  const start = offset + 1;
-  const end = Math.min(offset + LIMIT, totalCount);
-
   const handleSuspend = (userID: string) => {
     suspendUser.mutate(
       { path: { userID } },
@@ -238,45 +233,12 @@ export const UsersTable = () => {
             </Table.Content>
           </Table.ScrollContainer>
 
-          {pageCount > 1 && (
-            <Table.Footer>
-              <Pagination size="sm">
-                <Pagination.Summary>
-                  {start} to {end} of {totalCount} results
-                </Pagination.Summary>
-                <Pagination.Content>
-                  <Pagination.Item>
-                    <Pagination.Previous
-                      isDisabled={pageIndex === 0}
-                      onPress={() => setOffset(Math.max(0, offset - LIMIT))}
-                    >
-                      <Pagination.PreviousIcon />
-                      Prev
-                    </Pagination.Previous>
-                  </Pagination.Item>
-                  {pages.map((p) => (
-                    <Pagination.Item key={p}>
-                      <Pagination.Link
-                        isActive={p === pageIndex + 1}
-                        onPress={() => setOffset((p - 1) * LIMIT)}
-                      >
-                        {p}
-                      </Pagination.Link>
-                    </Pagination.Item>
-                  ))}
-                  <Pagination.Item>
-                    <Pagination.Next
-                      isDisabled={pageIndex >= pageCount - 1}
-                      onPress={() => setOffset(offset + LIMIT)}
-                    >
-                      Next
-                      <Pagination.NextIcon />
-                    </Pagination.Next>
-                  </Pagination.Item>
-                </Pagination.Content>
-              </Pagination>
-            </Table.Footer>
-          )}
+          <TablePagination
+            offset={offset}
+            limit={LIMIT}
+            totalCount={totalCount}
+            onOffsetChange={setOffset}
+          />
         </Table>
       )}
 

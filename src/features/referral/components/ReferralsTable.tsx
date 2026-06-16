@@ -1,10 +1,18 @@
 'use client';
 
-import { useState } from 'react';
-import { Alert, Button, Card, Chip, Skeleton, Table, Typography } from '@heroui/react';
+import { useMemo, useState } from 'react';
+import { Alert, Card, Chip, Skeleton, Table } from '@heroui/react';
 import { useLocale, useTranslations } from 'next-intl';
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
 
 import type { ReferralEntryResponse } from '@/shared/api/generated/types.gen';
+import { TableEmptyState } from '@/shared/components/TableEmptyState';
+import { TablePagination } from '@/shared/components/TablePagination';
 import { formatAmount } from '@/features/withdrawal/lib/formatAmount';
 
 import { useMyReferrals } from '../hooks/useMyReferrals';
@@ -16,16 +24,59 @@ const statusColorMap: Record<string, 'success' | 'danger' | 'default'> = {
   suspended: 'danger',
 };
 
+const columnHelper = createColumnHelper<ReferralEntryResponse>();
+
 export const ReferralsTable = () => {
   const t = useTranslations('referrals.table');
   const locale = useLocale();
   const [offset, setOffset] = useState(0);
   const { data, isLoading, isError } = useMyReferrals(LIMIT, offset);
 
-  const items = (data?.data as { items?: ReferralEntryResponse[] } | undefined)?.items ?? [];
+  const responseData = data?.data as ({ items?: ReferralEntryResponse[]; total_count?: number } | undefined);
+  const items = responseData?.items ?? [];
+  const totalCount = responseData?.total_count ?? 0;
 
-  const dateFormatter = new Intl.DateTimeFormat(locale, {
-    dateStyle: 'medium',
+  const dateFormatter = useMemo(
+    () => new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }),
+    [locale],
+  );
+
+  const columns = useMemo(
+    () => [
+      columnHelper.accessor('email', {
+        header: t('columns.email'),
+        cell: (info) => info.getValue() ?? '—',
+      }),
+      columnHelper.accessor('joined_at', {
+        header: t('columns.joinedAt'),
+        cell: (info) => {
+          const v = info.getValue();
+          return v ? dateFormatter.format(new Date(v)) : '—';
+        },
+      }),
+      columnHelper.accessor('status', {
+        header: t('columns.status'),
+        cell: (info) => {
+          const status = info.getValue();
+          return (
+            <Chip color={statusColorMap[status ?? ''] ?? 'default'}>
+              {status ?? '—'}
+            </Chip>
+          );
+        },
+      }),
+      columnHelper.accessor('total_earned', {
+        header: t('columns.earned'),
+        cell: (info) => `${formatAmount(info.getValue())} USDT`,
+      }),
+    ],
+    [t, dateFormatter],
+  );
+
+  const table = useReactTable({
+    data: items,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
   });
 
   if (isError) {
@@ -50,69 +101,41 @@ export const ReferralsTable = () => {
     );
   }
 
-  if (items.length === 0 && offset === 0) {
-    return (
-      <Card variant="secondary">
-        <Card.Header>
-          <Card.Title>{t('title')}</Card.Title>
-        </Card.Header>
-        <Card.Content className="flex flex-col items-center justify-center py-12 text-center">
-          <Typography.Paragraph>{t('empty')}</Typography.Paragraph>
-          <Typography.Paragraph size="sm" color="muted">{t('emptyDesc')}</Typography.Paragraph>
-        </Card.Content>
-      </Card>
-    );
-  }
-
   return (
-    <div className="flex flex-col gap-4">
-      <Table>
-        <Table.ScrollContainer>
-          <Table.Content aria-label={t('title')}>
-            <Table.Header>
-              <Table.Column isRowHeader>{t('columns.email')}</Table.Column>
-              <Table.Column>{t('columns.joinedAt')}</Table.Column>
-              <Table.Column>{t('columns.status')}</Table.Column>
-              <Table.Column>{t('columns.earned')}</Table.Column>
-            </Table.Header>
-            <Table.Body>
-              {items.map((item) => (
-                <Table.Row key={item.user_id}>
-                  <Table.Cell>{item.email ?? '—'}</Table.Cell>
-                  <Table.Cell>
-                    {item.joined_at ? dateFormatter.format(new Date(item.joined_at)) : '—'}
+    <Table>
+      <Table.ScrollContainer>
+        <Table.Content aria-label={t('title')}>
+          <Table.Header>
+            {table.getHeaderGroups()[0]!.headers.map((header) => (
+              <Table.Column
+                key={header.id}
+                id={header.id}
+                isRowHeader={header.id === 'email'}
+              >
+                {flexRender(header.column.columnDef.header, header.getContext())}
+              </Table.Column>
+            ))}
+          </Table.Header>
+          <Table.Body renderEmptyState={() => <TableEmptyState label={t('emptyDesc')} />}>
+            {table.getRowModel().rows.map((row) => (
+              <Table.Row key={row.id} id={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <Table.Cell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Table.Cell>
-                  <Table.Cell>
-                    <Chip color={statusColorMap[item.status ?? ''] ?? 'default'}>
-                      {item.status ?? '—'}
-                    </Chip>
-                  </Table.Cell>
-                  <Table.Cell>{formatAmount(item.total_earned)} USDT</Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table.Content>
-        </Table.ScrollContainer>
-      </Table>
+                ))}
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table.Content>
+      </Table.ScrollContainer>
 
-      <div className="flex items-center justify-end gap-2">
-        <Button
-          variant="tertiary"
-          size="sm"
-          isDisabled={offset === 0}
-          onPress={() => setOffset(Math.max(0, offset - LIMIT))}
-        >
-          {t('pagination.prev')}
-        </Button>
-        <Button
-          variant="tertiary"
-          size="sm"
-          isDisabled={items.length < LIMIT}
-          onPress={() => setOffset(offset + LIMIT)}
-        >
-          {t('pagination.next')}
-        </Button>
-      </div>
-    </div>
+      <TablePagination
+        offset={offset}
+        limit={LIMIT}
+        totalCount={totalCount}
+        onOffsetChange={setOffset}
+      />
+    </Table>
   );
 };
