@@ -32,7 +32,7 @@ export default async function ProfilePage({
   const t = await getTranslations('profile');
 
   return (
-    <div className="flex flex-col gap-6 p-5">
+    <>
       <div className="flex items-center gap-4">
         <SidebarToggle/>
         <Typography type="h4">{t('title')}</Typography>
@@ -40,6 +40,6 @@ export default async function ProfilePage({
       <ProfileAccountInfo email={claims.email} role={claims.role} />
       <TwoFASection initialEnabled={claims.two_fa_enabled ?? false} />
       <ChangePasswordSection />
-    </div>
+    </>
   );
 }

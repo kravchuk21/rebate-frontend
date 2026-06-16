@@ -10,7 +10,7 @@ export default async function ReferralsPage() {
   const t = await getTranslations('referrals');
 
   return (
-    <div className="flex flex-col gap-6 p-5">
+    <>
       <div className="flex items-center gap-4">
         <SidebarToggle/>
         <Typography type="h4">{t('title')}</Typography>
@@ -20,6 +20,6 @@ export default async function ReferralsPage() {
         <ReferralLinkCard />
       </div>
       <ReferralsTable />
-    </div>
+    </>
   );
 }
