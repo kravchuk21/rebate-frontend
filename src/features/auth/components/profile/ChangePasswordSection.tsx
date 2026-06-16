@@ -1,8 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Button, Card, Form } from '@heroui/react';
+import { Button, Card, Form, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -25,8 +24,6 @@ type PasswordFormValues = z.infer<ReturnType<typeof createPasswordSchema>>;
 
 export const ChangePasswordSection = () => {
   const t = useTranslations();
-  const [submitted, setSubmitted] = useState(false);
-
   const {
     control,
     handleSubmit,
@@ -37,13 +34,14 @@ export const ChangePasswordSection = () => {
   });
 
   const onSubmit = () => {
-    setSubmitted(true);
+    toast.default(t('profile.password.notAvailable'));
   };
 
   return (
     <Card variant="secondary">
       <Card.Header>
         <Card.Title>{t('profile.password.title')}</Card.Title>
+        <Card.Description>{t('profile.password.description')}</Card.Description>
       </Card.Header>
       <Card.Content>
         <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
@@ -75,14 +73,6 @@ export const ChangePasswordSection = () => {
               error={errors.confirm?.message}
             />
           </div>
-
-          {submitted && (
-            <Alert status="default">
-              <Alert.Content>
-                <Alert.Description>{t('profile.password.notAvailable')}</Alert.Description>
-              </Alert.Content>
-            </Alert>
-          )}
 
           <Button type="submit" variant="primary">
             {t('profile.password.submit')}

@@ -27,6 +27,7 @@ export const TwoFASection = ({ initialEnabled = false }: TwoFASectionProps) => {
             <Chip.Label>{enabled ? t('enabled') : t('disabled')}</Chip.Label>
           </Chip>
         </Card.Title>
+        <Card.Description>{t('description')}</Card.Description>
       </Card.Header>
 
       {enabled ? (

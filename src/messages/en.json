@@ -88,6 +88,7 @@
     },
     "twoFA": {
       "title": "Two-Factor Authentication",
+      "description": "Add an extra layer of security by requiring a verification code on each login.",
       "enabled": "Enabled",
       "disabled": "Disabled",
       "enableBtn": "Enable 2FA",
@@ -121,6 +122,7 @@
     },
     "password": {
       "title": "Change Password",
+      "description": "Update your account password. Use a strong password you don't use elsewhere.",
       "current": "Current Password",
       "new": "New Password",
       "confirm": "Confirm New Password",
