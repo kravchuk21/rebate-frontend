@@ -263,12 +263,20 @@
         "BEP20": "USDT BEP20 (BSC)",
         "SOL": "USDT SOL (Solana)"
       },
+      "copied": "Address copied to clipboard",
+      "columns": {
+        "name": "Name",
+        "network": "Network",
+        "address": "Address",
+        "actions": "Actions"
+      },
       "errors": {
         "loadFailed": "Failed to load payout methods",
         "deleteFailed": "Failed to delete payout method",
         "addFailed": "Failed to add payout method",
         "updateFailed": "Failed to update payout method",
-        "activeWithdrawal": "Cannot delete: there is an active withdrawal using this method"
+        "activeWithdrawal": "Cannot delete: there is an active withdrawal using this method",
+        "copyFailed": "Failed to copy address"
       }
     },
     "request": {
