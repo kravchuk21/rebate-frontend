@@ -11,7 +11,7 @@ export const SidebarToggle = () => {
   const { toggle } = useSidebar();
 
   return (
-    <ButtonRoot isIconOnly variant="ghost" size="sm" aria-label={t('openMenu')} onPress={toggle}>
+    <ButtonRoot isIconOnly variant="ghost" aria-label={t('openMenu')} onPress={toggle}>
       <LayoutSideContent />
     </ButtonRoot>
   );

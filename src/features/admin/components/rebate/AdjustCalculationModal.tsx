@@ -3,12 +3,13 @@
 import '@/shared/api/instance';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Button, FieldError, Form, Input, Label, Modal, TextField } from '@heroui/react';
+import { Button, Form, Modal, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import type { RebateCalculationResponse } from '@/shared/api/generated/types.gen';
 import { formatAmount } from '@/features/withdrawal/lib/formatAmount';
+import { FormField } from '@/shared/components/FormField';
 
 import { getAdminErrorMessage } from '../../lib/getAdminErrorMessage';
 import { useAdminAdjustCalculation } from '../../hooks/useAdminAdjustCalculation';
@@ -46,6 +47,9 @@ export const AdjustCalculationModal = ({ calculation, onOpenChange }: AdjustCalc
           reset();
           onOpenChange(false);
         },
+        onError: (error) => {
+          toast.danger(getAdminErrorMessage(error) ?? t('admin.rebate.errors.adjustFailed'));
+        },
       },
     );
   };
@@ -73,54 +77,20 @@ export const AdjustCalculationModal = ({ calculation, onOpenChange }: AdjustCalc
                   {t('admin.rebate.columns.grossRebate')}: {formatAmount(calculation?.gross_rebate)}
                 </p>
 
-                <Controller
+                <FormField
                   control={control}
                   name="new_gross_rebate"
-                  render={({ field }) => (
-                    <TextField
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      isInvalid={!!errors.new_gross_rebate}
-                      fullWidth
-                    >
-                      <Label>{t('admin.rebate.adjust.newGrossRebate')}</Label>
-                      <Input />
-                      <FieldError>{errors.new_gross_rebate?.message}</FieldError>
-                    </TextField>
-                  )}
+                  label={t('admin.rebate.adjust.newGrossRebate')}
+                  error={errors.new_gross_rebate?.message}
                 />
 
-                <Controller
+                <FormField
                   control={control}
                   name="reason"
-                  render={({ field }) => (
-                    <TextField
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      isInvalid={!!errors.reason}
-                      fullWidth
-                    >
-                      <Label>{t('admin.rebate.adjust.reason')}</Label>
-                      <Input placeholder={t('admin.rebate.adjust.reasonPlaceholder')} />
-                      <FieldError>{errors.reason?.message}</FieldError>
-                    </TextField>
-                  )}
+                  label={t('admin.rebate.adjust.reason')}
+                  placeholder={t('admin.rebate.adjust.reasonPlaceholder')}
+                  error={errors.reason?.message}
                 />
-
-                {adjustCalculation.isError && (
-                  <Alert status="danger">
-                    <Alert.Content>
-                      <Alert.Description>
-                        {getAdminErrorMessage(adjustCalculation.error) ??
-                          t('admin.rebate.errors.adjustFailed')}
-                      </Alert.Description>
-                    </Alert.Content>
-                  </Alert>
-                )}
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="tertiary" slot="close">

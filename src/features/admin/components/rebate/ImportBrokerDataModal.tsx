@@ -3,9 +3,11 @@
 import '@/shared/api/instance';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Button, FieldError, Form, Input, Label, Modal, TextField } from '@heroui/react';
+import { Button, Form, Modal, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+
+import { FormField } from '@/shared/components/FormField';
 
 import { getAdminErrorMessage } from '../../lib/getAdminErrorMessage';
 import { useAdminImportBrokerData } from '../../hooks/useAdminImportBrokerData';
@@ -41,6 +43,9 @@ export const ImportBrokerDataModal = ({ isOpen, onOpenChange }: ImportBrokerData
           reset();
           onOpenChange(false);
         },
+        onError: (error) => {
+          toast.danger(getAdminErrorMessage(error) ?? t('admin.rebate.errors.importFailed'));
+        },
       },
     );
   };
@@ -64,92 +69,34 @@ export const ImportBrokerDataModal = ({ isOpen, onOpenChange }: ImportBrokerData
             </Modal.Header>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Modal.Body className="flex flex-col gap-4">
-                <Controller
+                <FormField
                   control={control}
                   name="broker_account_id"
-                  render={({ field }) => (
-                    <TextField
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      isInvalid={!!errors.broker_account_id}
-                      fullWidth
-                    >
-                      <Label>{t('admin.rebate.import.brokerAccount')}</Label>
-                      <Input />
-                      <FieldError>{errors.broker_account_id?.message}</FieldError>
-                    </TextField>
-                  )}
+                  label={t('admin.rebate.import.brokerAccount')}
+                  error={errors.broker_account_id?.message}
                 />
 
-                <Controller
+                <FormField
                   control={control}
                   name="date"
-                  render={({ field }) => (
-                    <TextField
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      isInvalid={!!errors.date}
-                      fullWidth
-                    >
-                      <Label>{t('admin.rebate.import.date')}</Label>
-                      <Input type="date" />
-                      <FieldError>{errors.date?.message}</FieldError>
-                    </TextField>
-                  )}
+                  label={t('admin.rebate.import.date')}
+                  error={errors.date?.message}
+                  inputProps={{ type: 'date' }}
                 />
 
-                <Controller
+                <FormField
                   control={control}
                   name="volume"
-                  render={({ field }) => (
-                    <TextField
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      isInvalid={!!errors.volume}
-                      fullWidth
-                    >
-                      <Label>{t('admin.rebate.import.volume')}</Label>
-                      <Input />
-                      <FieldError>{errors.volume?.message}</FieldError>
-                    </TextField>
-                  )}
+                  label={t('admin.rebate.import.volume')}
+                  error={errors.volume?.message}
                 />
 
-                <Controller
+                <FormField
                   control={control}
                   name="gross_rebate"
-                  render={({ field }) => (
-                    <TextField
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      isInvalid={!!errors.gross_rebate}
-                      fullWidth
-                    >
-                      <Label>{t('admin.rebate.import.grossRebate')}</Label>
-                      <Input />
-                      <FieldError>{errors.gross_rebate?.message}</FieldError>
-                    </TextField>
-                  )}
+                  label={t('admin.rebate.import.grossRebate')}
+                  error={errors.gross_rebate?.message}
                 />
-
-                {importBrokerData.isError && (
-                  <Alert status="danger">
-                    <Alert.Content>
-                      <Alert.Description>
-                        {getAdminErrorMessage(importBrokerData.error) ??
-                          t('admin.rebate.errors.importFailed')}
-                      </Alert.Description>
-                    </Alert.Content>
-                  </Alert>
-                )}
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="tertiary" slot="close">

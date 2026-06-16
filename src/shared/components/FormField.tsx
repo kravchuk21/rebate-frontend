@@ -1,6 +1,7 @@
 'use client';
 
 import { FieldError, Input, Label, TextField } from '@heroui/react';
+import type { ComponentProps } from 'react';
 import { type Control, Controller, type FieldPath, type FieldValues } from 'react-hook-form';
 
 interface FormFieldProps<T extends FieldValues> {
@@ -11,6 +12,8 @@ interface FormFieldProps<T extends FieldValues> {
   type?: string;
   error?: string;
   isRequired?: boolean;
+  variant?: 'primary' | 'secondary';
+  inputProps?: ComponentProps<typeof Input>;
 }
 
 export function FormField<T extends FieldValues>({
@@ -21,6 +24,8 @@ export function FormField<T extends FieldValues>({
   type = 'text',
   error,
   isRequired,
+  variant = 'secondary',
+  inputProps,
 }: FormFieldProps<T>) {
   return (
     <Controller
@@ -38,7 +43,7 @@ export function FormField<T extends FieldValues>({
           fullWidth
         >
           <Label>{label}</Label>
-          <Input placeholder={placeholder} />
+          <Input variant={variant} placeholder={placeholder} {...inputProps} />
           <FieldError>{error}</FieldError>
         </TextField>
       )}

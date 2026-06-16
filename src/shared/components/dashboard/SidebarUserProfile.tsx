@@ -1,5 +1,4 @@
 import { Avatar, Typography } from '@heroui/react';
-
 import { Link } from '@/i18n/navigation';
 
 interface SidebarUserProfileProps {
@@ -17,7 +16,7 @@ export const SidebarUserProfile = ({ email, role }: SidebarUserProfileProps) => 
           alt="Avatar"
           src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg"
         />
-        <Avatar.Fallback>AV</Avatar.Fallback>
+        <Avatar.Fallback>{initial}</Avatar.Fallback>
       </Avatar>
       <div className="flex min-w-0 flex-col">
         <Typography.Paragraph size="sm" truncate>

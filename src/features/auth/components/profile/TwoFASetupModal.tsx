@@ -2,25 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  Alert,
-  Button,
-  FieldError,
-  Form,
-  Input,
-  Label,
-  Modal,
-  TextField,
-  Typography,
-} from '@heroui/react';
+import { Alert, Button, Form, Modal, toast, Typography } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { QRCodeSVG } from 'qrcode.react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
 import { useTwoFAConfirm } from '@/features/auth/hooks/useTwoFAConfirm';
 import { useTwoFAInitiate } from '@/features/auth/hooks/useTwoFAInitiate';
+import { FormField } from '@/shared/components/FormField';
 
 interface TwoFASetupModalProps {
   isOpen: boolean;
@@ -54,7 +45,11 @@ export const TwoFASetupModal = ({ isOpen, onOpenChange, onEnabled }: TwoFASetupM
 
   useEffect(() => {
     if (isOpen && !initiate.data && !initiate.isPending) {
-      initiate.mutate();
+      initiate.mutate(undefined, {
+        onError: (error) => {
+          toast.danger(getErrorMessage(error) ?? t('auth.errors.generic'));
+        },
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
@@ -73,6 +68,9 @@ export const TwoFASetupModal = ({ isOpen, onOpenChange, onEnabled }: TwoFASetupM
     confirm.mutate(data, {
       onSuccess: (response) => {
         setBackupCodes(response.backup_codes ?? []);
+      },
+      onError: (error) => {
+        toast.danger(getErrorMessage(error) ?? t('auth.errors.generic'));
       },
     });
   };
@@ -137,60 +135,25 @@ export const TwoFASetupModal = ({ isOpen, onOpenChange, onEnabled }: TwoFASetupM
                       </Typography>
                       <Typography.Code>{initiate.data.secret}</Typography.Code>
 
-                      <Typography type="body-sm" className="mt-2">
+                      <Typography.Paragraph size="sm" className="mt-2">
                         {t('profile.twoFA.setup.step2Desc')}
-                      </Typography>
+                      </Typography.Paragraph>
 
-                      <Controller
+                      <FormField
                         control={control}
                         name="password"
-                        render={({ field }) => (
-                          <TextField
-                            type="password"
-                            name={field.name}
-                            value={field.value}
-                            onChange={field.onChange}
-                            onBlur={field.onBlur}
-                            isInvalid={!!errors.password}
-                            fullWidth
-                          >
-                            <Label>{t('profile.twoFA.setup.password')}</Label>
-                            <Input />
-                            <FieldError>{errors.password?.message}</FieldError>
-                          </TextField>
-                        )}
+                        type="password"
+                        label={t('profile.twoFA.setup.password')}
+                        error={errors.password?.message}
                       />
 
-                      <Controller
+                      <FormField
                         control={control}
                         name="code"
-                        render={({ field }) => (
-                          <TextField
-                            name={field.name}
-                            value={field.value}
-                            onChange={field.onChange}
-                            onBlur={field.onBlur}
-                            isInvalid={!!errors.code}
-                            fullWidth
-                          >
-                            <Label>{t('profile.twoFA.setup.code')}</Label>
-                            <Input />
-                            <FieldError>{errors.code?.message}</FieldError>
-                          </TextField>
-                        )}
+                        label={t('profile.twoFA.setup.code')}
+                        error={errors.code?.message}
                       />
                     </>
-                  )}
-
-                  {(initiate.isError || confirm.isError) && (
-                    <Alert status="danger">
-                      <Alert.Content>
-                        <Alert.Description>
-                          {getErrorMessage(initiate.error ?? confirm.error) ??
-                            t('auth.errors.generic')}
-                        </Alert.Description>
-                      </Alert.Content>
-                    </Alert>
                   )}
                 </Modal.Body>
                 <Modal.Footer>

@@ -3,20 +3,11 @@
 import '@/shared/api/instance';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  Alert,
-  Button,
-  FieldError,
-  Form,
-  Input,
-  Label,
-  ListBox,
-  Modal,
-  Select,
-  TextField,
-} from '@heroui/react';
+import { Button, FieldError, Form, Label, ListBox, Modal, Select, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { Controller, useForm, useWatch } from 'react-hook-form';
+
+import { FormField } from '@/shared/components/FormField';
 
 import { getAdminErrorMessage } from '../../lib/getAdminErrorMessage';
 import { useAdminUpdateWithdrawalStatus } from '../../hooks/useAdminUpdateWithdrawalStatus';
@@ -68,6 +59,9 @@ export const UpdateWithdrawalStatusModal = ({
         onSuccess: () => {
           reset();
           onOpenChange(false);
+        },
+        onError: (error) => {
+          toast.danger(getAdminErrorMessage(error) ?? t('admin.withdrawals.errors.updateFailed'));
         },
       },
     );
@@ -127,74 +121,30 @@ export const UpdateWithdrawalStatusModal = ({
                 />
 
                 {selectedStatus === 'completed' && (
-                  <Controller
+                  <FormField
                     control={control}
                     name="tx_hash"
-                    render={({ field }) => (
-                      <TextField
-                        name={field.name}
-                        value={field.value}
-                        onChange={field.onChange}
-                        onBlur={field.onBlur}
-                        isInvalid={!!errors.tx_hash}
-                        fullWidth
-                      >
-                        <Label>{t('admin.withdrawals.updateStatus.txHash')}</Label>
-                        <Input placeholder={t('admin.withdrawals.updateStatus.txHashPlaceholder')} />
-                        <FieldError>{errors.tx_hash?.message}</FieldError>
-                      </TextField>
-                    )}
+                    label={t('admin.withdrawals.updateStatus.txHash')}
+                    placeholder={t('admin.withdrawals.updateStatus.txHashPlaceholder')}
+                    error={errors.tx_hash?.message}
                   />
                 )}
 
                 {selectedStatus === 'rejected' && (
-                  <Controller
+                  <FormField
                     control={control}
                     name="reason"
-                    render={({ field }) => (
-                      <TextField
-                        name={field.name}
-                        value={field.value}
-                        onChange={field.onChange}
-                        onBlur={field.onBlur}
-                        isInvalid={!!errors.reason}
-                        fullWidth
-                      >
-                        <Label>{t('admin.withdrawals.updateStatus.reason')}</Label>
-                        <Input placeholder={t('admin.withdrawals.updateStatus.reasonPlaceholder')} />
-                        <FieldError>{errors.reason?.message}</FieldError>
-                      </TextField>
-                    )}
+                    label={t('admin.withdrawals.updateStatus.reason')}
+                    placeholder={t('admin.withdrawals.updateStatus.reasonPlaceholder')}
+                    error={errors.reason?.message}
                   />
                 )}
 
-                <Controller
+                <FormField
                   control={control}
                   name="admin_note"
-                  render={({ field }) => (
-                    <TextField
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      fullWidth
-                    >
-                      <Label>{t('admin.withdrawals.updateStatus.adminNote')}</Label>
-                      <Input />
-                    </TextField>
-                  )}
+                  label={t('admin.withdrawals.updateStatus.adminNote')}
                 />
-
-                {updateStatus.isError && (
-                  <Alert status="danger">
-                    <Alert.Content>
-                      <Alert.Description>
-                        {getAdminErrorMessage(updateStatus.error) ??
-                          t('admin.withdrawals.errors.updateFailed')}
-                      </Alert.Description>
-                    </Alert.Content>
-                  </Alert>
-                )}
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="tertiary" slot="close">

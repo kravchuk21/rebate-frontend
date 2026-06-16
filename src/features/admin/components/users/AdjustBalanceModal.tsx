@@ -3,9 +3,11 @@
 import '@/shared/api/instance';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Button, FieldError, Form, Input, Label, Modal, TextField } from '@heroui/react';
+import { Button, Form, Modal, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+
+import { FormField } from '@/shared/components/FormField';
 
 import { getAdminErrorMessage } from '../../lib/getAdminErrorMessage';
 import { useAdminAdjustBalance } from '../../hooks/useAdminAdjustBalance';
@@ -46,6 +48,9 @@ export const AdjustBalanceModal = ({ userID, onOpenChange }: AdjustBalanceModalP
           reset();
           onOpenChange(false);
         },
+        onError: (error) => {
+          toast.danger(getAdminErrorMessage(error) ?? t('admin.users.errors.adjustFailed'));
+        },
       },
     );
   };
@@ -69,54 +74,21 @@ export const AdjustBalanceModal = ({ userID, onOpenChange }: AdjustBalanceModalP
             </Modal.Header>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Modal.Body className="flex flex-col gap-4">
-                <Controller
+                <FormField
                   control={control}
                   name="amount"
-                  render={({ field }) => (
-                    <TextField
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      isInvalid={!!errors.amount}
-                      fullWidth
-                    >
-                      <Label>{t('admin.users.adjustBalance.amount')}</Label>
-                      <Input placeholder={t('admin.users.adjustBalance.amountPlaceholder')} />
-                      <FieldError>{errors.amount?.message}</FieldError>
-                    </TextField>
-                  )}
+                  label={t('admin.users.adjustBalance.amount')}
+                  placeholder={t('admin.users.adjustBalance.amountPlaceholder')}
+                  error={errors.amount?.message}
                 />
 
-                <Controller
+                <FormField
                   control={control}
                   name="reason"
-                  render={({ field }) => (
-                    <TextField
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      isInvalid={!!errors.reason}
-                      fullWidth
-                    >
-                      <Label>{t('admin.users.adjustBalance.reason')}</Label>
-                      <Input placeholder={t('admin.users.adjustBalance.reasonPlaceholder')} />
-                      <FieldError>{errors.reason?.message}</FieldError>
-                    </TextField>
-                  )}
+                  label={t('admin.users.adjustBalance.reason')}
+                  placeholder={t('admin.users.adjustBalance.reasonPlaceholder')}
+                  error={errors.reason?.message}
                 />
-
-                {adjustBalance.isError && (
-                  <Alert status="danger">
-                    <Alert.Content>
-                      <Alert.Description>
-                        {getAdminErrorMessage(adjustBalance.error) ??
-                          t('admin.users.errors.adjustFailed')}
-                      </Alert.Description>
-                    </Alert.Content>
-                  </Alert>
-                )}
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="tertiary" slot="close">

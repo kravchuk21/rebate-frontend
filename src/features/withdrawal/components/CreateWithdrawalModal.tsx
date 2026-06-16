@@ -3,23 +3,13 @@
 import '@/shared/api/instance';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  Alert,
-  Button,
-  FieldError,
-  Form,
-  Input,
-  Label,
-  ListBox,
-  Modal,
-  Select,
-  TextField,
-} from '@heroui/react';
+import { Button, FieldError, Form, Label, ListBox, Modal, Select, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { Controller, useForm } from 'react-hook-form';
 
 import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
 import type { WithdrawalPayoutMethodResponse } from '@/shared/api/generated/types.gen';
+import { FormField } from '@/shared/components/FormField';
 
 import { useCreateWithdrawal } from '../hooks/useCreateWithdrawal';
 import { usePayoutMethods } from '../hooks/usePayoutMethods';
@@ -62,6 +52,9 @@ export const CreateWithdrawalModal = ({ isOpen, onOpenChange }: CreateWithdrawal
         onSuccess: () => {
           reset();
           onOpenChange(false);
+        },
+        onError: (error) => {
+          toast.danger(getErrorMessage(error) ?? t('withdrawal.request.errors.failed'));
         },
       },
     );
@@ -127,42 +120,16 @@ export const CreateWithdrawalModal = ({ isOpen, onOpenChange }: CreateWithdrawal
                     )}
                   />
 
-                  <Controller
+                  <FormField
                     control={control}
                     name="amount"
-                    render={({ field }) => (
-                      <TextField
-                        name={field.name}
-                        value={field.value}
-                        onChange={field.onChange}
-                        onBlur={field.onBlur}
-                        isInvalid={!!errors.amount}
-                        fullWidth
-                      >
-                        <Label>{t('withdrawal.request.amount')}</Label>
-                        <Input
-                          type="number"
-                          step="0.01"
-                          min="0"
-                          placeholder={t('withdrawal.request.amountPlaceholder')}
-                        />
-                        <FieldError>{errors.amount?.message}</FieldError>
-                      </TextField>
-                    )}
+                    label={t('withdrawal.request.amount')}
+                    placeholder={t('withdrawal.request.amountPlaceholder')}
+                    error={errors.amount?.message}
+                    inputProps={{ type: 'number', step: '0.01', min: '0' }}
                   />
 
                   <p className="text-sm text-muted">{t('withdrawal.request.feeNote')}</p>
-
-                  {createWithdrawal.isError && (
-                    <Alert status="danger">
-                      <Alert.Content>
-                        <Alert.Description>
-                          {getErrorMessage(createWithdrawal.error) ??
-                            t('withdrawal.request.errors.failed')}
-                        </Alert.Description>
-                      </Alert.Content>
-                    </Alert>
-                  )}
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="tertiary" slot="close">

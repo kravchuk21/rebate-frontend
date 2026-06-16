@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Card, Chip, useOverlayState } from '@heroui/react';
+import { Button, Card, Chip, Typography, useOverlayState } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
 import { TwoFADisableModal } from './TwoFADisableModal';
@@ -19,24 +19,25 @@ export const TwoFASection = ({ initialEnabled = false }: TwoFASectionProps) => {
   const disableModal = useOverlayState();
 
   return (
-    <Card>
-      <Card.Header className="flex items-center justify-between">
-        <Card.Title>{t('title')}</Card.Title>
-        <Chip color={enabled ? 'success' : 'default'}>
-          <Chip.Label>{enabled ? t('enabled') : t('disabled')}</Chip.Label>
-        </Chip>
+    <Card variant="secondary">
+      <Card.Header>
+        <Card.Title className="flex gap-2">
+          {t('title')}
+          <Chip color={enabled ? 'success' : 'danger'}>
+            <Chip.Label>{enabled ? t('enabled') : t('disabled')}</Chip.Label>
+          </Chip>
+        </Card.Title>
       </Card.Header>
-      <Card.Content>
-        {enabled ? (
-          <Button variant="danger" onPress={disableModal.open}>
-            {t('disableBtn')}
-          </Button>
-        ) : (
-          <Button variant="primary" onPress={setupModal.open}>
-            {t('enableBtn')}
-          </Button>
-        )}
-      </Card.Content>
+
+      {enabled ? (
+        <Button variant="danger" onPress={disableModal.open}>
+          {t('disableBtn')}
+        </Button>
+      ) : (
+        <Button variant="primary" onPress={setupModal.open}>
+          {t('enableBtn')}
+        </Button>
+      )}
 
       <TwoFASetupModal
         isOpen={setupModal.isOpen}

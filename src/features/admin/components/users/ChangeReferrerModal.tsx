@@ -3,11 +3,12 @@
 import '@/shared/api/instance';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Button, FieldError, Form, Input, Label, Modal, TextField } from '@heroui/react';
+import { Button, Form, Modal, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import type { AdminUserResponse } from '@/shared/api/generated/types.gen';
+import { FormField } from '@/shared/components/FormField';
 
 import { getAdminErrorMessage } from '../../lib/getAdminErrorMessage';
 import { useAdminChangeReferrer } from '../../hooks/useAdminChangeReferrer';
@@ -45,6 +46,9 @@ export const ChangeReferrerModal = ({ user, onOpenChange }: ChangeReferrerModalP
           reset();
           onOpenChange(false);
         },
+        onError: (error) => {
+          toast.danger(getAdminErrorMessage(error) ?? t('admin.users.errors.referrerFailed'));
+        },
       },
     );
   };
@@ -73,37 +77,13 @@ export const ChangeReferrerModal = ({ user, onOpenChange }: ChangeReferrerModalP
                   {user?.referred_by_email ?? t('admin.users.changeReferrer.none')}
                 </p>
 
-                <Controller
+                <FormField
                   control={control}
                   name="referrer_id"
-                  render={({ field }) => (
-                    <TextField
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      isInvalid={!!errors.referrer_id}
-                      fullWidth
-                    >
-                      <Label>{t('admin.users.changeReferrer.newReferrerID')}</Label>
-                      <Input
-                        placeholder={t('admin.users.changeReferrer.newReferrerIDPlaceholder')}
-                      />
-                      <FieldError>{errors.referrer_id?.message}</FieldError>
-                    </TextField>
-                  )}
+                  label={t('admin.users.changeReferrer.newReferrerID')}
+                  placeholder={t('admin.users.changeReferrer.newReferrerIDPlaceholder')}
+                  error={errors.referrer_id?.message}
                 />
-
-                {changeReferrer.isError && (
-                  <Alert status="danger">
-                    <Alert.Content>
-                      <Alert.Description>
-                        {getAdminErrorMessage(changeReferrer.error) ??
-                          t('admin.users.errors.referrerFailed')}
-                      </Alert.Description>
-                    </Alert.Content>
-                  </Alert>
-                )}
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="tertiary" slot="close">

@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Button, Card, FieldError, Form, Input, Label, TextField } from '@heroui/react';
+import { Alert, Button, Card, Form } from '@heroui/react';
 import { useTranslations } from 'next-intl';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+
+import { FormField } from '@/shared/components/FormField';
 
 const createPasswordSchema = (t: (key: string) => string) =>
   z
@@ -39,71 +41,40 @@ export const ChangePasswordSection = () => {
   };
 
   return (
-    <Card>
+    <Card variant="secondary">
       <Card.Header>
         <Card.Title>{t('profile.password.title')}</Card.Title>
       </Card.Header>
       <Card.Content>
         <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
-          <Controller
+          <FormField
             control={control}
             name="current"
-            render={({ field }) => (
-              <TextField
-                type="password"
-                name={field.name}
-                value={field.value}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-                isInvalid={!!errors.current}
-                fullWidth
-              >
-                <Label>{t('profile.password.current')}</Label>
-                <Input />
-                <FieldError>{errors.current?.message}</FieldError>
-              </TextField>
-            )}
+            type="password"
+            variant="primary"
+            label={t('profile.password.current')}
+            error={errors.current?.message}
           />
 
-          <Controller
-            control={control}
-            name="newPassword"
-            render={({ field }) => (
-              <TextField
-                type="password"
-                name={field.name}
-                value={field.value}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-                isInvalid={!!errors.newPassword}
-                fullWidth
-              >
-                <Label>{t('profile.password.new')}</Label>
-                <Input />
-                <FieldError>{errors.newPassword?.message}</FieldError>
-              </TextField>
-            )}
-          />
+          <div className="flex gap-3">
+            <FormField
+              control={control}
+              name="newPassword"
+              type="password"
+              variant="primary"
+              label={t('profile.password.new')}
+              error={errors.newPassword?.message}
+            />
 
-          <Controller
-            control={control}
-            name="confirm"
-            render={({ field }) => (
-              <TextField
-                type="password"
-                name={field.name}
-                value={field.value}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-                isInvalid={!!errors.confirm}
-                fullWidth
-              >
-                <Label>{t('profile.password.confirm')}</Label>
-                <Input />
-                <FieldError>{errors.confirm?.message}</FieldError>
-              </TextField>
-            )}
-          />
+            <FormField
+              control={control}
+              name="confirm"
+              type="password"
+              variant="primary"
+              label={t('profile.password.confirm')}
+              error={errors.confirm?.message}
+            />
+          </div>
 
           {submitted && (
             <Alert status="default">

@@ -3,23 +3,13 @@
 import '@/shared/api/instance';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  Alert,
-  Button,
-  FieldError,
-  Form,
-  Input,
-  Label,
-  ListBox,
-  Modal,
-  Select,
-  TextField,
-} from '@heroui/react';
+import { Button, FieldError, Form, Label, ListBox, Modal, Select, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { Controller, useForm } from 'react-hook-form';
 
 import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
 import type { BrokerResponse } from '@/shared/api/generated/types.gen';
+import { FormField } from '@/shared/components/FormField';
 
 import { useBrokers } from '../hooks/useBrokers';
 import { useSubmitAccount } from '../hooks/useSubmitAccount';
@@ -60,6 +50,9 @@ export const SubmitAccountModal = ({ isOpen, onOpenChange }: SubmitAccountModalP
         onSuccess: () => {
           reset();
           onOpenChange(false);
+        },
+        onError: (error) => {
+          toast.danger(getErrorMessage(error) ?? t('accounts.errors.submitFailed'));
         },
       },
     );
@@ -119,34 +112,13 @@ export const SubmitAccountModal = ({ isOpen, onOpenChange }: SubmitAccountModalP
                   )}
                 />
 
-                <Controller
+                <FormField
                   control={control}
                   name="uid"
-                  render={({ field }) => (
-                    <TextField
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      isInvalid={!!errors.uid}
-                      fullWidth
-                    >
-                      <Label>{t('accounts.submit.uid')}</Label>
-                      <Input placeholder={t('accounts.submit.uidPlaceholder')} />
-                      <FieldError>{errors.uid?.message}</FieldError>
-                    </TextField>
-                  )}
+                  label={t('accounts.submit.uid')}
+                  placeholder={t('accounts.submit.uidPlaceholder')}
+                  error={errors.uid?.message}
                 />
-
-                {submitAccount.isError && (
-                  <Alert status="danger">
-                    <Alert.Content>
-                      <Alert.Description>
-                        {getErrorMessage(submitAccount.error) ?? t('accounts.errors.submitFailed')}
-                      </Alert.Description>
-                    </Alert.Content>
-                  </Alert>
-                )}
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="tertiary" slot="close">

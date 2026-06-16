@@ -4,21 +4,20 @@ import '@/shared/api/instance';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  Alert,
   Button,
   FieldError,
   Form,
-  Input,
   Label,
   ListBox,
   Modal,
   Select,
-  TextField,
+  toast,
 } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 
 import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
+import { FormField } from '@/shared/components/FormField';
 
 import { useCreatePayoutMethod } from '../hooks/useCreatePayoutMethod';
 import {
@@ -57,6 +56,9 @@ export const AddPayoutMethodModal = ({ isOpen, onOpenChange }: AddPayoutMethodMo
           reset();
           onOpenChange(false);
         },
+        onError: (error) => {
+          toast.danger(getErrorMessage(error) ?? t('withdrawal.payoutMethods.errors.addFailed'));
+        },
       },
     );
   };
@@ -80,23 +82,12 @@ export const AddPayoutMethodModal = ({ isOpen, onOpenChange }: AddPayoutMethodMo
             </Modal.Header>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Modal.Body className="flex flex-col gap-4">
-                <Controller
+                <FormField
                   control={control}
                   name="name"
-                  render={({ field }) => (
-                    <TextField
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      isInvalid={!!errors.name}
-                      fullWidth
-                    >
-                      <Label>{t('withdrawal.payoutMethods.form.name')}</Label>
-                      <Input placeholder={t('withdrawal.payoutMethods.form.namePlaceholder')} />
-                      <FieldError>{errors.name?.message}</FieldError>
-                    </TextField>
-                  )}
+                  label={t('withdrawal.payoutMethods.form.name')}
+                  placeholder={t('withdrawal.payoutMethods.form.namePlaceholder')}
+                  error={errors.name?.message}
                 />
 
                 <Controller
@@ -109,6 +100,7 @@ export const AddPayoutMethodModal = ({ isOpen, onOpenChange }: AddPayoutMethodMo
                       selectedKey={field.value || null}
                       onSelectionChange={(key) => field.onChange(key ? String(key) : '')}
                       isInvalid={!!errors.network}
+                      variant="secondary"
                     >
                       <Label>{t('withdrawal.payoutMethods.form.network')}</Label>
                       <Select.Trigger>
@@ -134,39 +126,17 @@ export const AddPayoutMethodModal = ({ isOpen, onOpenChange }: AddPayoutMethodMo
                   )}
                 />
 
-                <Controller
+                <FormField
                   control={control}
                   name="address"
-                  render={({ field }) => (
-                    <TextField
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      isInvalid={!!errors.address}
-                      fullWidth
-                    >
-                      <Label>{t('withdrawal.payoutMethods.form.address')}</Label>
-                      <Input placeholder={t('withdrawal.payoutMethods.form.addressPlaceholder')} />
-                      {!errors.address && (
-                        <p className="text-sm text-muted">
-                          {t(`withdrawal.payoutMethods.networks.${selectedNetwork}`)}
-                        </p>
-                      )}
-                      <FieldError>{errors.address?.message}</FieldError>
-                    </TextField>
-                  )}
+                  label={t('withdrawal.payoutMethods.form.address')}
+                  placeholder={t('withdrawal.payoutMethods.form.addressPlaceholder')}
+                  error={errors.address?.message}
                 />
-
-                {createPayoutMethod.isError && (
-                  <Alert status="danger">
-                    <Alert.Content>
-                      <Alert.Description>
-                        {getErrorMessage(createPayoutMethod.error) ??
-                          t('withdrawal.payoutMethods.errors.addFailed')}
-                      </Alert.Description>
-                    </Alert.Content>
-                  </Alert>
+                {!errors.address && (
+                  <p className="text-sm text-muted">
+                    {t(`withdrawal.payoutMethods.networks.${selectedNetwork}`)}
+                  </p>
                 )}
               </Modal.Body>
               <Modal.Footer>

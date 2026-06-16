@@ -1,23 +1,14 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  Alert,
-  Button,
-  FieldError,
-  Form,
-  Input,
-  Label,
-  Modal,
-  TextField,
-  Typography,
-} from '@heroui/react';
+import { Button, Form, Modal, toast, Typography } from '@heroui/react';
 import { useTranslations } from 'next-intl';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
 import { useTwoFADisable } from '@/features/auth/hooks/useTwoFADisable';
+import { FormField } from '@/shared/components/FormField';
 
 interface TwoFADisableModalProps {
   isOpen: boolean;
@@ -62,6 +53,9 @@ export const TwoFADisableModal = ({ isOpen, onOpenChange, onDisabled }: TwoFADis
         onOpenChange(false);
         onDisabled();
       },
+      onError: (error) => {
+        toast.danger(getErrorMessage(error) ?? t('auth.errors.generic'));
+      },
     });
   };
 
@@ -76,56 +70,22 @@ export const TwoFADisableModal = ({ isOpen, onOpenChange, onDisabled }: TwoFADis
             </Modal.Header>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Modal.Body className="flex flex-col gap-4">
-                <Typography type="body-sm">{t('profile.twoFA.disable.desc')}</Typography>
+                <Typography.Paragraph size="sm">{t('profile.twoFA.disable.desc')}</Typography.Paragraph>
 
-                <Controller
+                <FormField
                   control={control}
                   name="password"
-                  render={({ field }) => (
-                    <TextField
-                      type="password"
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      isInvalid={!!errors.password}
-                      fullWidth
-                    >
-                      <Label>{t('profile.twoFA.disable.password')}</Label>
-                      <Input />
-                      <FieldError>{errors.password?.message}</FieldError>
-                    </TextField>
-                  )}
+                  type="password"
+                  label={t('profile.twoFA.disable.password')}
+                  error={errors.password?.message}
                 />
 
-                <Controller
+                <FormField
                   control={control}
                   name="code"
-                  render={({ field }) => (
-                    <TextField
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      isInvalid={!!errors.code}
-                      fullWidth
-                    >
-                      <Label>{t('profile.twoFA.disable.code')}</Label>
-                      <Input />
-                      <FieldError>{errors.code?.message}</FieldError>
-                    </TextField>
-                  )}
+                  label={t('profile.twoFA.disable.code')}
+                  error={errors.code?.message}
                 />
-
-                {disable.isError && (
-                  <Alert status="danger">
-                    <Alert.Content>
-                      <Alert.Description>
-                        {getErrorMessage(disable.error) ?? t('auth.errors.generic')}
-                      </Alert.Description>
-                    </Alert.Content>
-                  </Alert>
-                )}
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="tertiary" slot="close">

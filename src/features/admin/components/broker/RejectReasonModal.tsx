@@ -3,9 +3,12 @@
 import '@/shared/api/instance';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Button, FieldError, Form, Input, Label, Modal, TextField } from '@heroui/react';
+import { Button, Form, Modal, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
-import { Controller, useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+
+import { FormField } from '@/shared/components/FormField';
 
 import { createReasonSchema, type ReasonFormValues } from '../../schemas/reasonSchema';
 
@@ -47,6 +50,12 @@ export const RejectReasonModal = ({
     onOpenChange(open);
   };
 
+  useEffect(() => {
+    if (error) {
+      toast.danger(errorMessage);
+    }
+  }, [error, errorMessage]);
+
   return (
     <Modal isOpen={isOpen} onOpenChange={handleOpenChange}>
       <Modal.Backdrop>
@@ -63,32 +72,13 @@ export const RejectReasonModal = ({
               })}
             >
               <Modal.Body className="flex flex-col gap-4">
-                <Controller
+                <FormField
                   control={control}
                   name="reason"
-                  render={({ field }) => (
-                    <TextField
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      isInvalid={!!errors.reason}
-                      fullWidth
-                    >
-                      <Label>{t(`${type}.reason`)}</Label>
-                      <Input placeholder={t(`${type}.reasonPlaceholder`)} />
-                      <FieldError>{errors.reason?.message}</FieldError>
-                    </TextField>
-                  )}
+                  label={t(`${type}.reason`)}
+                  placeholder={t(`${type}.reasonPlaceholder`)}
+                  error={errors.reason?.message}
                 />
-
-                {!!error && (
-                  <Alert status="danger">
-                    <Alert.Content>
-                      <Alert.Description>{errorMessage}</Alert.Description>
-                    </Alert.Content>
-                  </Alert>
-                )}
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="tertiary" slot="close">
