@@ -1,6 +1,6 @@
 'use client';
 
-import { Tab, TabIndicator, TabList, TabListContainer, TabsRoot } from '@heroui/react';
+import { Tabs } from '@heroui/react';
 import { useRouter, usePathname } from '@/i18n/navigation';
 
 export interface SidebarNavItem {
@@ -24,7 +24,7 @@ export const SidebarNav = ({ items, ariaLabel = 'Navigation', onNavigate }: Side
       .sort((a, b) => b.href.length - a.href.length)[0] ?? items[0];
 
   return (
-    <TabsRoot
+    <Tabs
       orientation="vertical"
       selectedKey={activeItem?.href}
       onSelectionChange={(key) => {
@@ -32,16 +32,16 @@ export const SidebarNav = ({ items, ariaLabel = 'Navigation', onNavigate }: Side
         onNavigate?.();
       }}
     >
-      <TabListContainer className="w-full">
-        <TabList aria-label={ariaLabel} className="w-full">
+      <Tabs.ListContainer className="w-full">
+        <Tabs.List aria-label={ariaLabel} className="w-full">
           {items.map((item) => (
-            <Tab key={item.href} id={item.href} className="justify-start">
+            <Tabs.Tab key={item.href} id={item.href} className="justify-start">
               {item.label}
-              <TabIndicator />
-            </Tab>
+              <Tabs.Indicator />
+            </Tabs.Tab>
           ))}
-        </TabList>
-      </TabListContainer>
-    </TabsRoot>
+        </Tabs.List>
+      </Tabs.ListContainer>
+    </Tabs>
   );
 };
