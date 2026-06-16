@@ -7,6 +7,7 @@ import { decodeAccessToken } from '@/shared/lib/decodeToken';
 import { ChangePasswordSection } from '@/features/auth/components/profile/ChangePasswordSection';
 import { ProfileAccountInfo } from '@/features/auth/components/profile/ProfileAccountInfo';
 import { TwoFASection } from '@/features/auth/components/profile/TwoFASection';
+import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
 
 export default async function ProfilePage({
   params,
@@ -33,16 +34,23 @@ export default async function ProfilePage({
   return (
     <>
       <PageHeader title={t('title')} />
-      <ProfileAccountInfo email={claims.email} role={claims.role} />
-      <ReferralLinkCard />
-      <div className='flex gap-5 flex-col lg:flex-row'>
-        <div className='flex-1'>
+      <DashboardLayout>
+        <DashboardItem span={12}>
+          <ProfileAccountInfo email={claims.email} role={claims.role} />
+        </DashboardItem>
+
+        <DashboardItem span={12}>
+          <ReferralLinkCard />
+        </DashboardItem>
+
+        <DashboardItem span={7}>
           <ChangePasswordSection />
-        </div>
-        <div className='flex-1'>
+        </DashboardItem>
+
+        <DashboardItem span={5}>
           <TwoFASection initialEnabled={claims.two_fa_enabled ?? false} />
-        </div>
-      </div>
+        </DashboardItem>
+      </DashboardLayout>
     </>
   );
 }
