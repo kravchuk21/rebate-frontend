@@ -1,10 +1,10 @@
 'use client';
 
 import '@/shared/api/instance';
-import { Copy, TrashBin } from '@gravity-ui/icons';
+import { Car, Copy, TrashBin } from '@gravity-ui/icons';
 
 import { useEffect, useMemo, useState } from 'react';
-import { AlertDialog, Button, toast, Typography } from '@heroui/react';
+import { AlertDialog, Button, Card, toast, Typography } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
@@ -155,10 +155,14 @@ export const PayoutMethodsSection = () => {
   return (
     <DashboardLayout>
       <DashboardItem span={12}>
-        <div className="flex items-center justify-between">
-          <Typography.Paragraph>{t('title')}</Typography.Paragraph>
-          <Button onPress={() => setIsModalOpen(true)}>{t('add')}</Button>
-        </div>
+          <Card variant='transparent' className='p-0'>
+            <Card.Header>
+              <div className='flex items-center justify-between'>
+                <Card.Title>{t('title')}</Card.Title>
+                <Button onPress={() => setIsModalOpen(true)}>{t('add')}</Button>
+              </div>
+            </Card.Header>
+          </Card>
       </DashboardItem>
 
       {!isError && (
