@@ -500,6 +500,7 @@
         "reject": "Reject",
         "revoke": "Revoke"
       },
+      "emptyDesc": "No broker accounts found",
       "reject": {
         "title": "Reject Broker Account",
         "reason": "Reason",
@@ -540,6 +541,7 @@
         "txHash": "Tx Hash",
         "actions": "Actions"
       },
+      "emptyDesc": "No withdrawals found",
       "updateStatus": {
         "title": "Update Status",
         "status": "Status",
@@ -576,6 +578,7 @@
         "status": "Status",
         "actions": "Actions"
       },
+      "emptyDesc": "No calculations found",
       "import": {
         "title": "Import Broker Data",
         "brokerAccount": "Broker Account ID",
@@ -645,6 +648,7 @@
         "date": "Date",
         "details": "Details"
       },
+      "emptyDesc": "No audit log entries found",
       "details": {
         "title": "Audit Log Details",
         "oldValue": "Old Value",

@@ -6,9 +6,13 @@ import type { SortDescriptor } from '@heroui/react';
 import type { SortingState } from '@tanstack/react-table';
 
 import { useEffect, useMemo, useState } from 'react';
-import { AlertDialog, Button, Input, toast } from '@heroui/react';
+import { AlertDialog, Button, Input, toast, ButtonGroup } from '@heroui/react';
 import { useLocale, useTranslations } from 'next-intl';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { CirclePause } from '@gravity-ui/icons';
+import { CirclePlay } from '@gravity-ui/icons';
+import { Pencil } from '@gravity-ui/icons';
+import { Persons } from '@gravity-ui/icons';
 
 import type { AdminUserResponse } from '@/shared/api/generated/types.gen';
 
@@ -21,7 +25,7 @@ import { AdjustBalanceModal } from './AdjustBalanceModal';
 import { ChangeReferrerModal } from './ChangeReferrerModal';
 import { UserStatusChip } from './UserStatusChip';
 
-const LIMIT = 20;
+const LIMIT = 10;
 
 function toSortDescriptor(sorting: SortingState): SortDescriptor | undefined {
   const first = sorting[0];
@@ -110,39 +114,26 @@ export const UsersTable = () => {
         cell: ({ row }) => {
           const user = row.original;
           return (
-            <div className="flex flex-wrap gap-2">
+            <ButtonGroup size='sm' variant='tertiary'>
               {user.status === 'suspended' ? (
-                <Button
-                  variant="tertiary"
-                  size="sm"
-                  onPress={() => user.id && unsuspendUser.mutate({ path: { userID: user.id } })}
-                >
-                  {t('actions.unsuspend')}
+                <Button onPress={() => user.id && unsuspendUser.mutate({ path: { userID: user.id } })}>
+                  <CirclePause />
                 </Button>
               ) : (
-                <Button
-                  variant="tertiary"
-                  size="sm"
-                  onPress={() => setSuspendTarget(user.id ?? null)}
-                >
-                  {t('actions.suspend')}
+                <Button onPress={() => setSuspendTarget(user.id ?? null)}>
+                  <CirclePlay />
                 </Button>
               )}
-              <Button
-                variant="tertiary"
-                size="sm"
-                onPress={() => setAdjustBalanceTarget(user.id ?? null)}
-              >
-                {t('actions.adjustBalance')}
+              <Button onPress={() => setAdjustBalanceTarget(user.id ?? null)}>
+                <ButtonGroup.Separator/>
+                <Pencil />
               </Button>
-              <Button
-                variant="tertiary"
-                size="sm"
-                onPress={() => setReferrerTarget(user)}
-              >
-                {t('actions.changeReferrer')}
+              <Button onPress={() => setReferrerTarget(user)}>
+                <ButtonGroup.Separator/>
+                <Persons />
               </Button>
-            </div>
+            </ButtonGroup>
+
           );
         },
       }),

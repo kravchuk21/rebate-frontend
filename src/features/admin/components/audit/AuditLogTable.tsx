@@ -2,16 +2,20 @@
 
 import '@/shared/api/instance';
 
-import { useState } from 'react';
-import { Alert, Button, Card, Input, Label, Modal, Skeleton, Table } from '@heroui/react';
+import { useEffect, useMemo, useState } from 'react';
+import { Button, Input, Label, Modal, toast } from '@heroui/react';
 import { useLocale, useTranslations } from 'next-intl';
+import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
 import type { AdminAuditLogEntryResponse } from '@/shared/api/generated/types.gen';
 import { truncateAddress } from '@/features/withdrawal/lib/validateAddress';
+import { DataTable } from '@/shared/components/DataTable';
 
 import { useAdminAuditLog } from '../../hooks/useAdminAuditLog';
 
 const LIMIT = 20;
+
+const columnHelper = createColumnHelper<AdminAuditLogEntryResponse>();
 
 export const AuditLogTable = () => {
   const t = useTranslations('admin.auditLog');
@@ -21,18 +25,74 @@ export const AuditLogTable = () => {
   const [offset, setOffset] = useState(0);
   const [detailsEntry, setDetailsEntry] = useState<AdminAuditLogEntryResponse | null>(null);
 
-  const { data, isLoading, isError } = useAdminAuditLog({
+  const { data, isError } = useAdminAuditLog({
     action: action || undefined,
     entity_type: entityType || undefined,
     limit: LIMIT,
     offset,
   });
 
-  const entries = (data?.data as { items?: AdminAuditLogEntryResponse[] } | undefined)?.items ?? [];
+  useEffect(() => {
+    if (isError) toast.danger(t('errors.loadFailed'));
+  }, [isError, t]);
 
-  const dateFormatter = new Intl.DateTimeFormat(locale, {
-    dateStyle: 'medium',
-    timeStyle: 'short',
+  const responseData = data?.data as
+    | { items?: AdminAuditLogEntryResponse[]; total_count?: number }
+    | undefined;
+  const entries = responseData?.items ?? [];
+  const totalCount = responseData?.total_count ?? 0;
+
+  const dateFormatter = useMemo(
+    () => new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }),
+    [locale],
+  );
+
+  const columns = useMemo(
+    () => [
+      columnHelper.accessor('admin_email', {
+        header: t('columns.admin'),
+        cell: (info) => info.getValue() ?? '—',
+      }),
+      columnHelper.accessor('action', {
+        header: t('columns.action'),
+        cell: (info) => info.getValue() ?? '—',
+      }),
+      columnHelper.accessor('entity_type', {
+        header: t('columns.entityType'),
+        cell: (info) => info.getValue() ?? '—',
+      }),
+      columnHelper.accessor('entity_id', {
+        header: t('columns.entityId'),
+        cell: (info) => {
+          const v = info.getValue();
+          return v ? truncateAddress(v) : '—';
+        },
+      }),
+      columnHelper.accessor('created_at', {
+        header: t('columns.date'),
+        cell: (info) => {
+          const v = info.getValue();
+          return v ? dateFormatter.format(new Date(v)) : '—';
+        },
+      }),
+      columnHelper.display({
+        id: 'details',
+        header: t('columns.details'),
+        cell: ({ row }) => (
+          <Button variant="tertiary" size="sm" onPress={() => setDetailsEntry(row.original)}>
+            {t('columns.details')}
+          </Button>
+        ),
+      }),
+    ],
+    [t, dateFormatter],
+  );
+
+  const table = useReactTable({
+    data: entries,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (row, index) => row.id ?? String(index),
   });
 
   return (
@@ -60,78 +120,14 @@ export const AuditLogTable = () => {
         </div>
       </div>
 
-      {isError && (
-        <Alert status="danger">
-          <Alert.Content>
-            <Alert.Description>{t('errors.loadFailed')}</Alert.Description>
-          </Alert.Content>
-        </Alert>
-      )}
-
-      {isLoading && (
-        <Card>
-          <Card.Content className="flex flex-col gap-3 py-4">
-            <Skeleton className="h-6 w-full" />
-            <Skeleton className="h-6 w-full" />
-            <Skeleton className="h-6 w-full" />
-          </Card.Content>
-        </Card>
-      )}
-
-      {!isLoading && !isError && (
-        <>
-          <Table>
-            <Table.ScrollContainer>
-              <Table.Content aria-label={t('title')}>
-                <Table.Header>
-                  <Table.Column isRowHeader>{t('columns.admin')}</Table.Column>
-                  <Table.Column>{t('columns.action')}</Table.Column>
-                  <Table.Column>{t('columns.entityType')}</Table.Column>
-                  <Table.Column>{t('columns.entityId')}</Table.Column>
-                  <Table.Column>{t('columns.date')}</Table.Column>
-                  <Table.Column>{t('columns.details')}</Table.Column>
-                </Table.Header>
-                <Table.Body>
-                  {entries.map((entry) => (
-                    <Table.Row key={entry.id}>
-                      <Table.Cell>{entry.admin_email ?? '—'}</Table.Cell>
-                      <Table.Cell>{entry.action ?? '—'}</Table.Cell>
-                      <Table.Cell>{entry.entity_type ?? '—'}</Table.Cell>
-                      <Table.Cell>{entry.entity_id ? truncateAddress(entry.entity_id) : '—'}</Table.Cell>
-                      <Table.Cell>
-                        {entry.created_at ? dateFormatter.format(new Date(entry.created_at)) : '—'}
-                      </Table.Cell>
-                      <Table.Cell>
-                        <Button variant="tertiary" size="sm" onPress={() => setDetailsEntry(entry)}>
-                          {t('columns.details')}
-                        </Button>
-                      </Table.Cell>
-                    </Table.Row>
-                  ))}
-                </Table.Body>
-              </Table.Content>
-            </Table.ScrollContainer>
-          </Table>
-
-          <div className="flex items-center justify-end gap-2">
-            <Button
-              variant="tertiary"
-              size="sm"
-              isDisabled={offset === 0}
-              onPress={() => setOffset(Math.max(0, offset - LIMIT))}
-            >
-              ←
-            </Button>
-            <Button
-              variant="tertiary"
-              size="sm"
-              isDisabled={entries.length < LIMIT}
-              onPress={() => setOffset(offset + LIMIT)}
-            >
-              →
-            </Button>
-          </div>
-        </>
+      {!isError && (
+        <DataTable
+          table={table}
+          ariaLabel={t('title')}
+          emptyLabel={t('emptyDesc')}
+          rowHeaderColumnId="admin_email"
+          pagination={{ offset, limit: LIMIT, totalCount, onOffsetChange: setOffset }}
+        />
       )}
 
       <Modal isOpen={detailsEntry !== null} onOpenChange={(open) => !open && setDetailsEntry(null)}>

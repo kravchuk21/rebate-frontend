@@ -2,21 +2,26 @@
 
 import '@/shared/api/instance';
 
-import { useState } from 'react';
-import { Alert, Button, Card, Skeleton, Table } from '@heroui/react';
+import { useEffect, useMemo, useState } from 'react';
+import { Button, toast } from '@heroui/react';
 import { useLocale, useTranslations } from 'next-intl';
+import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { Pencil } from '@gravity-ui/icons';
 
 import type { RebateCalculationResponse } from '@/shared/api/generated/types.gen';
 import { formatAmount } from '@/features/withdrawal/lib/formatAmount';
 import { RebateStatusChip } from '@/features/rebate/components/RebateStatusChip';
 import { formatPeriodDate } from '@/features/rebate/lib/formatPeriodDate';
+import { DataTable } from '@/shared/components/DataTable';
 
 import { useAdminCalculations } from '../../hooks/useAdminCalculations';
 import { AdjustCalculationModal } from './AdjustCalculationModal';
 import { ImportBrokerDataModal } from './ImportBrokerDataModal';
 import { TriggerCalculationModal } from './TriggerCalculationModal';
 
-const LIMIT = 20;
+const LIMIT = 10;
+
+const columnHelper = createColumnHelper<RebateCalculationResponse>();
 
 export const AdminCalculationsTable = () => {
   const t = useTranslations('admin.rebate');
@@ -26,10 +31,65 @@ export const AdminCalculationsTable = () => {
   const [isTriggerOpen, setIsTriggerOpen] = useState(false);
   const [adjustTarget, setAdjustTarget] = useState<RebateCalculationResponse | null>(null);
 
-  const { data, isLoading, isError } = useAdminCalculations({ limit: LIMIT, offset });
+  const { data, isError } = useAdminCalculations({ limit: LIMIT, offset });
 
-  const calculations =
-    (data?.data as { items?: RebateCalculationResponse[] } | undefined)?.items ?? [];
+  useEffect(() => {
+    if (isError) toast.danger(t('errors.loadFailed'));
+  }, [isError, t]);
+
+  const responseData = data?.data as
+    | { items?: RebateCalculationResponse[]; total_count?: number }
+    | undefined;
+  const calculations = responseData?.items ?? [];
+  const totalCount = responseData?.total_count ?? 0;
+
+  const columns = useMemo(
+    () => [
+      columnHelper.display({
+        id: 'broker',
+        header: t('columns.broker'),
+        cell: ({ row }) => row.original.broker_account?.broker_name ?? '—',
+      }),
+      columnHelper.display({
+        id: 'uid',
+        header: t('columns.uid'),
+        cell: ({ row }) => row.original.broker_account?.uid ?? '—',
+      }),
+      columnHelper.accessor('period_date', {
+        header: t('columns.period'),
+        cell: (info) => formatPeriodDate(info.getValue(), locale),
+      }),
+      columnHelper.accessor('gross_rebate', {
+        header: t('columns.grossRebate'),
+        cell: (info) => `${formatAmount(info.getValue())} USDT`,
+      }),
+      columnHelper.accessor('user_payout_amount', {
+        header: t('columns.payout'),
+        cell: (info) => `${formatAmount(info.getValue())} USDT`,
+      }),
+      columnHelper.accessor('status', {
+        header: t('columns.status'),
+        cell: (info) => <RebateStatusChip status={info.getValue() ?? ''} />,
+      }),
+      columnHelper.display({
+        id: 'actions',
+        header: t('columns.actions'),
+        cell: ({ row }) => (
+          <Button isIconOnly variant="tertiary" size="sm" onPress={() => setAdjustTarget(row.original)}>
+            <Pencil />
+          </Button>
+        ),
+      }),
+    ],
+    [t, locale],
+  );
+
+  const table = useReactTable({
+    data: calculations,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (row, index) => row.id ?? String(index),
+  });
 
   return (
     <div className="flex flex-col gap-4">
@@ -42,80 +102,14 @@ export const AdminCalculationsTable = () => {
         </Button>
       </div>
 
-      {isError && (
-        <Alert status="danger">
-          <Alert.Content>
-            <Alert.Description>{t('errors.loadFailed')}</Alert.Description>
-          </Alert.Content>
-        </Alert>
-      )}
-
-      {isLoading && (
-        <Card>
-          <Card.Content className="flex flex-col gap-3 py-4">
-            <Skeleton className="h-6 w-full" />
-            <Skeleton className="h-6 w-full" />
-            <Skeleton className="h-6 w-full" />
-          </Card.Content>
-        </Card>
-      )}
-
-      {!isLoading && !isError && (
-        <>
-          <Table>
-            <Table.ScrollContainer>
-              <Table.Content aria-label={t('title')}>
-                <Table.Header>
-                  <Table.Column isRowHeader>{t('columns.broker')}</Table.Column>
-                  <Table.Column>{t('columns.uid')}</Table.Column>
-                  <Table.Column>{t('columns.period')}</Table.Column>
-                  <Table.Column>{t('columns.grossRebate')}</Table.Column>
-                  <Table.Column>{t('columns.payout')}</Table.Column>
-                  <Table.Column>{t('columns.status')}</Table.Column>
-                  <Table.Column>{t('columns.actions')}</Table.Column>
-                </Table.Header>
-                <Table.Body>
-                  {calculations.map((calculation) => (
-                    <Table.Row key={calculation.id}>
-                      <Table.Cell>{calculation.broker_account?.broker_name ?? '—'}</Table.Cell>
-                      <Table.Cell>{calculation.broker_account?.uid ?? '—'}</Table.Cell>
-                      <Table.Cell>{formatPeriodDate(calculation.period_date, locale)}</Table.Cell>
-                      <Table.Cell>{formatAmount(calculation.gross_rebate)} USDT</Table.Cell>
-                      <Table.Cell>{formatAmount(calculation.user_payout_amount)} USDT</Table.Cell>
-                      <Table.Cell>
-                        <RebateStatusChip status={calculation.status ?? ''} />
-                      </Table.Cell>
-                      <Table.Cell>
-                        <Button variant="tertiary" size="sm" onPress={() => setAdjustTarget(calculation)}>
-                          {t('adjust.title')}
-                        </Button>
-                      </Table.Cell>
-                    </Table.Row>
-                  ))}
-                </Table.Body>
-              </Table.Content>
-            </Table.ScrollContainer>
-          </Table>
-
-          <div className="flex items-center justify-end gap-2">
-            <Button
-              variant="tertiary"
-              size="sm"
-              isDisabled={offset === 0}
-              onPress={() => setOffset(Math.max(0, offset - LIMIT))}
-            >
-              ←
-            </Button>
-            <Button
-              variant="tertiary"
-              size="sm"
-              isDisabled={calculations.length < LIMIT}
-              onPress={() => setOffset(offset + LIMIT)}
-            >
-              →
-            </Button>
-          </div>
-        </>
+      {!isError && (
+        <DataTable
+          table={table}
+          ariaLabel={t('title')}
+          emptyLabel={t('emptyDesc')}
+          rowHeaderColumnId="broker"
+          pagination={{ offset, limit: LIMIT, totalCount, onOffsetChange: setOffset }}
+        />
       )}
 
       <ImportBrokerDataModal isOpen={isImportOpen} onOpenChange={setIsImportOpen} />

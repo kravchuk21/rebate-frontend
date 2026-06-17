@@ -2,12 +2,14 @@
 
 import '@/shared/api/instance';
 
-import { useState } from 'react';
-import { Alert, Button, Card, Skeleton, Table, Tabs } from '@heroui/react';
+import { useEffect, useMemo, useState } from 'react';
+import { Button, Tabs, toast } from '@heroui/react';
 import { useLocale, useTranslations } from 'next-intl';
+import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
 import type { BrokerAccountDetailResponse } from '@/shared/api/generated/types.gen';
 import { AccountStatusChip } from '@/features/broker/components/AccountStatusChip';
+import { DataTable } from '@/shared/components/DataTable';
 
 import { getAdminErrorMessage } from '../../lib/getAdminErrorMessage';
 import { useAdminApproveBrokerAccount } from '../../hooks/useAdminApproveBrokerAccount';
@@ -18,6 +20,8 @@ import { RejectReasonModal } from './RejectReasonModal';
 
 const LIMIT = 20;
 
+const columnHelper = createColumnHelper<BrokerAccountDetailResponse>();
+
 export const AdminBrokerAccountsTable = () => {
   const t = useTranslations('admin.brokerAccounts');
   const locale = useLocale();
@@ -26,22 +30,30 @@ export const AdminBrokerAccountsTable = () => {
   const [rejectTarget, setRejectTarget] = useState<string | null>(null);
   const [revokeTarget, setRevokeTarget] = useState<string | null>(null);
 
-  const { data, isLoading, isError } = useAdminBrokerAccounts({
+  const { data, isError } = useAdminBrokerAccounts({
     status: status === 'pending' ? 'pending' : undefined,
     limit: LIMIT,
     offset,
   });
 
+  useEffect(() => {
+    if (isError) toast.danger(t('errors.loadFailed'));
+  }, [isError, t]);
+
   const approveAccount = useAdminApproveBrokerAccount();
   const rejectAccount = useAdminRejectBrokerAccount();
   const revokeAccount = useAdminRevokeBrokerAccount();
 
-  const accounts = (data?.data as { items?: BrokerAccountDetailResponse[] } | undefined)?.items ?? [];
+  const responseData = data?.data as
+    | { items?: BrokerAccountDetailResponse[]; total_count?: number }
+    | undefined;
+  const accounts = responseData?.items ?? [];
+  const totalCount = responseData?.total_count ?? 0;
 
-  const dateFormatter = new Intl.DateTimeFormat(locale, {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  });
+  const dateFormatter = useMemo(
+    () => new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }),
+    [locale],
+  );
 
   const handleTabChange = (key: string) => {
     setStatus(key === 'all' ? 'all' : 'pending');
@@ -68,6 +80,78 @@ export const AdminBrokerAccountsTable = () => {
     );
   };
 
+  const columns = useMemo(
+    () => [
+      columnHelper.display({
+        id: 'broker',
+        header: t('columns.broker'),
+        cell: ({ row }) => row.original.broker?.name ?? '—',
+      }),
+      columnHelper.accessor('uid', {
+        header: t('columns.uid'),
+        cell: (info) => info.getValue() ?? '—',
+      }),
+      columnHelper.accessor('status', {
+        header: t('columns.status'),
+        cell: (info) => <AccountStatusChip status={info.getValue() ?? ''} />,
+      }),
+      columnHelper.accessor('created_at', {
+        header: t('columns.submittedAt'),
+        cell: (info) => {
+          const v = info.getValue();
+          return v ? dateFormatter.format(new Date(v)) : '—';
+        },
+      }),
+      columnHelper.display({
+        id: 'actions',
+        header: t('columns.actions'),
+        cell: ({ row }) => {
+          const account = row.original;
+          return (
+            <div className="flex flex-wrap gap-2">
+              {account.status === 'pending' && (
+                <>
+                  <Button
+                    variant="tertiary"
+                    size="sm"
+                    onPress={() => account.id && handleApprove(account.id)}
+                  >
+                    {t('actions.approve')}
+                  </Button>
+                  <Button
+                    variant="tertiary"
+                    size="sm"
+                    onPress={() => setRejectTarget(account.id ?? null)}
+                  >
+                    {t('actions.reject')}
+                  </Button>
+                </>
+              )}
+              {account.status === 'approved' && (
+                <Button
+                  variant="tertiary"
+                  size="sm"
+                  onPress={() => setRevokeTarget(account.id ?? null)}
+                >
+                  {t('actions.revoke')}
+                </Button>
+              )}
+            </div>
+          );
+        },
+      }),
+    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [t, dateFormatter],
+  );
+
+  const table = useReactTable({
+    data: accounts,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (row, index) => row.id ?? String(index),
+  });
+
   return (
     <div className="flex flex-col gap-4">
       <Tabs onSelectionChange={(key) => handleTabChange(String(key))}>
@@ -85,104 +169,14 @@ export const AdminBrokerAccountsTable = () => {
         </Tabs.ListContainer>
       </Tabs>
 
-      {isError && (
-        <Alert status="danger">
-          <Alert.Content>
-            <Alert.Description>{t('errors.loadFailed')}</Alert.Description>
-          </Alert.Content>
-        </Alert>
-      )}
-
-      {isLoading && (
-        <Card>
-          <Card.Content className="flex flex-col gap-3 py-4">
-            <Skeleton className="h-6 w-full" />
-            <Skeleton className="h-6 w-full" />
-            <Skeleton className="h-6 w-full" />
-          </Card.Content>
-        </Card>
-      )}
-
-      {!isLoading && !isError && (
-        <>
-          <Table>
-            <Table.ScrollContainer>
-              <Table.Content aria-label={t('title')}>
-                <Table.Header>
-                  <Table.Column isRowHeader>{t('columns.broker')}</Table.Column>
-                  <Table.Column>{t('columns.uid')}</Table.Column>
-                  <Table.Column>{t('columns.status')}</Table.Column>
-                  <Table.Column>{t('columns.submittedAt')}</Table.Column>
-                  <Table.Column>{t('columns.actions')}</Table.Column>
-                </Table.Header>
-                <Table.Body>
-                  {accounts.map((account) => (
-                    <Table.Row key={account.id}>
-                      <Table.Cell>{account.broker?.name ?? '—'}</Table.Cell>
-                      <Table.Cell>{account.uid ?? '—'}</Table.Cell>
-                      <Table.Cell>
-                        <AccountStatusChip status={account.status ?? ''} />
-                      </Table.Cell>
-                      <Table.Cell>
-                        {account.created_at ? dateFormatter.format(new Date(account.created_at)) : '—'}
-                      </Table.Cell>
-                      <Table.Cell>
-                        <div className="flex flex-wrap gap-2">
-                          {account.status === 'pending' && (
-                            <>
-                              <Button
-                                variant="tertiary"
-                                size="sm"
-                                onPress={() => account.id && handleApprove(account.id)}
-                              >
-                                {t('actions.approve')}
-                              </Button>
-                              <Button
-                                variant="tertiary"
-                                size="sm"
-                                onPress={() => setRejectTarget(account.id ?? null)}
-                              >
-                                {t('actions.reject')}
-                              </Button>
-                            </>
-                          )}
-                          {account.status === 'approved' && (
-                            <Button
-                              variant="tertiary"
-                              size="sm"
-                              onPress={() => setRevokeTarget(account.id ?? null)}
-                            >
-                              {t('actions.revoke')}
-                            </Button>
-                          )}
-                        </div>
-                      </Table.Cell>
-                    </Table.Row>
-                  ))}
-                </Table.Body>
-              </Table.Content>
-            </Table.ScrollContainer>
-          </Table>
-
-          <div className="flex items-center justify-end gap-2">
-            <Button
-              variant="tertiary"
-              size="sm"
-              isDisabled={offset === 0}
-              onPress={() => setOffset(Math.max(0, offset - LIMIT))}
-            >
-              ←
-            </Button>
-            <Button
-              variant="tertiary"
-              size="sm"
-              isDisabled={accounts.length < LIMIT}
-              onPress={() => setOffset(offset + LIMIT)}
-            >
-              →
-            </Button>
-          </div>
-        </>
+      {!isError && (
+        <DataTable
+          table={table}
+          ariaLabel={t('title')}
+          emptyLabel={t('emptyDesc')}
+          rowHeaderColumnId="broker"
+          pagination={{ offset, limit: LIMIT, totalCount, onOffsetChange: setOffset }}
+        />
       )}
 
       <RejectReasonModal

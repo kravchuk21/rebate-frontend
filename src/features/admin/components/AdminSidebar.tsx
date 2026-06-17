@@ -52,7 +52,9 @@ export const AdminSidebar = ({ email, role }: AdminSidebarProps) => {
       </Drawer.Root>
 
       {isDesktopVisible && (
-        <aside className="hidden w-72 border-r p-4 md:block">{content()}</aside>
+        <aside className="hidden w-72 shrink-0 border-r p-4 md:sticky md:top-0 md:block md:h-screen md:overflow-y-auto">
+          {content()}
+        </aside>
       )}
     </>
   );

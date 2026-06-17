@@ -3,8 +3,10 @@
 import '@/shared/api/instance';
 
 import { useEffect, useState } from 'react';
-import { Alert, Button, Card, Input, Skeleton } from '@heroui/react';
+import { Button, Card, Input, Skeleton, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
+
+import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
 
 import { useAdminConfig } from '../../hooks/useAdminConfig';
 import { useAdminSetConfig } from '../../hooks/useAdminSetConfig';
@@ -66,33 +68,33 @@ export const ConfigEditor = () => {
   const t = useTranslations('admin.config');
   const { data, isLoading, isError } = useAdminConfig();
 
+  useEffect(() => {
+    if (isError) toast.danger(t('errors.loadFailed'));
+  }, [isError, t]);
+
   const values = (data?.data as Record<string, string> | undefined) ?? {};
 
   if (isLoading) {
     return (
-      <div className="flex flex-col gap-4">
+      <DashboardLayout>
         {CONFIG_KEYS.map((key) => (
-          <Skeleton key={key} className="h-20 w-full" />
+          <DashboardItem key={key} span={12}>
+            <Skeleton className="h-20 w-full" />
+          </DashboardItem>
         ))}
-      </div>
+      </DashboardLayout>
     );
   }
 
-  if (isError) {
-    return (
-      <Alert status="danger">
-        <Alert.Content>
-          <Alert.Description>{t('errors.loadFailed')}</Alert.Description>
-        </Alert.Content>
-      </Alert>
-    );
-  }
+  if (isError) return null;
 
   return (
-    <div className="flex flex-col gap-4">
+    <DashboardLayout>
       {CONFIG_KEYS.map((key) => (
-        <ConfigRow key={key} configKey={key} value={values[key] ?? ''} />
+        <DashboardItem key={key} span={12}>
+          <ConfigRow configKey={key} value={values[key] ?? ''} />
+        </DashboardItem>
       ))}
-    </div>
+    </DashboardLayout>
   );
 };
