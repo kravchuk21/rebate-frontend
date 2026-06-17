@@ -55,7 +55,7 @@ export const WithdrawalPageClient = () => {
               </Button>
             </DashboardItem>
             <DashboardItem span={12}>
-              <LedgerTable limit={10} />
+              <LedgerTable />
             </DashboardItem>
           </DashboardLayout>
         </Tabs.Panel>

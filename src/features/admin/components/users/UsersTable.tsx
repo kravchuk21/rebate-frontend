@@ -6,7 +6,7 @@ import type { SortDescriptor } from '@heroui/react';
 import type { SortingState } from '@tanstack/react-table';
 
 import { useEffect, useMemo, useState } from 'react';
-import { AlertDialog, Alert, Button, Card, Input, Skeleton, Table, toast } from '@heroui/react';
+import { AlertDialog, Button, Input, Table, toast } from '@heroui/react';
 import { useLocale, useTranslations } from 'next-intl';
 import {
   createColumnHelper,
@@ -187,17 +187,7 @@ export const UsersTable = () => {
         className="max-w-sm"
       />
 
-      {isLoading && (
-        <Card>
-          <Card.Content className="flex flex-col gap-3 py-4">
-            <Skeleton className="h-6 w-full" />
-            <Skeleton className="h-6 w-full" />
-            <Skeleton className="h-6 w-full" />
-          </Card.Content>
-        </Card>
-      )}
-
-      {!isLoading && !isError && (
+      {!isError && (
         <Table>
           <Table.ScrollContainer>
             <Table.Content
