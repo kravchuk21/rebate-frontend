@@ -375,12 +375,6 @@
     },
     "errors": {
       "loadFailed": "Failed to load rebate history"
-    },
-    "tooltips": {
-      "grossRebate": "Total rebate received from broker",
-      "ourFee": "Service fee deducted from gross rebate",
-      "referrerAmount": "Share paid to your referrer",
-      "yourPayout": "Amount credited to your balance"
     }
   },
   "referrals": {

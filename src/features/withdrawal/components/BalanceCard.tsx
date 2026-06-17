@@ -38,7 +38,7 @@ export const BalanceCard = () => {
           <DashboardItem span={4}>
             <Card variant='secondary'>
               <Card.Header>
-                <div className='flex justify-between'>
+                <div className='flex justify-between items-center'>
                   <Card.Title>{t('total')}</Card.Title>
                   <InfoTooltip title={t('totalHint.title')} description={t('totalHint.description')} />
                 </div>
@@ -57,7 +57,7 @@ export const BalanceCard = () => {
           <DashboardItem span={4}>
             <Card variant='secondary'>
               <Card.Header>
-                <div className='flex justify-between'>
+                <div className='flex justify-between items-center'>
                   <Card.Title>{t('frozen')}</Card.Title>
                   <InfoTooltip title={t('frozenHint.title')} description={t('frozenHint.description')} />
                 </div>
@@ -76,7 +76,7 @@ export const BalanceCard = () => {
           <DashboardItem span={4}>
             <Card variant='secondary'>
               <Card.Header>
-                <div className='flex justify-between'>
+                <div className='flex justify-between items-center'>
                   <Card.Title>{t('available')}</Card.Title>
                   <InfoTooltip title={t('availableHint.title')} description={t('availableHint.description')} />
                 </div>

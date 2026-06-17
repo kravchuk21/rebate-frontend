@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { Button } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
+import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
+
 import { BrokerAccountsTable } from './BrokerAccountsTable';
 import { SubmitAccountModal } from './SubmitAccountModal';
 
@@ -12,12 +14,16 @@ export const BrokerAccountsPageClient = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-end">
+    <DashboardLayout>
+      <DashboardItem className="flex items-center justify-end">
         <Button onPress={() => setIsModalOpen(true)}>{t('addAccount')}</Button>
-      </div>
-      <BrokerAccountsTable onAddAccount={() => setIsModalOpen(true)} />
+      </DashboardItem>
+
+      <DashboardItem span={12}>
+        <BrokerAccountsTable onAddAccount={() => setIsModalOpen(true)} />
+      </DashboardItem>
+
       <SubmitAccountModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} />
-    </div>
+    </DashboardLayout>
   );
 };
