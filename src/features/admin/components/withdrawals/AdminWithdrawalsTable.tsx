@@ -46,9 +46,14 @@ export const AdminWithdrawalsTable = () => {
       <Tabs onSelectionChange={(key) => handleTabChange(String(key))}>
         <Tabs.ListContainer>
           <Tabs.List>
-            <Tabs.Tab id="pending">{t('tabs.pending')}</Tabs.Tab>
-            <Tabs.Tab id="all">{t('tabs.all')}</Tabs.Tab>
-            <Tabs.Indicator />
+            <Tabs.Tab id="pending">
+              {t('tabs.pending')}
+              <Tabs.Indicator />
+            </Tabs.Tab>
+            <Tabs.Tab id="all">
+              {t('tabs.all')}
+              <Tabs.Indicator />
+            </Tabs.Tab>
           </Tabs.List>
         </Tabs.ListContainer>
       </Tabs>
