@@ -150,7 +150,10 @@
     "cards": {
       "accounts": "Broker Accounts",
       "balance": "Available Balance",
-      "referralCode": "Referral Code"
+      "referralCode": "Referral Code",
+      "manageAccounts": "Manage accounts",
+      "withdrawFunds": "Withdraw funds",
+      "viewReferrals": "View referrals"
     }
   },
   "accounts": {

@@ -3,6 +3,7 @@ import { PageHeader } from '@/shared/components/dashboard/PageHeader';
 
 import { DashboardSummaryCards } from '@/features/broker/components/DashboardSummaryCards';
 import { ReferralLinkCard } from '@/features/referral/components/ReferralLinkCard';
+import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
 
 export default async function DashboardPage() {
   const t = await getTranslations('dashboard');
@@ -10,8 +11,14 @@ export default async function DashboardPage() {
   return (
     <>
       <PageHeader title={t('title')} />
-      <DashboardSummaryCards />
-      <ReferralLinkCard />
+      <DashboardLayout>
+        <DashboardItem>
+          <DashboardSummaryCards />
+        </DashboardItem>
+        <DashboardItem>
+          <ReferralLinkCard />
+        </DashboardItem>
+      </DashboardLayout>
     </>
   );
 }

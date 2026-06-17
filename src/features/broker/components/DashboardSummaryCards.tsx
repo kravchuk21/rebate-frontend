@@ -2,10 +2,11 @@
 
 import '@/shared/api/instance';
 
-import { Card, Skeleton } from '@heroui/react';
+import { Button, Card, Skeleton, Typography } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
-import { Link } from '@/i18n/navigation';
+import { useRouter } from '@/i18n/navigation';
+import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
 import type {
   BrokerAccountDetailResponse,
   ReferralStatsResponse,
@@ -19,6 +20,7 @@ import { useMyAccounts } from '../hooks/useMyAccounts';
 
 export const DashboardSummaryCards = () => {
   const t = useTranslations('dashboard.cards');
+  const router = useRouter();
   const { data } = useMyAccounts();
   const { data: balanceData, isLoading: isBalanceLoading } = useBalance();
   const { data: referralData, isLoading: isReferralLoading } = useReferralStats();
@@ -30,65 +32,69 @@ export const DashboardSummaryCards = () => {
   const balance = balanceData?.data as WithdrawalBalanceResponse | undefined;
   const referralStats = referralData?.data as ReferralStatsResponse | undefined;
 
-  const handleCopyReferralLink = () => {
-    if (!referralStats?.referral_url) return;
-    navigator.clipboard.writeText(referralStats.referral_url);
-  };
-
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-      <Link href="/accounts">
-        <Card variant='secondary'>
+    <DashboardLayout>
+      <DashboardItem span={4}>
+        <Card variant="secondary">
           <Card.Header>
             <Card.Title>{t('accounts')}</Card.Title>
           </Card.Header>
           <Card.Content>
-            <span className="text-2xl font-semibold">{approvedCount}</span>
+            <Typography.Paragraph>
+              {approvedCount}
+            </Typography.Paragraph>
           </Card.Content>
+          <Card.Footer>
+            <Button variant="secondary" size="sm" onPress={() => router.push('/accounts')}>
+              {t('manageAccounts')}
+            </Button>
+          </Card.Footer>
         </Card>
-      </Link>
+      </DashboardItem>
 
-      <Link href="/withdrawal">
-        <Card>
+      <DashboardItem span={4}>
+        <Card variant="secondary">
           <Card.Header>
             <Card.Title>{t('balance')}</Card.Title>
           </Card.Header>
           <Card.Content>
             {isBalanceLoading ? (
-              <Skeleton className="h-8 w-24" />
+              <Skeleton className="h-7 w-full" />
             ) : (
-              <span className="text-2xl font-semibold">
+              <Typography.Paragraph>
                 {formatAmount(balance?.available)} USDT
-              </span>
+              </Typography.Paragraph>
             )}
           </Card.Content>
+          <Card.Footer>
+            <Button variant="secondary" size="sm" onPress={() => router.push('/withdrawal')}>
+              {t('withdrawFunds')}
+            </Button>
+          </Card.Footer>
         </Card>
-      </Link>
+      </DashboardItem>
 
-      <Link href="/referrals">
-        <Card>
+      <DashboardItem span={4}>
+        <Card variant="secondary">
           <Card.Header>
             <Card.Title>{t('referralCode')}</Card.Title>
           </Card.Header>
           <Card.Content>
             {isReferralLoading ? (
-              <Skeleton className="h-8 w-24" />
+              <Skeleton className="h-7 w-full" />
             ) : (
-              <button
-                type="button"
-                className="text-2xl font-semibold"
-                onClick={(event) => {
-                  event.preventDefault();
-                  event.stopPropagation();
-                  handleCopyReferralLink();
-                }}
-              >
+              <Typography.Paragraph>
                 {referralStats?.referral_code ?? '—'}
-              </button>
+              </Typography.Paragraph>
             )}
           </Card.Content>
+          <Card.Footer>
+            <Button variant="secondary" size="sm" onPress={() => router.push('/referrals')}>
+              {t('viewReferrals')}
+            </Button>
+          </Card.Footer>
         </Card>
-      </Link>
-    </div>
+      </DashboardItem>
+    </DashboardLayout>
   );
 };

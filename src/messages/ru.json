@@ -150,7 +150,10 @@
     "cards": {
       "accounts": "Брокерские аккаунты",
       "balance": "Доступный баланс",
-      "referralCode": "Реферальный код"
+      "referralCode": "Реферальный код",
+      "manageAccounts": "Управление аккаунтами",
+      "withdrawFunds": "Вывести средства",
+      "viewReferrals": "К рефералам"
     }
   },
   "accounts": {
