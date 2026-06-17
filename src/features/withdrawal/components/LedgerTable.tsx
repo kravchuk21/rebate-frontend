@@ -3,25 +3,26 @@
 import '@/shared/api/instance';
 
 import { useEffect, useMemo, useState } from 'react';
-import { Table, toast } from '@heroui/react';
+import { toast } from '@heroui/react';
 import { useLocale, useTranslations } from 'next-intl';
-import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
 import type { WithdrawalLedgerEntryResponse } from '@/shared/api/generated/types.gen';
 
-import { TableEmptyState } from '@/shared/components/TableEmptyState';
-import { TablePagination } from '@/shared/components/TablePagination';
+import { DataTable } from '@/shared/components/DataTable';
 import { useLedger } from '../hooks/useLedger';
 import { formatAmountWithSign } from '../lib/formatAmount';
 import { LedgerTypeChip } from './LedgerTypeChip';
 
 const LIMIT = 10;
 
+const columnHelper = createColumnHelper<WithdrawalLedgerEntryResponse>();
+
 export const LedgerTable = () => {
   const t = useTranslations('withdrawal.ledger');
   const locale = useLocale();
   const [offset, setOffset] = useState(0);
-  const { data, isLoading, isError } = useLedger(LIMIT, offset);
+  const { data, isError } = useLedger(LIMIT, offset);
 
   useEffect(() => {
     if (isError) toast.danger(t('errors.loadFailed'));
@@ -37,8 +38,6 @@ export const LedgerTable = () => {
     () => new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }),
     [locale],
   );
-
-  const columnHelper = createColumnHelper<WithdrawalLedgerEntryResponse>();
 
   const columns = useMemo(
     () => [
@@ -63,7 +62,6 @@ export const LedgerTable = () => {
         },
       }),
     ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, dateFormatter],
   );
 
@@ -76,36 +74,12 @@ export const LedgerTable = () => {
   if (isError) return null;
 
   return (
-    <Table>
-      <Table.ScrollContainer>
-        <Table.Content aria-label={t('title')}>
-          <Table.Header>
-            {table.getHeaderGroups()[0]!.headers.map((header) => (
-              <Table.Column key={header.id} isRowHeader={header.id === 'type'}>
-                {flexRender(header.column.columnDef.header, header.getContext())}
-              </Table.Column>
-            ))}
-          </Table.Header>
-          <Table.Body renderEmptyState={() => <TableEmptyState label={t('empty')} />}>
-            {table.getRowModel().rows.map((row) => (
-              <Table.Row key={row.id} id={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <Table.Cell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Table.Cell>
-                ))}
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table.Content>
-      </Table.ScrollContainer>
-
-      <TablePagination
-        offset={offset}
-        limit={LIMIT}
-        totalCount={totalCount}
-        onOffsetChange={setOffset}
-      />
-    </Table>
+    <DataTable
+      table={table}
+      ariaLabel={t('title')}
+      emptyLabel={t('empty')}
+      rowHeaderColumnId="type"
+      pagination={{ offset, limit: LIMIT, totalCount, onOffsetChange: setOffset }}
+    />
   );
 };

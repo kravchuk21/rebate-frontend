@@ -6,19 +6,13 @@ import type { SortDescriptor } from '@heroui/react';
 import type { SortingState } from '@tanstack/react-table';
 
 import { useEffect, useMemo, useState } from 'react';
-import { AlertDialog, Button, Input, Table, toast } from '@heroui/react';
+import { AlertDialog, Button, Input, toast } from '@heroui/react';
 import { useLocale, useTranslations } from 'next-intl';
-import {
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
+import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
 import type { AdminUserResponse } from '@/shared/api/generated/types.gen';
 
-import { TableEmptyState } from '@/shared/components/TableEmptyState';
-import { TablePagination } from '@/shared/components/TablePagination';
+import { DataTable } from '@/shared/components/DataTable';
 import { getAdminErrorMessage } from '../../lib/getAdminErrorMessage';
 import { useAdminSuspendUser } from '../../hooks/useAdminSuspendUser';
 import { useAdminUnsuspendUser } from '../../hooks/useAdminUnsuspendUser';
@@ -38,6 +32,8 @@ function toSortDescriptor(sorting: SortingState): SortDescriptor | undefined {
 function toSortingState(descriptor: SortDescriptor): SortingState {
   return [{ id: descriptor.column as string, desc: descriptor.direction === 'descending' }];
 }
+
+const columnHelper = createColumnHelper<AdminUserResponse>();
 
 export const UsersTable = () => {
   const t = useTranslations('admin.users');
@@ -79,8 +75,6 @@ export const UsersTable = () => {
     () => new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }),
     [locale],
   );
-
-  const columnHelper = createColumnHelper<AdminUserResponse>();
 
   const columns = useMemo(
     () => [
@@ -188,48 +182,15 @@ export const UsersTable = () => {
       />
 
       {!isError && (
-        <Table>
-          <Table.ScrollContainer>
-            <Table.Content
-              aria-label={t('title')}
-              sortDescriptor={sortDescriptor}
-              onSortChange={(d) => setSorting(toSortingState(d))}
-            >
-              <Table.Header>
-                {table.getHeaderGroups()[0]!.headers.map((header) => (
-                  <Table.Column
-                    key={header.id}
-                    id={header.id}
-                    allowsSorting={header.column.getCanSort()}
-                    isRowHeader={header.id === 'email'}
-                  >
-                    {flexRender(header.column.columnDef.header, header.getContext())}
-                  </Table.Column>
-                ))}
-              </Table.Header>
-              <Table.Body
-                renderEmptyState={() => <TableEmptyState label={t('emptyDesc')} />}
-              >
-                {table.getRowModel().rows.map((row) => (
-                  <Table.Row key={row.id} id={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                      <Table.Cell key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </Table.Cell>
-                    ))}
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table.Content>
-          </Table.ScrollContainer>
-
-          <TablePagination
-            offset={offset}
-            limit={LIMIT}
-            totalCount={totalCount}
-            onOffsetChange={setOffset}
-          />
-        </Table>
+        <DataTable
+          table={table}
+          ariaLabel={t('title')}
+          emptyLabel={t('emptyDesc')}
+          rowHeaderColumnId="email"
+          sortDescriptor={sortDescriptor}
+          onSortChange={(d) => setSorting(toSortingState(d))}
+          pagination={{ offset, limit: LIMIT, totalCount, onOffsetChange: setOffset }}
+        />
       )}
 
       <AlertDialog

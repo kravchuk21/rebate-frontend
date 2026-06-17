@@ -2,12 +2,14 @@
 
 import '@/shared/api/instance';
 
-import { useState } from 'react';
-import { AlertDialog, Alert, Button, Card, Skeleton, Table } from '@heroui/react';
+import { useEffect, useMemo, useState } from 'react';
+import { AlertDialog, Alert, Button, toast } from '@heroui/react';
 import { useLocale, useTranslations } from 'next-intl';
+import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
 import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
 import type { WithdrawalResponse } from '@/shared/api/generated/types.gen';
+import { DataTable } from '@/shared/components/DataTable';
 
 import { useCancelWithdrawal } from '../hooks/useCancelWithdrawal';
 import { useWithdrawals } from '../hooks/useWithdrawals';
@@ -15,52 +17,32 @@ import { formatAmount } from '../lib/formatAmount';
 import { truncateAddress } from '../lib/validateAddress';
 import { WithdrawalStatusChip } from './WithdrawalStatusChip';
 
+const LIMIT = 20;
+
+const columnHelper = createColumnHelper<WithdrawalResponse>();
+
 export const WithdrawalsTable = () => {
   const t = useTranslations('withdrawal.history');
   const locale = useLocale();
-  const { data, isLoading, isError } = useWithdrawals(20, 0);
+  const [offset, setOffset] = useState(0);
+  const { data, isError } = useWithdrawals(LIMIT, offset);
   const cancelWithdrawal = useCancelWithdrawal();
   const [cancelTarget, setCancelTarget] = useState<string | null>(null);
 
-  const withdrawals =
-    (data?.data as { items?: WithdrawalResponse[] } | undefined)?.items ?? [];
+  useEffect(() => {
+    if (isError) toast.danger(t('errors.loadFailed'));
+  }, [isError, t]);
 
-  const dateFormatter = new Intl.DateTimeFormat(locale, {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  });
+  const responseData = data?.data as
+    | { items?: WithdrawalResponse[]; total_count?: number }
+    | undefined;
+  const withdrawals = responseData?.items ?? [];
+  const totalCount = responseData?.total_count ?? 0;
 
-  if (isError) {
-    return (
-      <Alert status="danger">
-        <Alert.Content>
-          <Alert.Description>{t('errors.loadFailed')}</Alert.Description>
-        </Alert.Content>
-      </Alert>
-    );
-  }
-
-  if (isLoading) {
-    return (
-      <Card>
-        <Card.Content className="flex flex-col gap-3 py-4">
-          <Skeleton className="h-6 w-full" />
-          <Skeleton className="h-6 w-full" />
-          <Skeleton className="h-6 w-full" />
-        </Card.Content>
-      </Card>
-    );
-  }
-
-  if (withdrawals.length === 0) {
-    return (
-      <Card>
-        <Card.Content className="flex items-center justify-center py-12 text-center text-muted">
-          {t('empty')}
-        </Card.Content>
-      </Card>
-    );
-  }
+  const dateFormatter = useMemo(
+    () => new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }),
+    [locale],
+  );
 
   const handleCancel = (id: string) => {
     cancelWithdrawal.mutate(
@@ -71,66 +53,90 @@ export const WithdrawalsTable = () => {
     );
   };
 
+  const columns = useMemo(
+    () => [
+      columnHelper.display({
+        id: 'method',
+        header: t('columns.method'),
+        cell: ({ row }) => {
+          const { payout_method } = row.original;
+          return payout_method ? `${payout_method.name} (${payout_method.network})` : '—';
+        },
+      }),
+      columnHelper.accessor('amount_requested', {
+        header: t('columns.amount'),
+        cell: (info) => `${formatAmount(info.getValue())} USDT`,
+      }),
+      columnHelper.accessor('network_fee', {
+        header: t('columns.fee'),
+        cell: (info) => {
+          const v = info.getValue();
+          return v != null ? `${formatAmount(v)} USDT` : '—';
+        },
+      }),
+      columnHelper.accessor('amount_to_send', {
+        header: t('columns.youReceive'),
+        cell: (info) => {
+          const v = info.getValue();
+          return v != null ? `${formatAmount(v)} USDT` : '—';
+        },
+      }),
+      columnHelper.accessor('status', {
+        header: t('columns.status'),
+        cell: (info) => <WithdrawalStatusChip status={info.getValue() ?? ''} />,
+      }),
+      columnHelper.accessor('requested_at', {
+        header: t('columns.date'),
+        cell: (info) => {
+          const v = info.getValue();
+          return v ? dateFormatter.format(new Date(v)) : '—';
+        },
+      }),
+      columnHelper.accessor('tx_hash', {
+        header: t('columns.txHash'),
+        cell: (info) => {
+          const v = info.getValue();
+          return v ? truncateAddress(v) : '—';
+        },
+      }),
+      columnHelper.display({
+        id: 'cancel',
+        header: t('cancel'),
+        cell: ({ row }) => {
+          const withdrawal = row.original;
+          return withdrawal.status === 'pending' && withdrawal.id ? (
+            <Button
+              variant="tertiary"
+              size="sm"
+              onPress={() => setCancelTarget(withdrawal.id ?? null)}
+            >
+              {t('cancel')}
+            </Button>
+          ) : null;
+        },
+      }),
+    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [t, dateFormatter],
+  );
+
+  const table = useReactTable({
+    data: withdrawals,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
+
+  if (isError) return null;
+
   return (
     <>
-      <Table>
-        <Table.ScrollContainer>
-          <Table.Content aria-label={t('title')}>
-            <Table.Header>
-              <Table.Column isRowHeader>{t('columns.method')}</Table.Column>
-              <Table.Column>{t('columns.amount')}</Table.Column>
-              <Table.Column>{t('columns.fee')}</Table.Column>
-              <Table.Column>{t('columns.youReceive')}</Table.Column>
-              <Table.Column>{t('columns.status')}</Table.Column>
-              <Table.Column>{t('columns.date')}</Table.Column>
-              <Table.Column>{t('columns.txHash')}</Table.Column>
-              <Table.Column>{t('cancel')}</Table.Column>
-            </Table.Header>
-            <Table.Body>
-              {withdrawals.map((withdrawal) => (
-                <Table.Row key={withdrawal.id}>
-                  <Table.Cell>
-                    {withdrawal.payout_method
-                      ? `${withdrawal.payout_method.name} (${withdrawal.payout_method.network})`
-                      : '—'}
-                  </Table.Cell>
-                  <Table.Cell>{formatAmount(withdrawal.amount_requested)} USDT</Table.Cell>
-                  <Table.Cell>
-                    {withdrawal.network_fee != null ? `${formatAmount(withdrawal.network_fee)} USDT` : '—'}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {withdrawal.amount_to_send != null
-                      ? `${formatAmount(withdrawal.amount_to_send)} USDT`
-                      : '—'}
-                  </Table.Cell>
-                  <Table.Cell>
-                    <WithdrawalStatusChip status={withdrawal.status ?? ''} />
-                  </Table.Cell>
-                  <Table.Cell>
-                    {withdrawal.requested_at
-                      ? dateFormatter.format(new Date(withdrawal.requested_at))
-                      : '—'}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {withdrawal.tx_hash ? truncateAddress(withdrawal.tx_hash) : '—'}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {withdrawal.status === 'pending' && withdrawal.id && (
-                      <Button
-                        variant="tertiary"
-                        size="sm"
-                        onPress={() => setCancelTarget(withdrawal.id ?? null)}
-                      >
-                        {t('cancel')}
-                      </Button>
-                    )}
-                  </Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table.Content>
-        </Table.ScrollContainer>
-      </Table>
+      <DataTable
+        table={table}
+        ariaLabel={t('title')}
+        emptyLabel={t('empty')}
+        rowHeaderColumnId="method"
+        pagination={{ offset, limit: LIMIT, totalCount, onOffsetChange: setOffset }}
+      />
 
       <AlertDialog isOpen={cancelTarget !== null} onOpenChange={(open) => !open && setCancelTarget(null)}>
         <AlertDialog.Backdrop>
