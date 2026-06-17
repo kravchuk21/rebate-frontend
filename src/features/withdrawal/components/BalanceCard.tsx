@@ -2,13 +2,15 @@
 
 import '@/shared/api/instance';
 
-import { Alert, Card, Skeleton, Tooltip } from '@heroui/react';
+import { Alert, Card, Skeleton, Typography } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
 import type { WithdrawalBalanceResponse } from '@/shared/api/generated/types.gen';
 
 import { useBalance } from '../hooks/useBalance';
 import { formatAmount } from '../lib/formatAmount';
+import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
+import { InfoTooltip } from './InfoTooltip';
 
 export const BalanceCard = () => {
   const t = useTranslations('withdrawal.balance');
@@ -27,52 +29,70 @@ export const BalanceCard = () => {
   const balance = data?.data as WithdrawalBalanceResponse | undefined;
 
   return (
-    <Card>
+    <Card variant='transparent' className='p-0'>
       <Card.Header>
         <Card.Title>{t('title')}</Card.Title>
       </Card.Header>
       <Card.Content>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-          <div className="flex flex-col gap-1">
-            <span className="text-sm text-muted">{t('total')}</span>
-            {isLoading ? (
-              <Skeleton className="h-8 w-24" />
-            ) : (
-              <span className="text-2xl font-semibold">
-                {formatAmount(balance?.total)} USDT
-              </span>
-            )}
-          </div>
-
-          <div className="flex flex-col gap-1">
-            <Tooltip>
-              <Tooltip.Trigger className="w-fit">
-                <span className="text-sm text-muted underline decoration-dotted">
-                  {t('frozen')}
-                </span>
-              </Tooltip.Trigger>
-              <Tooltip.Content>{t('frozenHint')}</Tooltip.Content>
-            </Tooltip>
-            {isLoading ? (
-              <Skeleton className="h-8 w-24" />
-            ) : (
-              <span className="text-2xl font-semibold">
-                {formatAmount(balance?.frozen)} USDT
-              </span>
-            )}
-          </div>
-
-          <div className="flex flex-col gap-1">
-            <span className="text-sm text-muted">{t('available')}</span>
-            {isLoading ? (
-              <Skeleton className="h-8 w-24" />
-            ) : (
-              <span className="text-2xl font-semibold text-accent">
-                {formatAmount(balance?.available)} USDT
-              </span>
-            )}
-          </div>
-        </div>
+        <DashboardLayout>
+          <DashboardItem span={4}>
+            <Card variant='secondary'>
+              <Card.Header>
+                <div className='flex justify-between'>
+                  <Card.Title>{t('total')}</Card.Title>
+                  <InfoTooltip title={t('totalHint.title')} description={t('totalHint.description')} />
+                </div>
+              </Card.Header>
+              <Card.Content>
+                {isLoading ? (
+                  <Skeleton className="h-7 w-full" />
+                ) : (
+                  <Typography.Paragraph>
+                    {formatAmount(balance?.total)} USDT
+                  </Typography.Paragraph>
+                )}
+              </Card.Content>
+            </Card>
+          </DashboardItem>
+          <DashboardItem span={4}>
+            <Card variant='secondary'>
+              <Card.Header>
+                <div className='flex justify-between'>
+                  <Card.Title>{t('frozen')}</Card.Title>
+                  <InfoTooltip title={t('frozenHint.title')} description={t('frozenHint.description')} />
+                </div>
+              </Card.Header>
+              <Card.Content>
+                {isLoading ? (
+                  <Skeleton className="h-7 w-full" />
+                ) : (
+                  <Typography.Paragraph>
+                    {formatAmount(balance?.frozen)} USDT
+                  </Typography.Paragraph>
+                )}
+              </Card.Content>
+            </Card>
+          </DashboardItem>
+          <DashboardItem span={4}>
+            <Card variant='secondary'>
+              <Card.Header>
+                <div className='flex justify-between'>
+                  <Card.Title>{t('available')}</Card.Title>
+                  <InfoTooltip title={t('availableHint.title')} description={t('availableHint.description')} />
+                </div>
+              </Card.Header>
+              <Card.Content>
+                {isLoading ? (
+                  <Skeleton className="h-7 w-full" />
+                ) : (
+                  <Typography.Paragraph>
+                    {formatAmount(balance?.available)} USDT
+                  </Typography.Paragraph>
+                )}
+              </Card.Content>
+            </Card>
+          </DashboardItem>
+        </DashboardLayout>
       </Card.Content>
     </Card>
   );

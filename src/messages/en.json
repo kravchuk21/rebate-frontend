@@ -205,7 +205,18 @@
       "total": "Total",
       "frozen": "Frozen",
       "available": "Available",
-      "frozenHint": "Frozen funds are pending withdrawal processing",
+      "totalHint": {
+        "title": "Total",
+        "description": "Available + frozen funds."
+      },
+      "frozenHint": {
+        "title": "Frozen",
+        "description": "Pending withdrawal processing."
+      },
+      "availableHint": {
+        "title": "Available",
+        "description": "Funds ready to withdraw."
+      },
       "errors": {
         "loadFailed": "Failed to load balance"
       }

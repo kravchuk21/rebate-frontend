@@ -12,6 +12,7 @@ import { CreateWithdrawalModal } from './CreateWithdrawalModal';
 import { LedgerTable } from './LedgerTable';
 import { PayoutMethodsSection } from './PayoutMethodsSection';
 import { WithdrawalsTable } from './WithdrawalsTable';
+import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
 
 const TABS = ['overview', 'history', 'payoutMethods'] as const;
 type Tab = (typeof TABS)[number];
@@ -44,15 +45,19 @@ export const WithdrawalPageClient = () => {
         </Tabs.ListContainer>
 
         <Tabs.Panel id="overview">
-          <div className="flex flex-col gap-6">
-            <BalanceCard />
-            <div className="flex items-center justify-end">
+          <DashboardLayout>
+            <DashboardItem span={12}>
+              <BalanceCard />
+            </DashboardItem>
+            <DashboardItem className="flex items-center justify-end">
               <Button onPress={() => setIsWithdrawModalOpen(true)}>
                 {t('request.title')}
               </Button>
-            </div>
-            <LedgerTable limit={10} />
-          </div>
+            </DashboardItem>
+            <DashboardItem span={12}>
+              <LedgerTable limit={10} />
+            </DashboardItem>
+          </DashboardLayout>
         </Tabs.Panel>
 
         <Tabs.Panel id="history">
