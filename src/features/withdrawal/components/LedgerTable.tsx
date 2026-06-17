@@ -69,6 +69,7 @@ export const LedgerTable = () => {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getRowId: (row, index) => row.id ?? String(index),
   });
 
   if (isError) return null;

@@ -1,20 +1,22 @@
 'use client';
 
 import '@/shared/api/instance';
-import {Copy, TrashBin} from '@gravity-ui/icons';
+import { Copy, TrashBin } from '@gravity-ui/icons';
 
-import { useEffect, useState } from 'react';
-import { AlertDialog, Button, Table, toast, Typography } from '@heroui/react';
+import { useEffect, useMemo, useState } from 'react';
+import { AlertDialog, Button, toast, Typography } from '@heroui/react';
 import { useTranslations } from 'next-intl';
+import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
 import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
 import type { WithdrawalPayoutMethodResponse } from '@/shared/api/generated/types.gen';
-import { TableEmptyState } from '@/shared/components/TableEmptyState';
+import { DataTable } from '@/shared/components/DataTable';
 
 import { useDeletePayoutMethod } from '../hooks/useDeletePayoutMethod';
 import { usePayoutMethods } from '../hooks/usePayoutMethods';
 import { truncateAddress } from '../lib/validateAddress';
 import { AddPayoutMethodModal } from './AddPayoutMethodModal';
+import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
 
 interface RowActionsProps {
   method: WithdrawalPayoutMethodResponse;
@@ -75,12 +77,23 @@ const RowActions = ({ method }: RowActionsProps) => {
   );
 };
 
+const LIMIT = 10;
+
+const columnHelper = createColumnHelper<WithdrawalPayoutMethodResponse>();
+
 export const PayoutMethodsSection = () => {
   const t = useTranslations('withdrawal.payoutMethods');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data, isLoading, isError } = usePayoutMethods();
+  const [offset, setOffset] = useState(0);
+  const { data, isError } = usePayoutMethods();
 
-  const methods = (data?.data as WithdrawalPayoutMethodResponse[] | undefined) ?? [];
+  const allMethods = data?.data as WithdrawalPayoutMethodResponse[] | undefined;
+  // Memoize the page slice so `data` passed to react-table keeps a stable
+  // reference between renders. An unstable array makes react-table produce new
+  // row objects each render, which forces React Aria's collection (used by
+  // DataTable) to rebuild on every commit and freezes the page.
+  const methods = useMemo(() => allMethods?.slice(offset, offset + LIMIT) ?? [], [allMethods, offset]);
+  const totalCount = allMethods?.length ?? 0;
 
   useEffect(() => {
     if (isError) toast.danger(t('errors.loadFailed'));
@@ -95,52 +108,72 @@ export const PayoutMethodsSection = () => {
     }
   };
 
+  const columns = useMemo(
+    () => [
+      columnHelper.accessor('name', {
+        header: t('columns.name'),
+        cell: (info) => <span className="truncate">{info.getValue()}</span>,
+      }),
+      columnHelper.accessor('network', {
+        header: t('columns.network'),
+      }),
+      columnHelper.accessor('address', {
+        header: t('columns.address'),
+        cell: (info) => {
+          const address = info.getValue();
+          return (
+            <div className="flex items-center gap-2">
+              {address ? truncateAddress(address) : '—'}
+              {address && (
+                <Button isIconOnly size="sm" variant="ghost" onClick={() => handleCopy(address)}>
+                  <Copy />
+                </Button>
+              )}
+            </div>
+          );
+        },
+      }),
+      columnHelper.display({
+        id: 'actions',
+        header: t('columns.actions'),
+        cell: ({ row }) => (
+          <RowActions method={row.original} />
+        ),
+      }),
+    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [t],
+  );
+
+  const table = useReactTable({
+    data: methods,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (row, index) => row.id ?? String(index),
+  });
+
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <Typography.Heading className="text-lg">{t('title')}</Typography.Heading>
-        <Button onPress={() => setIsModalOpen(true)}>{t('add')}</Button>
-      </div>
+    <DashboardLayout>
+      <DashboardItem span={12}>
+        <div className="flex items-center justify-between">
+          <Typography.Paragraph>{t('title')}</Typography.Paragraph>
+          <Button onPress={() => setIsModalOpen(true)}>{t('add')}</Button>
+        </div>
+      </DashboardItem>
 
       {!isError && (
-        <Table>
-          <Table.ScrollContainer>
-            <Table.Content aria-label={t('title')}>
-              <Table.Header>
-                <Table.Column isRowHeader>{t('columns.name')}</Table.Column>
-                <Table.Column>{t('columns.network')}</Table.Column>
-                <Table.Column>{t('columns.address')}</Table.Column>
-                <Table.Column className='text-right'>{t('columns.actions')}</Table.Column>
-              </Table.Header>
-              <Table.Body
-                renderEmptyState={() => <TableEmptyState label={t('emptyDesc')} />}
-              >
-                {methods.map((method) => (
-                  <Table.Row key={method.id}>
-                    <Table.Cell className='truncate'>{method.name}</Table.Cell>
-                    <Table.Cell>{method.network}</Table.Cell>
-                    <Table.Cell>
-                      <div className="flex items-center gap-2">
-                        {method.address ? truncateAddress(method.address) : '—'}
-                        {method.address && (
-                          <Button isIconOnly size="sm" variant="ghost" onClick={() => handleCopy(method.address!)}>
-                            <Copy />
-                          </Button>
-                        )}
-                      </div>
-                    </Table.Cell>
-                    <Table.Cell className='text-right'>
-                      <RowActions method={method} />
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table.Content>
-          </Table.ScrollContainer>
-        </Table>
+        <DashboardItem span={12}>
+          <DataTable
+            table={table}
+            ariaLabel={t('title')}
+            emptyLabel={t('emptyDesc')}
+            rowHeaderColumnId="name"
+            pagination={{ offset, limit: LIMIT, totalCount, onOffsetChange: setOffset }}
+          />
+        </DashboardItem>
       )}
 
       <AddPayoutMethodModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} />
-    </div>
+    </DashboardLayout>
   );
 };

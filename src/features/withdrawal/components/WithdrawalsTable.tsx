@@ -124,6 +124,7 @@ export const WithdrawalsTable = () => {
     data: withdrawals,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getRowId: (row, index) => row.id ?? String(index),
   });
 
   if (isError) return null;

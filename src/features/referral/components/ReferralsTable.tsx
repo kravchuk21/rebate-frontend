@@ -76,6 +76,7 @@ export const ReferralsTable = () => {
     data: items,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getRowId: (row, index) => row.user_id ?? String(index),
   });
 
   if (isError) return null;

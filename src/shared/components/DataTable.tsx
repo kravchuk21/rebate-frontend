@@ -37,6 +37,7 @@ export function DataTable<T>({
 }: DataTableProps<T>) {
   const headers = table.getHeaderGroups()[0]!.headers;
   const rowHeaderId = rowHeaderColumnId ?? headers[0]?.id;
+  const rows = table.getRowModel().rows;
 
   return (
     <Table>
@@ -46,28 +47,35 @@ export function DataTable<T>({
           sortDescriptor={sortDescriptor}
           onSortChange={onSortChange}
         >
-          <Table.Header>
-            {headers.map((header) => (
+          {/*
+            Header columns use React Aria's keyed `columns` prop so a stable
+            react-table header object reuses its cached collection node instead of
+            rebuilding on every render. Row cells are mapped inline below because
+            `Table.Row`'s `columns` prop is ignored for function children by
+            react-aria-components (it always resolves cells from the table-wide
+            column context, not from per-row props).
+          */}
+          <Table.Header columns={headers}>
+            {(header) => (
               <Table.Column
-                key={header.id}
                 id={header.id}
-                allowsSorting={header.column.getCanSort()}
+                allowsSorting={onSortChange ? header.column.getCanSort() : false}
                 isRowHeader={header.id === rowHeaderId}
               >
                 {flexRender(header.column.columnDef.header, header.getContext())}
               </Table.Column>
-            ))}
+            )}
           </Table.Header>
-          <Table.Body renderEmptyState={() => <TableEmptyState label={emptyLabel} />}>
-            {table.getRowModel().rows.map((row) => (
-              <Table.Row key={row.id} id={row.id}>
+          <Table.Body items={rows} renderEmptyState={() => <TableEmptyState label={emptyLabel} />}>
+            {(row) => (
+              <Table.Row id={row.id}>
                 {row.getVisibleCells().map((cell) => (
                   <Table.Cell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Table.Cell>
                 ))}
               </Table.Row>
-            ))}
+            )}
           </Table.Body>
         </Table.Content>
       </Table.ScrollContainer>

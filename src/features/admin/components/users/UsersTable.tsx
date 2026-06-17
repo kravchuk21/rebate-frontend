@@ -155,6 +155,7 @@ export const UsersTable = () => {
     data: users,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getRowId: (row, index) => row.id ?? String(index),
     manualSorting: true,
     onSortingChange: setSorting,
     state: { sorting },
