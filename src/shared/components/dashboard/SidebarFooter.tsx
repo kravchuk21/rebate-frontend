@@ -14,8 +14,8 @@ export const SidebarFooter = () => {
 
   return (
     <div className="flex flex-col gap-1">
-      <ThemeSwitcher />
       <LocaleSwitcher />
+      <ThemeSwitcher />
       <Button
         variant="tertiary"
         fullWidth

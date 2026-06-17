@@ -2,95 +2,70 @@
 
 import '@/shared/api/instance';
 
-import { Alert, Button, Card, Spinner, Table, Typography } from '@heroui/react';
+import { useMemo } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
+import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
 import type { BrokerAccountDetailResponse } from '@/shared/api/generated/types.gen';
+import { DataTable } from '@/shared/components/DataTable';
 
 import { useMyAccounts } from '../hooks/useMyAccounts';
 import { AccountStatusChip } from './AccountStatusChip';
 
-interface BrokerAccountsTableProps {
-  onAddAccount: () => void;
-}
+const columnHelper = createColumnHelper<BrokerAccountDetailResponse>();
 
-export const BrokerAccountsTable = ({ onAddAccount }: BrokerAccountsTableProps) => {
+export const BrokerAccountsTable = () => {
   const t = useTranslations('accounts');
   const locale = useLocale();
-  const { data, isLoading, isError, refetch } = useMyAccounts();
+  const { data } = useMyAccounts();
 
   const accounts =
     (data?.data as { items?: BrokerAccountDetailResponse[] } | undefined)?.items ?? [];
 
-  if (isLoading) {
-    return (
-      <Card>
-        <Card.Content className="flex items-center justify-center py-12">
-          <Spinner />
-        </Card.Content>
-      </Card>
-    );
-  }
+  const dateFormatter = useMemo(
+    () => new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }),
+    [locale],
+  );
 
-  if (isError) {
-    return (
-      <Card>
-        <Card.Content className="flex flex-col items-center gap-4 py-12 text-center">
-          <Alert status="danger">
-            <Alert.Content>
-              <Alert.Description>{t('errors.loadFailed')}</Alert.Description>
-            </Alert.Content>
-          </Alert>
-          <Button variant="secondary" onPress={() => refetch()}>
-            {t('errors.retry')}
-          </Button>
-        </Card.Content>
-      </Card>
-    );
-  }
+  const columns = useMemo(
+    () => [
+      columnHelper.display({
+        id: 'broker',
+        header: t('table.broker'),
+        cell: ({ row }) => row.original.broker?.name ?? '—',
+      }),
+      columnHelper.accessor('uid', {
+        header: t('table.uid'),
+        cell: (info) => info.getValue() ?? '—',
+      }),
+      columnHelper.accessor('status', {
+        header: t('table.status'),
+        cell: (info) => <AccountStatusChip status={info.getValue() ?? ''} />,
+      }),
+      columnHelper.accessor('created_at', {
+        header: t('table.createdAt'),
+        cell: (info) => {
+          const v = info.getValue();
+          return v ? dateFormatter.format(new Date(v)) : '—';
+        },
+      }),
+    ],
+    [t, dateFormatter],
+  );
 
-  if (accounts.length === 0) {
-    return (
-      <Card>
-        <Card.Content className="flex flex-col items-center gap-4 py-12 text-center">
-          <Typography.Heading className="text-lg">{t('noAccounts')}</Typography.Heading>
-          <p className="text-muted">{t('noAccountsDesc')}</p>
-          <Button onPress={onAddAccount}>{t('addAccount')}</Button>
-        </Card.Content>
-      </Card>
-    );
-  }
-
-  const dateFormatter = new Intl.DateTimeFormat(locale, {
-    dateStyle: 'medium',
+  const table = useReactTable({
+    data: accounts,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (row, index) => row.id ?? String(index),
   });
 
   return (
-    <Table>
-      <Table.ScrollContainer>
-        <Table.Content aria-label={t('title')}>
-          <Table.Header>
-            <Table.Column isRowHeader>{t('table.broker')}</Table.Column>
-            <Table.Column>{t('table.uid')}</Table.Column>
-            <Table.Column>{t('table.status')}</Table.Column>
-            <Table.Column>{t('table.createdAt')}</Table.Column>
-          </Table.Header>
-          <Table.Body>
-            {accounts.map((account) => (
-              <Table.Row key={account.id}>
-                <Table.Cell>{account.broker?.name ?? '—'}</Table.Cell>
-                <Table.Cell>{account.uid ?? '—'}</Table.Cell>
-                <Table.Cell>
-                  <AccountStatusChip status={account.status ?? ''} />
-                </Table.Cell>
-                <Table.Cell>
-                  {account.created_at ? dateFormatter.format(new Date(account.created_at)) : '—'}
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table.Content>
-      </Table.ScrollContainer>
-    </Table>
+    <DataTable
+      table={table}
+      ariaLabel={t('title')}
+      emptyLabel={t('noAccounts')}
+      rowHeaderColumnId="broker"
+    />
   );
 };
