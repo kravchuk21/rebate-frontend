@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { Drawer } from '@heroui/react';
 
@@ -26,7 +27,10 @@ export const Sidebar = ({ email, role }: SidebarProps) => {
   const t = useTranslations('nav');
   const { drawer, isDesktopVisible } = useSidebar();
 
-  const items = NAV_KEYS.map((item) => ({ href: item.href, label: t(item.labelKey) }));
+  const items = useMemo(
+    () => NAV_KEYS.map((item) => ({ href: item.href, label: t(item.labelKey) })),
+    [t],
+  );
 
   const content = (onNavigate?: () => void) => (
     <div className="flex h-full flex-col gap-4">

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Avatar, Typography } from '@heroui/react';
 import { Link } from '@/i18n/navigation';
 
@@ -6,7 +7,7 @@ interface SidebarUserProfileProps {
   role: string;
 }
 
-export const SidebarUserProfile = ({ email, role }: SidebarUserProfileProps) => {
+export const SidebarUserProfile = memo(function SidebarUserProfile({ email, role }: SidebarUserProfileProps) {
   const initial = email.charAt(0).toUpperCase();
 
   return (
@@ -28,4 +29,4 @@ export const SidebarUserProfile = ({ email, role }: SidebarUserProfileProps) => 
       </div>
     </Link>
   );
-};
+});

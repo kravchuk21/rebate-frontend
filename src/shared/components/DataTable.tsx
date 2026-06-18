@@ -3,6 +3,7 @@
 import type { SortDescriptor } from '@heroui/react';
 import type { Table as ReactTableInstance } from '@tanstack/react-table';
 
+import { useCallback } from 'react';
 import { Table } from '@heroui/react';
 import { flexRender } from '@tanstack/react-table';
 
@@ -39,6 +40,11 @@ export function DataTable<T>({
   const rowHeaderId = rowHeaderColumnId ?? headers[0]?.id;
   const rows = table.getRowModel().rows;
 
+  const renderEmptyState = useCallback(
+    () => <TableEmptyState label={emptyLabel} />,
+    [emptyLabel],
+  );
+
   return (
     <Table>
       <Table.ScrollContainer>
@@ -66,7 +72,7 @@ export function DataTable<T>({
               </Table.Column>
             )}
           </Table.Header>
-          <Table.Body items={rows} renderEmptyState={() => <TableEmptyState label={emptyLabel} />}>
+          <Table.Body items={rows} renderEmptyState={renderEmptyState}>
             {(row) => (
               <Table.Row id={row.id}>
                 {row.getVisibleCells().map((cell) => (

@@ -73,7 +73,10 @@ export const UsersTable = () => {
   const unsuspendUser = useAdminUnsuspendUser();
 
   const responseData = data?.data as ({ items?: AdminUserResponse[]; total_count?: number } | undefined);
-  const users = responseData?.items ?? [];
+  // Stable reference: React Aria's controlled-sort Table re-commits its collection
+  // whenever `items` identity changes. A fresh `?? []` every render makes the
+  // collection never settle (matches the other admin tables).
+  const users = useMemo(() => responseData?.items ?? [], [responseData]);
   const totalCount = responseData?.total_count ?? 0;
 
   const dateFormatter = useMemo(

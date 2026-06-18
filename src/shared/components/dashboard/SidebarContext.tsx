@@ -1,6 +1,14 @@
 'use client';
 
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useOverlayState, type UseOverlayStateReturn } from '@heroui/react';
 
 interface SidebarContextValue {
@@ -18,6 +26,13 @@ export const SidebarProvider = ({ children }: { children: React.ReactNode }) => 
   const [isDesktopVisible, setDesktopVisible] = useState(true);
   const [isDesktop, setIsDesktop] = useState(false);
 
+  // Keep latest drawer/isDesktop available to the stable `toggle` callback without
+  // making `toggle` (and therefore the context value) change identity every render.
+  const drawerRef = useRef(drawer);
+  drawerRef.current = drawer;
+  const isDesktopRef = useRef(isDesktop);
+  isDesktopRef.current = isDesktop;
+
   useEffect(() => {
     const mediaQuery = window.matchMedia(DESKTOP_QUERY);
     setIsDesktop(mediaQuery.matches);
@@ -26,27 +41,28 @@ export const SidebarProvider = ({ children }: { children: React.ReactNode }) => 
       setIsDesktop(event.matches);
 
       if (event.matches) {
-        drawer.close();
+        drawerRef.current.close();
       }
     };
 
     mediaQuery.addEventListener('change', onChange);
     return () => mediaQuery.removeEventListener('change', onChange);
-  }, [drawer]);
+  }, []);
 
   const toggle = useCallback(() => {
-    if (isDesktop) {
+    if (isDesktopRef.current) {
       setDesktopVisible((prev) => !prev);
     } else {
-      drawer.toggle();
+      drawerRef.current.toggle();
     }
-  }, [drawer, isDesktop]);
+  }, []);
 
-  return (
-    <SidebarContext.Provider value={{ drawer, isDesktopVisible, toggle }}>
-      {children}
-    </SidebarContext.Provider>
+  const value = useMemo(
+    () => ({ drawer, isDesktopVisible, toggle }),
+    [drawer, isDesktopVisible, toggle],
   );
+
+  return <SidebarContext.Provider value={value}>{children}</SidebarContext.Provider>;
 };
 
 export const useSidebar = () => {

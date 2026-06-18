@@ -1,12 +1,13 @@
 'use client';
 
+import { memo } from 'react';
 import { ButtonRoot } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { LayoutSideContent } from '@gravity-ui/icons';
 
 import { useSidebar } from './SidebarContext';
 
-export const SidebarToggle = () => {
+export const SidebarToggle = memo(function SidebarToggle() {
   const t = useTranslations('common');
   const { toggle } = useSidebar();
 
@@ -15,4 +16,4 @@ export const SidebarToggle = () => {
       <LayoutSideContent />
     </ButtonRoot>
   );
-};
+});
