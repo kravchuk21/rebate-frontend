@@ -493,6 +493,9 @@
       "title": "Broker Accounts",
       "tabs": {
         "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "revoked": "Revoked",
         "all": "All"
       },
       "columns": {
@@ -535,9 +538,16 @@
     },
     "withdrawals": {
       "title": "Withdrawals",
-      "tabs": {
-        "pending": "Pending",
-        "all": "All"
+      "filters": {
+        "status": "Status",
+        "all": "All",
+        "statuses": {
+          "pending": "Pending",
+          "processing": "Processing",
+          "completed": "Completed",
+          "rejected": "Rejected",
+          "cancelled": "Cancelled"
+        }
       },
       "columns": {
         "method": "Method",

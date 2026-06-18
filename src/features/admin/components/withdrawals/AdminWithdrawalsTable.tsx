@@ -2,9 +2,12 @@
 
 import '@/shared/api/instance';
 
+import { Pencil } from '@gravity-ui/icons';
+
 import { useEffect, useMemo, useState } from 'react';
-import { Button, Tabs, toast } from '@heroui/react';
+import { Button, ToggleButton, ToggleButtonGroup, toast } from '@heroui/react';
 import { useLocale, useTranslations } from 'next-intl';
+import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
 import type { WithdrawalResponse } from '@/shared/api/generated/types.gen';
@@ -12,23 +15,26 @@ import { formatAmount } from '@/features/withdrawal/lib/formatAmount';
 import { truncateAddress } from '@/features/withdrawal/lib/validateAddress';
 import { WithdrawalStatusChip } from '@/features/withdrawal/components/WithdrawalStatusChip';
 import { DataTable } from '@/shared/components/DataTable';
+import { formatDateYMD } from '@/shared/lib/formatDate';
 
 import { useAdminWithdrawals } from '../../hooks/useAdminWithdrawals';
 import { UpdateWithdrawalStatusModal } from './UpdateWithdrawalStatusModal';
 
 const LIMIT = 20;
 
+const STATUSES = ['pending', 'processing', 'completed', 'rejected', 'cancelled'] as const;
+
 const columnHelper = createColumnHelper<WithdrawalResponse>();
 
 export const AdminWithdrawalsTable = () => {
   const t = useTranslations('admin.withdrawals');
   const locale = useLocale();
-  const [tab, setTab] = useState<'pending' | 'all'>('pending');
+  const [status, setStatus] = useState<string | null>(null);
   const [offset, setOffset] = useState(0);
   const [updateTarget, setUpdateTarget] = useState<string | null>(null);
 
   const { data, isError } = useAdminWithdrawals({
-    status: tab === 'pending' ? 'pending' : undefined,
+    status: status ?? undefined,
     limit: LIMIT,
     offset,
   });
@@ -40,16 +46,15 @@ export const AdminWithdrawalsTable = () => {
   const responseData = data?.data as
     | { items?: WithdrawalResponse[]; total_count?: number }
     | undefined;
-  const withdrawals = responseData?.items ?? [];
+  // Stable reference: React Aria's controlled-sort Table re-commits its
+  // collection whenever `items` identity changes. A fresh `?? []` every render
+  // (notably while the query is loading after a filter switch, when data is
+  // undefined) makes the collection never settle and hangs the page.
+  const withdrawals = useMemo(() => responseData?.items ?? [], [responseData]);
   const totalCount = responseData?.total_count ?? 0;
 
-  const dateFormatter = useMemo(
-    () => new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }),
-    [locale],
-  );
-
-  const handleTabChange = (key: string) => {
-    setTab(key === 'all' ? 'all' : 'pending');
+  const handleStatusChange = (key: string | null) => {
+    setStatus(key === 'all' || key === null ? null : key);
     setOffset(0);
   };
 
@@ -82,7 +87,7 @@ export const AdminWithdrawalsTable = () => {
         header: t('columns.requestedAt'),
         cell: (info) => {
           const v = info.getValue();
-          return v ? dateFormatter.format(new Date(v)) : '—';
+          return v ? formatDateYMD(v, locale) : '—';
         },
       }),
       columnHelper.accessor('tx_hash', {
@@ -100,16 +105,17 @@ export const AdminWithdrawalsTable = () => {
           return (
             <Button
               variant="tertiary"
+              isIconOnly
               size="sm"
               onPress={() => setUpdateTarget(withdrawal.id ?? null)}
             >
-              {t('updateStatus.title')}
+              <Pencil/>
             </Button>
           );
         },
       }),
     ],
-    [t, dateFormatter],
+    [t, locale],
   );
 
   const table = useReactTable({
@@ -120,23 +126,27 @@ export const AdminWithdrawalsTable = () => {
   });
 
   return (
-    <div className="flex flex-col gap-4">
-      <Tabs onSelectionChange={(key) => handleTabChange(String(key))}>
-        <Tabs.ListContainer>
-          <Tabs.List>
-            <Tabs.Tab id="pending">
-              {t('tabs.pending')}
-              <Tabs.Indicator />
-            </Tabs.Tab>
-            <Tabs.Tab id="all">
-              {t('tabs.all')}
-              <Tabs.Indicator />
-            </Tabs.Tab>
-          </Tabs.List>
-        </Tabs.ListContainer>
-      </Tabs>
+    <DashboardLayout>
+      <DashboardItem>
+        <ToggleButtonGroup
+          fullWidth
+          aria-label={t('filters.status')}
+          selectionMode="single"
+          disallowEmptySelection
+          selectedKeys={[status ?? 'all']}
+          onSelectionChange={(keys) => handleStatusChange(String([...keys][0] ?? 'all'))}
+          size='sm'
+        >
+          <ToggleButton id="all">{t('filters.all')}</ToggleButton>
+          {STATUSES.map((s) => (
+            <ToggleButton key={s} id={s}>
+              {t(`filters.statuses.${s}`)}
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
+      </DashboardItem>
 
-      {!isError && (
+      <DashboardItem>
         <DataTable
           table={table}
           ariaLabel={t('title')}
@@ -144,12 +154,12 @@ export const AdminWithdrawalsTable = () => {
           rowHeaderColumnId="method"
           pagination={{ offset, limit: LIMIT, totalCount, onOffsetChange: setOffset }}
         />
-      )}
+      </DashboardItem>
 
       <UpdateWithdrawalStatusModal
         withdrawalID={updateTarget}
         onOpenChange={(open) => !open && setUpdateTarget(null)}
       />
-    </div>
+    </DashboardLayout>
   );
 };

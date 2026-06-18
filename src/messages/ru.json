@@ -493,6 +493,9 @@
       "title": "Брокерские счета",
       "tabs": {
         "pending": "На проверке",
+        "approved": "Подтверждённые",
+        "rejected": "Отклонённые",
+        "revoked": "Отозванные",
         "all": "Все"
       },
       "columns": {
@@ -535,9 +538,16 @@
     },
     "withdrawals": {
       "title": "Выводы средств",
-      "tabs": {
-        "pending": "На проверке",
-        "all": "Все"
+      "filters": {
+        "status": "Статус",
+        "all": "Все",
+        "statuses": {
+          "pending": "На проверке",
+          "processing": "В обработке",
+          "completed": "Выполнено",
+          "rejected": "Отклонено",
+          "cancelled": "Отменено"
+        }
       },
       "columns": {
         "method": "Метод",

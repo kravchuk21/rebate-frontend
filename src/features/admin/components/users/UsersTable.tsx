@@ -6,7 +6,7 @@ import type { SortDescriptor } from '@heroui/react';
 import type { SortingState } from '@tanstack/react-table';
 
 import { useEffect, useMemo, useState } from 'react';
-import { AlertDialog, Button, Input, toast, ButtonGroup } from '@heroui/react';
+import { AlertDialog, Button, SearchField, toast, ButtonGroup } from '@heroui/react';
 import { useLocale, useTranslations } from 'next-intl';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { CirclePause } from '@gravity-ui/icons';
@@ -24,6 +24,7 @@ import { useAdminUsers } from '../../hooks/useAdminUsers';
 import { AdjustBalanceModal } from './AdjustBalanceModal';
 import { ChangeReferrerModal } from './ChangeReferrerModal';
 import { UserStatusChip } from './UserStatusChip';
+import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
 
 const LIMIT = 10;
 
@@ -125,11 +126,11 @@ export const UsersTable = () => {
                 </Button>
               )}
               <Button onPress={() => setAdjustBalanceTarget(user.id ?? null)}>
-                <ButtonGroup.Separator/>
+                <ButtonGroup.Separator />
                 <Pencil />
               </Button>
               <Button onPress={() => setReferrerTarget(user)}>
-                <ButtonGroup.Separator/>
+                <ButtonGroup.Separator />
                 <Persons />
               </Button>
             </ButtonGroup>
@@ -165,15 +166,18 @@ export const UsersTable = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <Input
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder={t('search')}
-        className="max-w-sm"
-      />
+    <DashboardLayout>
+      <DashboardItem>
+        <SearchField variant='secondary' value={search} onChange={setSearch} aria-label={t('search')}>
+          <SearchField.Group>
+            <SearchField.SearchIcon />
+            <SearchField.Input placeholder={t('search')} />
+            <SearchField.ClearButton />
+          </SearchField.Group>
+        </SearchField>
+      </DashboardItem>
 
-      {!isError && (
+      <DashboardItem>
         <DataTable
           table={table}
           ariaLabel={t('title')}
@@ -183,7 +187,7 @@ export const UsersTable = () => {
           onSortChange={(d) => setSorting(toSortingState(d))}
           pagination={{ offset, limit: LIMIT, totalCount, onOffsetChange: setOffset }}
         />
-      )}
+      </DashboardItem>
 
       <AlertDialog
         isOpen={suspendTarget !== null}
@@ -223,6 +227,6 @@ export const UsersTable = () => {
         user={referrerTarget}
         onOpenChange={(open) => !open && setReferrerTarget(null)}
       />
-    </div>
+    </DashboardLayout>
   );
 };

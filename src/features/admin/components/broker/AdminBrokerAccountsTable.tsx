@@ -3,13 +3,15 @@
 import '@/shared/api/instance';
 
 import { useEffect, useMemo, useState } from 'react';
-import { Button, Tabs, toast } from '@heroui/react';
+import { Button, ButtonGroup, ToggleButton, ToggleButtonGroup, toast } from '@heroui/react';
 import { useLocale, useTranslations } from 'next-intl';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
 import type { BrokerAccountDetailResponse } from '@/shared/api/generated/types.gen';
 import { AccountStatusChip } from '@/features/broker/components/AccountStatusChip';
 import { DataTable } from '@/shared/components/DataTable';
+import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
+import { formatDateYMD } from '@/shared/lib/formatDate';
 
 import { getAdminErrorMessage } from '../../lib/getAdminErrorMessage';
 import { useAdminApproveBrokerAccount } from '../../hooks/useAdminApproveBrokerAccount';
@@ -17,21 +19,24 @@ import { useAdminBrokerAccounts } from '../../hooks/useAdminBrokerAccounts';
 import { useAdminRejectBrokerAccount } from '../../hooks/useAdminRejectBrokerAccount';
 import { useAdminRevokeBrokerAccount } from '../../hooks/useAdminRevokeBrokerAccount';
 import { RejectReasonModal } from './RejectReasonModal';
+import { Check, CircleXmark, ArrowRotateLeft } from '@gravity-ui/icons';
 
 const LIMIT = 20;
+
+const STATUSES = ['pending', 'approved', 'rejected', 'revoked'] as const;
 
 const columnHelper = createColumnHelper<BrokerAccountDetailResponse>();
 
 export const AdminBrokerAccountsTable = () => {
   const t = useTranslations('admin.brokerAccounts');
   const locale = useLocale();
-  const [status, setStatus] = useState<'pending' | 'all'>('pending');
+  const [status, setStatus] = useState<string | null>('pending');
   const [offset, setOffset] = useState(0);
   const [rejectTarget, setRejectTarget] = useState<string | null>(null);
   const [revokeTarget, setRevokeTarget] = useState<string | null>(null);
 
   const { data, isError } = useAdminBrokerAccounts({
-    status: status === 'pending' ? 'pending' : undefined,
+    status: status ?? undefined,
     limit: LIMIT,
     offset,
   });
@@ -47,16 +52,11 @@ export const AdminBrokerAccountsTable = () => {
   const responseData = data?.data as
     | { items?: BrokerAccountDetailResponse[]; total_count?: number }
     | undefined;
-  const accounts = responseData?.items ?? [];
+  const accounts = useMemo(() => responseData?.items ?? [], [responseData]);
   const totalCount = responseData?.total_count ?? 0;
 
-  const dateFormatter = useMemo(
-    () => new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }),
-    [locale],
-  );
-
-  const handleTabChange = (key: string) => {
-    setStatus(key === 'all' ? 'all' : 'pending');
+  const handleStatusChange = (key: string | null) => {
+    setStatus(key === 'all' || key === null ? null : key);
     setOffset(0);
   };
 
@@ -99,7 +99,7 @@ export const AdminBrokerAccountsTable = () => {
         header: t('columns.submittedAt'),
         cell: (info) => {
           const v = info.getValue();
-          return v ? dateFormatter.format(new Date(v)) : '—';
+          return v ? formatDateYMD(v, locale) : '—';
         },
       }),
       columnHelper.display({
@@ -108,41 +108,30 @@ export const AdminBrokerAccountsTable = () => {
         cell: ({ row }) => {
           const account = row.original;
           return (
-            <div className="flex flex-wrap gap-2">
+            <ButtonGroup size='sm' variant='tertiary'>
               {account.status === 'pending' && (
                 <>
-                  <Button
-                    variant="tertiary"
-                    size="sm"
-                    onPress={() => account.id && handleApprove(account.id)}
-                  >
-                    {t('actions.approve')}
+                  <Button variant='tertiary' onPress={() => account.id && handleApprove(account.id)}>
+                    <Check />
                   </Button>
-                  <Button
-                    variant="tertiary"
-                    size="sm"
-                    onPress={() => setRejectTarget(account.id ?? null)}
-                  >
-                    {t('actions.reject')}
+                  <Button variant='tertiary' onPress={() => setRejectTarget(account.id ?? null)}>
+                    <ButtonGroup.Separator />
+                    <CircleXmark />
                   </Button>
                 </>
               )}
               {account.status === 'approved' && (
-                <Button
-                  variant="tertiary"
-                  size="sm"
-                  onPress={() => setRevokeTarget(account.id ?? null)}
-                >
-                  {t('actions.revoke')}
+                <Button variant='tertiary' onPress={() => setRevokeTarget(account.id ?? null)}>
+                  <ArrowRotateLeft />
                 </Button>
               )}
-            </div>
+            </ButtonGroup>
           );
         },
       }),
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, dateFormatter],
+    [t, locale],
   );
 
   const table = useReactTable({
@@ -153,23 +142,27 @@ export const AdminBrokerAccountsTable = () => {
   });
 
   return (
-    <div className="flex flex-col gap-4">
-      <Tabs selectedKey='all' onSelectionChange={(key) => handleTabChange(String(key))}>
-        <Tabs.ListContainer>
-          <Tabs.List>
-            <Tabs.Tab id="pending">
-              {t('tabs.pending')}
-              <Tabs.Indicator />
-            </Tabs.Tab>
-            <Tabs.Tab id="all">
-              {t('tabs.all')}
-              <Tabs.Indicator />
-            </Tabs.Tab>
-          </Tabs.List>
-        </Tabs.ListContainer>
-      </Tabs>
+    <DashboardLayout>
+      <DashboardItem>
+        <ToggleButtonGroup
+          fullWidth
+          aria-label={t('tabs.pending')}
+          selectionMode="single"
+          disallowEmptySelection
+          selectedKeys={[status ?? 'all']}
+          onSelectionChange={(keys) => handleStatusChange(String([...keys][0] ?? 'all'))}
+          size="sm"
+        >
+          <ToggleButton id="all">{t('tabs.all')}</ToggleButton>
+          {STATUSES.map((s) => (
+            <ToggleButton key={s} id={s}>
+              {t(`tabs.${s}`)}
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
+      </DashboardItem>
 
-      {!isError && (
+      <DashboardItem>
         <DataTable
           table={table}
           ariaLabel={t('title')}
@@ -177,7 +170,7 @@ export const AdminBrokerAccountsTable = () => {
           rowHeaderColumnId="broker"
           pagination={{ offset, limit: LIMIT, totalCount, onOffsetChange: setOffset }}
         />
-      )}
+      </DashboardItem>
 
       <RejectReasonModal
         type="reject"
@@ -198,6 +191,6 @@ export const AdminBrokerAccountsTable = () => {
         onOpenChange={(open) => !open && setRevokeTarget(null)}
         onSubmit={handleRevoke}
       />
-    </div>
+    </DashboardLayout>
   );
 };
