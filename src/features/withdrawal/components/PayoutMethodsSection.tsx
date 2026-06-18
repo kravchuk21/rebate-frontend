@@ -1,7 +1,7 @@
 'use client';
 
 import '@/shared/api/instance';
-import { Car, Copy, TrashBin } from '@gravity-ui/icons';
+import { Car, TrashBin } from '@gravity-ui/icons';
 
 import { useEffect, useMemo, useState } from 'react';
 import { AlertDialog, Button, Card, toast, Typography } from '@heroui/react';
@@ -10,6 +10,7 @@ import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/re
 
 import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
 import type { WithdrawalPayoutMethodResponse } from '@/shared/api/generated/types.gen';
+import { CopyButton } from '@/shared/components/CopyButton';
 import { DataTable } from '@/shared/components/DataTable';
 
 import { useDeletePayoutMethod } from '../hooks/useDeletePayoutMethod';
@@ -99,15 +100,6 @@ export const PayoutMethodsSection = () => {
     if (isError) toast.danger(t('errors.loadFailed'));
   }, [isError, t]);
 
-  const handleCopy = async (address: string) => {
-    try {
-      await navigator.clipboard.writeText(address);
-      toast.success(t('copied'));
-    } catch {
-      toast.danger(t('errors.copyFailed'));
-    }
-  };
-
   const columns = useMemo(
     () => [
       columnHelper.accessor('name', {
@@ -124,11 +116,7 @@ export const PayoutMethodsSection = () => {
           return (
             <div className="flex items-center gap-2">
               {address ? truncateAddress(address) : '—'}
-              {address && (
-                <Button isIconOnly size="sm" variant="ghost" onClick={() => handleCopy(address)}>
-                  <Copy />
-                </Button>
-              )}
+              {address && <CopyButton value={address} />}
             </div>
           );
         },

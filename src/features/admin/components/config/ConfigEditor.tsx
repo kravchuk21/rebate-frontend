@@ -2,11 +2,13 @@
 
 import '@/shared/api/instance';
 
-import { useEffect, useState } from 'react';
-import { Button, Card, Input, Skeleton, toast } from '@heroui/react';
+import { useEffect } from 'react';
+import { Button, Card, Form, Skeleton, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
+import { useForm } from 'react-hook-form';
 
 import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
+import { FormField } from '@/shared/components/FormField';
 
 import { useAdminConfig } from '../../hooks/useAdminConfig';
 import { useAdminSetConfig } from '../../hooks/useAdminSetConfig';
@@ -23,43 +25,57 @@ const CONFIG_KEYS = [
 
 type ConfigKey = (typeof CONFIG_KEYS)[number];
 
-const ConfigRow = ({ configKey, value }: { configKey: ConfigKey; value: string }) => {
+type ConfigFormValues = Record<ConfigKey, string>;
+
+const ConfigForm = ({ values }: { values: Partial<ConfigFormValues> }) => {
   const t = useTranslations('admin.config');
   const setConfig = useAdminSetConfig();
-  const [inputValue, setInputValue] = useState(value);
-  const [showSaved, setShowSaved] = useState(false);
 
-  useEffect(() => {
-    if (!showSaved) return;
+  const {
+    control,
+    handleSubmit,
+    formState: { dirtyFields },
+  } = useForm<ConfigFormValues>({
+    values: CONFIG_KEYS.reduce(
+      (acc, key) => ({ ...acc, [key]: values[key] ?? '' }),
+      {} as ConfigFormValues,
+    ),
+  });
 
-    const timeout = setTimeout(() => setShowSaved(false), 2000);
-    return () => clearTimeout(timeout);
-  }, [showSaved]);
+  const onSubmit = async (data: ConfigFormValues) => {
+    const changedKeys = (Object.keys(dirtyFields) as ConfigKey[]);
+    if (changedKeys.length === 0) return;
 
-  const handleSave = () => {
-    setConfig.mutate(
-      { path: { key: configKey }, body: { value: inputValue } },
-      {
-        onSuccess: () => setShowSaved(true),
-      },
-    );
+    try {
+      await Promise.all(
+        changedKeys.map((key) =>
+          setConfig.mutateAsync({ path: { key }, body: { value: data[key] } }),
+        ),
+      );
+      toast.success(t('saved'));
+    } catch {
+      toast.danger(t('saveFailed'));
+    }
   };
 
   return (
-    <Card>
-      <Card.Content className="flex flex-col gap-3 py-4 sm:flex-row sm:items-end sm:justify-between">
-        <div className="flex flex-1 flex-col gap-1">
-          <p className="font-medium">{t(`labels.${configKey}`)}</p>
-          <Input value={inputValue} onChange={(event) => setInputValue(event.target.value)} />
-        </div>
-        <div className="flex items-center gap-2">
-          {showSaved && <span className="text-sm text-success">{t('saved')}</span>}
-          {setConfig.isError && <span className="text-sm text-danger">{t('saveFailed')}</span>}
-          <Button variant="primary" onPress={handleSave} isDisabled={setConfig.isPending}>
-            {t('save')}
-          </Button>
-        </div>
-      </Card.Content>
+    <Card variant='secondary'>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <DashboardLayout>
+          {CONFIG_KEYS.map((key) => (
+            <DashboardItem key={key} span={6}>
+              <FormField variant='primary' control={control} name={key} label={t(`labels.${key}`)} />
+            </DashboardItem>
+          ))}
+          <DashboardItem span={12}>
+            <div className="flex justify-end">
+              <Button type="submit" variant="primary" isDisabled={setConfig.isPending}>
+                {t('save')}
+              </Button>
+            </div>
+          </DashboardItem>
+        </DashboardLayout>
+      </Form>
     </Card>
   );
 };
@@ -72,29 +88,25 @@ export const ConfigEditor = () => {
     if (isError) toast.danger(t('errors.loadFailed'));
   }, [isError, t]);
 
-  const values = (data?.data as Record<string, string> | undefined) ?? {};
+  const items = (data?.data as { items?: { key: string; value: string }[] } | undefined)?.items ?? [];
+  const values = items.reduce(
+    (acc, item) => ({ ...acc, [item.key]: item.value }),
+    {} as Record<string, string>,
+  );
 
-  if (isLoading) {
-    return (
-      <DashboardLayout>
-        {CONFIG_KEYS.map((key) => (
-          <DashboardItem key={key} span={12}>
-            <Skeleton className="h-20 w-full" />
-          </DashboardItem>
-        ))}
-      </DashboardLayout>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <DashboardLayout>
+  //       {CONFIG_KEYS.map((key) => (
+  //         <DashboardItem key={key} span={12}>
+  //           <Skeleton className="h-20 w-full" />
+  //         </DashboardItem>
+  //       ))}
+  //     </DashboardLayout>
+  //   );
+  // }
 
   if (isError) return null;
 
-  return (
-    <DashboardLayout>
-      {CONFIG_KEYS.map((key) => (
-        <DashboardItem key={key} span={12}>
-          <ConfigRow configKey={key} value={values[key] ?? ''} />
-        </DashboardItem>
-      ))}
-    </DashboardLayout>
-  );
+  return <ConfigForm values={values} />;
 };
