@@ -9,7 +9,6 @@ import { SidebarUserProfile } from '@/shared/components/dashboard/SidebarUserPro
 import { useSidebar } from '@/shared/components/dashboard/SidebarContext';
 
 const ADMIN_NAV_KEYS = [
-  { href: '/admin', labelKey: 'overview' },
   { href: '/admin/users', labelKey: 'users' },
   { href: '/admin/broker-accounts', labelKey: 'brokerAccounts' },
   { href: '/admin/withdrawals', labelKey: 'withdrawals' },

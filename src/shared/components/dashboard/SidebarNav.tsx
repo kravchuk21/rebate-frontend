@@ -34,7 +34,10 @@ export const SidebarNav = ({ items, onNavigate }: SidebarNavProps) => {
           fullWidth
           className="justify-start"
           onPress={() => {
-            router.push(item.href);
+            if (pathname !== item.href) {
+              router.push(item.href);
+            }
+
             onNavigate?.();
           }}
         >

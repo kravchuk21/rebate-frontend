@@ -62,7 +62,7 @@ export const TwoFADisableModal = ({ isOpen, onOpenChange, onDisabled }: TwoFADis
   return (
     <Modal isOpen={isOpen} onOpenChange={handleOpenChange}>
       <Modal.Backdrop>
-        <Modal.Container>
+        <Modal.Container scroll='outside'>
           <Modal.Dialog className="sm:max-w-[420px]">
             <Modal.CloseTrigger />
             <Modal.Header>

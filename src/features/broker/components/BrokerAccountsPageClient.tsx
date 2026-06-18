@@ -20,7 +20,7 @@ export const BrokerAccountsPageClient = () => {
       </DashboardItem>
 
       <DashboardItem span={12}>
-        <BrokerAccountsTable onAddAccount={() => setIsModalOpen(true)} />
+        <BrokerAccountsTable />
       </DashboardItem>
 
       <SubmitAccountModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} />

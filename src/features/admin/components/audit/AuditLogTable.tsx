@@ -132,7 +132,7 @@ export const AuditLogTable = () => {
 
       <Modal isOpen={detailsEntry !== null} onOpenChange={(open) => !open && setDetailsEntry(null)}>
         <Modal.Backdrop>
-          <Modal.Container>
+          <Modal.Container scroll='outside'>
             <Modal.Dialog className="sm:max-w-[480px]">
               <Modal.CloseTrigger />
               <Modal.Header>

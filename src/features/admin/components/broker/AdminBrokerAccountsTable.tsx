@@ -154,7 +154,7 @@ export const AdminBrokerAccountsTable = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <Tabs onSelectionChange={(key) => handleTabChange(String(key))}>
+      <Tabs selectedKey='all' onSelectionChange={(key) => handleTabChange(String(key))}>
         <Tabs.ListContainer>
           <Tabs.List>
             <Tabs.Tab id="pending">

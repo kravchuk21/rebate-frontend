@@ -87,7 +87,7 @@ export const TwoFASetupModal = ({ isOpen, onOpenChange, onEnabled }: TwoFASetupM
   return (
     <Modal isOpen={isOpen} onOpenChange={handleOpenChange}>
       <Modal.Backdrop>
-        <Modal.Container>
+        <Modal.Container scroll='outside'>
           <Modal.Dialog className="sm:max-w-[480px]">
             <Modal.CloseTrigger />
             <Modal.Header>

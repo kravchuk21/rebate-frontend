@@ -24,14 +24,16 @@ export const AuthModal = ({ defaultReferralCode }: AuthModalProps) => {
   return (
     <Modal>
       <Modal.Backdrop isOpen={isOpen} onOpenChange={handleOpenChange}>
-        <Modal.Container>
+        <Modal.Container scroll='outside'>
           <Modal.Dialog className="sm:max-w-[380px] w-full">
+            <Modal.Body>
+              {currentModal === 'login' && <LoginForm />}
+              {currentModal === 'register' && (
+                <RegisterForm defaultReferralCode={defaultReferralCode} />
+              )}
+              {currentModal === 'twoFa' && <TwoFAModal />}
+            </Modal.Body>
             <Modal.CloseTrigger />
-            {currentModal === 'login' && <LoginForm />}
-            {currentModal === 'register' && (
-              <RegisterForm defaultReferralCode={defaultReferralCode} />
-            )}
-            {currentModal === 'twoFa' && <TwoFAModal />}
           </Modal.Dialog>
         </Modal.Container>
       </Modal.Backdrop>

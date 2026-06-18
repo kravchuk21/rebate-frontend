@@ -65,7 +65,7 @@ export const AdjustCalculationModal = ({ calculation, onOpenChange }: AdjustCalc
   return (
     <Modal isOpen={calculation !== null} onOpenChange={handleOpenChange}>
       <Modal.Backdrop>
-        <Modal.Container>
+        <Modal.Container scroll='outside'>
           <Modal.Dialog className="sm:max-w-[420px]">
             <Modal.CloseTrigger />
             <Modal.Header>

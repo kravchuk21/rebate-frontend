@@ -28,7 +28,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} data-theme="dark" suppressHydrationWarning>
-      <body>
+      <body suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <QueryProvider>
             <Toast.Provider />

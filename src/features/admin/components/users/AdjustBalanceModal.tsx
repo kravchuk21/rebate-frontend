@@ -66,7 +66,7 @@ export const AdjustBalanceModal = ({ userID, onOpenChange }: AdjustBalanceModalP
   return (
     <Modal isOpen={userID !== null} onOpenChange={handleOpenChange}>
       <Modal.Backdrop>
-        <Modal.Container>
+        <Modal.Container scroll='outside'>
           <Modal.Dialog className="sm:max-w-[420px]">
             <Modal.CloseTrigger />
             <Modal.Header>
