@@ -3,7 +3,14 @@
     "tagline": "Earn rebates from your trading. Automatically.",
     "description": "Connect your broker account and receive daily rebate payouts in crypto.",
     "signIn": "Sign In",
-    "getStarted": "Get Started"
+    "getStarted": "Get Started",
+    "blog": "Blog"
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Guides and updates about trading rebates and crypto payouts.",
+    "empty": "No posts yet.",
+    "backToBlog": "← Back to blog"
   },
   "auth": {
     "login": {

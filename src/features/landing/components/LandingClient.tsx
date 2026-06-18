@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { AuthModal } from '@/features/auth/components/AuthModal';
 import { AuthModalTrigger } from '@/features/auth/components/AuthModalTrigger';
+import { Link } from '@/i18n/navigation';
 
 interface LandingClientProps {
   defaultReferralCode?: string;
@@ -24,7 +25,10 @@ export const LandingClient = ({ defaultReferralCode }: LandingClientProps) => {
             Rebate Pro
           </span>
         </div>
-        <div>
+        <div className="flex items-center gap-6">
+          <Link href="/blog" className="text-sm text-muted hover:text-foreground">
+            {t('blog')}
+          </Link>
           <AuthModalTrigger />
         </div>
       </header>
