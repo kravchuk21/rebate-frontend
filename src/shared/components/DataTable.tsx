@@ -67,6 +67,7 @@ export function DataTable<T>({
                 id={header.id}
                 allowsSorting={onSortChange ? header.column.getCanSort() : false}
                 isRowHeader={header.id === rowHeaderId}
+                className='text-nowrap'
               >
                 {flexRender(header.column.columnDef.header, header.getContext())}
               </Table.Column>
@@ -74,7 +75,7 @@ export function DataTable<T>({
           </Table.Header>
           <Table.Body items={rows} renderEmptyState={renderEmptyState}>
             {(row) => (
-              <Table.Row id={row.id}>
+              <Table.Row id={row.id} className='text-nowrap'>
                 {row.getVisibleCells().map((cell) => (
                   <Table.Cell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

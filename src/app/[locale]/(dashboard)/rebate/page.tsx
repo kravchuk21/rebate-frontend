@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { PageHeader } from '@/shared/components/dashboard/PageHeader';
-
+import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
 import { RebateTable } from '@/features/rebate/components/RebateTable';
 
 export default async function RebatePage() {
@@ -9,7 +9,11 @@ export default async function RebatePage() {
   return (
     <>
       <PageHeader title={t('title')} />
-      <RebateTable />
+      <DashboardLayout>
+        <DashboardItem>
+          <RebateTable />
+        </DashboardItem>
+      </DashboardLayout>
     </>
   );
 }
