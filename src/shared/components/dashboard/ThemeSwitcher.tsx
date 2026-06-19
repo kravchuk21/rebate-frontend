@@ -4,25 +4,18 @@ import { useEffect, useState } from "react";
 import { Button, ButtonGroup } from "@heroui/react";
 import { Sun, Moon, Display } from "@gravity-ui/icons";
 
-type Theme = "light" | "dark" | "system";
-
-const STORAGE_KEY = "theme";
-
-function applyTheme(theme: Theme) {
-  const resolved =
-    theme === "system"
-      ? window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light"
-      : theme;
-  document.documentElement.setAttribute("data-theme", resolved);
-}
+import {
+  DEFAULT_THEME,
+  THEME_STORAGE_KEY,
+  applyTheme,
+  type Theme,
+} from "@/shared/lib/theme";
 
 export const ThemeSwitcher = () => {
-  const [theme, setTheme] = useState<Theme>("system");
+  const [theme, setTheme] = useState<Theme>(DEFAULT_THEME);
 
   useEffect(() => {
-    const stored = (localStorage.getItem(STORAGE_KEY) as Theme | null) ?? "system";
+    const stored = (localStorage.getItem(THEME_STORAGE_KEY) as Theme | null) ?? DEFAULT_THEME;
     setTheme(stored);
     applyTheme(stored);
   }, []);
@@ -37,7 +30,7 @@ export const ThemeSwitcher = () => {
 
   const select = (next: Theme) => {
     setTheme(next);
-    localStorage.setItem(STORAGE_KEY, next);
+    localStorage.setItem(THEME_STORAGE_KEY, next);
     applyTheme(next);
   };
 

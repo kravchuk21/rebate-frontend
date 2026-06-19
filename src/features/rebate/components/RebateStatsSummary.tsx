@@ -27,17 +27,17 @@ export const RebateStatsSummary = ({ stats, isLoading }: RebateStatsSummaryProps
   return (
     <>
       {SUMMARY_ROWS.map(({ labelKey, field }) => (
-        <div key={field} className="flex justify-between">
+        <div key={field} className="flex items-center justify-between gap-4">
           <Typography.Paragraph className="flex-1" size="sm" color="muted">
             {t(`summary.${labelKey}`)}
           </Typography.Paragraph>
-          <Typography.Paragraph className="flex-1 text-right" size="sm">
-            {isLoading ? (
-              <Skeleton className="h-7 w-full" />
-            ) : (
-              `${formatAmount(stats?.[field])} USDT`
-            )}
-          </Typography.Paragraph>
+          {isLoading ? (
+            <Skeleton className="h-7 flex-1" />
+          ) : (
+            <Typography.Paragraph className="flex-1 text-right" size="sm">
+              {`${formatAmount(stats?.[field])} USDT`}
+            </Typography.Paragraph>
+          )}
         </div>
       ))}
     </>
