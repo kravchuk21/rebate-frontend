@@ -29,6 +29,9 @@ export const LandingClient = ({ defaultReferralCode }: LandingClientProps) => {
           <Link href="/blog" className="text-sm text-muted hover:text-foreground">
             {t('blog')}
           </Link>
+          <Link href="/faq" className="text-sm text-muted hover:text-foreground">
+            {t('faq')}
+          </Link>
           <AuthModalTrigger />
         </div>
       </header>

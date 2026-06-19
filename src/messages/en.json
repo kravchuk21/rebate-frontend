@@ -4,13 +4,80 @@
     "description": "Connect your broker account and receive daily rebate payouts in crypto.",
     "signIn": "Sign In",
     "getStarted": "Get Started",
-    "blog": "Blog"
+    "blog": "Blog",
+    "faq": "FAQ"
   },
   "blog": {
     "title": "Blog",
     "description": "Guides and updates about trading rebates and crypto payouts.",
     "empty": "No posts yet.",
     "backToBlog": "← Back to blog"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "description": "Everything you need to know about rebates, payouts, and referrals.",
+    "categories": [
+      {
+        "title": "General",
+        "items": [
+          {
+            "title": "What is a trading rebate?",
+            "content": "A rebate is a portion of the trading fees you generate that gets paid back to you. Connect your broker account, keep trading as usual, and we calculate and pay out your rebate automatically."
+          },
+          {
+            "title": "Which brokers are supported?",
+            "content": "We support a growing list of major brokers. You can see the full list when adding a broker account from your dashboard."
+          },
+          {
+            "title": "How do I connect my broker account?",
+            "content": "Go to Broker Accounts in your dashboard, select your broker, and enter your trading account UID. Your account will be reviewed and approved shortly after."
+          }
+        ]
+      },
+      {
+        "title": "Rebates & Payouts",
+        "items": [
+          {
+            "title": "How often are rebates calculated?",
+            "content": "Rebates are calculated daily once your broker account is approved, based on your trading volume for that day."
+          },
+          {
+            "title": "How do I withdraw my balance?",
+            "content": "Add a payout method (a crypto wallet address) in the Withdrawals section, then request a withdrawal. A small network fee is deducted from the amount you receive."
+          },
+          {
+            "title": "Which networks can I withdraw to?",
+            "content": "We support USDT withdrawals over TRC20 (Tron), ERC20 (Ethereum), BEP20 (BSC), and SOL (Solana)."
+          },
+          {
+            "title": "How long do withdrawals take?",
+            "content": "Withdrawals are typically processed within 24 hours. You can track the status of your request in the Withdrawals history tab."
+          }
+        ]
+      },
+      {
+        "title": "Referrals",
+        "items": [
+          {
+            "title": "How does the referral program work?",
+            "content": "Share your referral link or code with other traders. When they sign up and trade, you earn a percentage of their trading rebates."
+          },
+          {
+            "title": "Where can I find my referral link?",
+            "content": "Your referral link and code are available on the Referrals page in your dashboard."
+          }
+        ]
+      },
+      {
+        "title": "Support",
+        "items": [
+          {
+            "title": "How do I get support?",
+            "content": "You can reach our support team through your account dashboard, or email us directly at support@example.com."
+          }
+        ]
+      }
+    ]
   },
   "auth": {
     "login": {
