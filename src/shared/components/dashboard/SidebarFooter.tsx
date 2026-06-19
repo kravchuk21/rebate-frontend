@@ -17,8 +17,6 @@ export const SidebarFooter = memo(function SidebarFooter() {
 
   return (
     <div className="flex flex-col gap-1">
-      <LocaleSwitcher />
-      <ThemeSwitcher />
       <SidebarButton onPress={() => router.push('/faq')}>
         <CircleQuestion />
         {t('help')}
@@ -30,6 +28,8 @@ export const SidebarFooter = memo(function SidebarFooter() {
         <ArrowRightFromSquare />
         {t('logout')}
       </SidebarButton>
+      <LocaleSwitcher />
+      <ThemeSwitcher />
     </div>
   );
 });
