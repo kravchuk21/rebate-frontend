@@ -5,6 +5,7 @@ import { Button, Typography, buttonVariants } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
 import { Link } from '@/i18n/navigation';
+import { Routes } from '@/shared/lib/routes';
 
 export default function LocaleError({
   error,
@@ -33,7 +34,7 @@ export default function LocaleError({
           <Button variant="primary" onPress={reset}>
             {t('tryAgain')}
           </Button>
-          <Link href="/dashboard" className={buttonVariants({ variant: 'tertiary' })}>
+          <Link href={Routes.Dashboard} className={buttonVariants({ variant: 'tertiary' })}>
             {t('goHome')}
           </Link>
         </div>

@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { AuthModal } from '@/features/auth/components/AuthModal';
 import { AuthModalTrigger } from '@/features/auth/components/AuthModalTrigger';
 import { Link } from '@/i18n/navigation';
+import { Routes } from '@/shared/lib/routes';
 
 interface LandingClientProps {
   defaultReferralCode?: string;
@@ -26,10 +27,10 @@ export const LandingClient = ({ defaultReferralCode }: LandingClientProps) => {
           </span>
         </div>
         <div className="flex items-center gap-6">
-          <Link href="/blog" className="text-sm text-muted hover:text-foreground">
+          <Link href={Routes.Blog} className="text-sm text-muted hover:text-foreground">
             {t('blog')}
           </Link>
-          <Link href="/faq" className="text-sm text-muted hover:text-foreground">
+          <Link href={Routes.Faq} className="text-sm text-muted hover:text-foreground">
             {t('faq')}
           </Link>
           <AuthModalTrigger />

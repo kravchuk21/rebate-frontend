@@ -6,6 +6,7 @@ import { Button, Card, Skeleton, Typography } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
 import { useRouter } from '@/i18n/navigation';
+import { Routes } from '@/shared/lib/routes';
 import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
 import type {
   BrokerAccountDetailResponse,
@@ -39,21 +40,21 @@ export const DashboardSummaryCards = () => {
       isLoading: false,
       value: approvedCount,
       actionLabel: t('manageAccounts'),
-      href: '/accounts',
+      href: Routes.Accounts,
     },
     {
       title: t('balance'),
       isLoading: isBalanceLoading,
       value: `${formatAmount(balance?.available)} USDT`,
       actionLabel: t('withdrawFunds'),
-      href: '/withdrawal',
+      href: Routes.Withdrawal,
     },
     {
       title: t('referralCode'),
       isLoading: isReferralLoading,
       value: referralStats?.referral_code ?? '—',
       actionLabel: t('viewReferrals'),
-      href: '/referrals',
+      href: Routes.Referrals,
     },
   ] as const;
 

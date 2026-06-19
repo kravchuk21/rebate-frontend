@@ -1,6 +1,7 @@
 import { redirect } from '@/i18n/navigation';
 import { getAccessToken } from '@/shared/lib/cookies';
 import { decodeAccessToken } from '@/shared/lib/decodeToken';
+import { Routes } from '@/shared/lib/routes';
 import { AdminSidebar } from '@/features/admin/components/AdminSidebar';
 import { SidebarProvider } from '@/shared/components/dashboard/SidebarContext';
 import { PageTransition } from '@/shared/components/PageTransition';
@@ -16,14 +17,14 @@ export default async function AdminLayout({
   const token = await getAccessToken();
 
   if (!token) {
-    redirect({ href: '/?modal=login', locale });
+    redirect({ href: `${Routes.Home}?modal=login`, locale });
     return;
   }
 
   const claims = decodeAccessToken(token);
 
   if (!claims || claims.role !== 'admin') {
-    redirect({ href: '/dashboard', locale });
+    redirect({ href: Routes.Dashboard, locale });
     return;
   }
 

@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { Link } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
+import { Routes } from '@/shared/lib/routes';
 import { getAllSlugs, getPostBySlug } from '@/features/blog/lib/posts';
 import { BlogArticle } from '@/features/blog/components/BlogArticle';
 
@@ -53,7 +54,7 @@ export default async function BlogPostPage({
   return (
     <div className="min-h-screen px-6 py-12 md:py-24">
       <div className="max-w-2xl mx-auto w-full mb-8">
-        <Link href="/blog" className="text-sm text-muted hover:text-foreground">
+        <Link href={Routes.Blog} className="text-sm text-muted hover:text-foreground">
           {t('backToBlog')}
         </Link>
       </div>

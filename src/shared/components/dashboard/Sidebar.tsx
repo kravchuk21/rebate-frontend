@@ -4,15 +4,16 @@ import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { ArrowDownToLine, CreditCard, House, Persons, PersonGear, ArrowUpFromLine } from '@gravity-ui/icons';
 
+import { Routes } from '@/shared/lib/routes';
 import { SidebarShell } from './SidebarShell';
 
 const NAV_KEYS = [
-  { href: '/dashboard', labelKey: 'dashboard', icon: House },
-  { href: '/accounts', labelKey: 'accounts', icon: CreditCard },
-  { href: '/rebate', labelKey: 'rebate', icon: ArrowDownToLine },
-  { href: '/withdrawal', labelKey: 'withdrawal', icon: ArrowUpFromLine },
-  { href: '/referrals', labelKey: 'referrals', icon: Persons, tag: 'new' },
-  { href: '/profile', labelKey: 'profile', icon: PersonGear },
+  { href: Routes.Dashboard, labelKey: 'dashboard', icon: House },
+  { href: Routes.Accounts, labelKey: 'accounts', icon: CreditCard },
+  { href: Routes.Rebate, labelKey: 'rebate', icon: ArrowDownToLine },
+  { href: Routes.Withdrawal, labelKey: 'withdrawal', icon: ArrowUpFromLine },
+  { href: Routes.Referrals, labelKey: 'referrals', icon: Persons, tag: 'new' },
+  { href: Routes.Profile, labelKey: 'profile', icon: PersonGear },
 ] as const;
 
 interface SidebarProps {

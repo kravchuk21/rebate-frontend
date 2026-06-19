@@ -8,6 +8,7 @@ import { LocaleSwitcher } from '@/shared/components/LocaleSwitcher';
 import { ThemeSwitcher } from '@/shared/components/dashboard/ThemeSwitcher';
 import { useLogout } from '@/features/auth/hooks/useLogout';
 import { useRouter } from '@/i18n/navigation';
+import { Routes } from '@/shared/lib/routes';
 import { SidebarButton } from './SidebarButton';
 
 export const SidebarFooter = memo(function SidebarFooter() {
@@ -17,7 +18,7 @@ export const SidebarFooter = memo(function SidebarFooter() {
 
   return (
     <div className="flex flex-col gap-1">
-      <SidebarButton onPress={() => router.push('/faq')}>
+      <SidebarButton onPress={() => router.push(Routes.Faq)}>
         <CircleQuestion />
         {t('help')}
       </SidebarButton>

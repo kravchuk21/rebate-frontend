@@ -4,6 +4,7 @@ import { ReferralLinkCard } from '@/features/referral/components/ReferralLinkCar
 import { redirect } from '@/i18n/navigation';
 import { getAccessToken } from '@/shared/lib/cookies';
 import { decodeAccessToken } from '@/shared/lib/decodeToken';
+import { Routes } from '@/shared/lib/routes';
 import { ChangePasswordSection } from '@/features/auth/components/profile/ChangePasswordSection';
 import { ProfileAccountInfo } from '@/features/auth/components/profile/ProfileAccountInfo';
 import { TwoFASection } from '@/features/auth/components/profile/TwoFASection';
@@ -18,14 +19,14 @@ export default async function ProfilePage({
   const token = await getAccessToken();
 
   if (!token) {
-    redirect({ href: '/?modal=login', locale });
+    redirect({ href: `${Routes.Home}?modal=login`, locale });
     return;
   }
 
   const claims = decodeAccessToken(token);
 
   if (!claims) {
-    redirect({ href: '/?modal=login', locale });
+    redirect({ href: `${Routes.Home}?modal=login`, locale });
     return;
   }
 

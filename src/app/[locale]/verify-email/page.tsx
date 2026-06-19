@@ -8,6 +8,7 @@ import { Alert, Card, Spinner } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
 import { Link } from '@/i18n/navigation';
+import { Routes } from '@/shared/lib/routes';
 import { postAuthVerifyEmail } from '@/shared/api/generated/requests/auth/postAuthVerifyEmail.gen';
 import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
 
@@ -51,7 +52,7 @@ const VerifyEmailContent = () => {
             <Alert.Content>
               <Alert.Description>
                 {t('success')}{' '}
-                <Link href="/?modal=login" className="underline">
+                <Link href={`${Routes.Home}?modal=login`} className="underline">
                   {t('successAction')}
                 </Link>
               </Alert.Description>
@@ -64,7 +65,7 @@ const VerifyEmailContent = () => {
             <Alert.Content>
               <Alert.Description>
                 {error ?? t('error')}{' '}
-                <Link href="/?modal=login" className="underline">
+                <Link href={`${Routes.Home}?modal=login`} className="underline">
                   {t('errorAction')}
                 </Link>
               </Alert.Description>

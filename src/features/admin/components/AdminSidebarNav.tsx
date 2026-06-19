@@ -3,15 +3,16 @@
 import { useTranslations } from 'next-intl';
 import { Tab, TabIndicator, TabList, TabListContainer, TabsRoot } from '@heroui/react';
 import { useRouter, usePathname } from '@/i18n/navigation';
+import { Routes } from '@/shared/lib/routes';
 
 const adminNavItems = [
-  { href: '/admin', labelKey: 'overview' },
-  { href: '/admin/users', labelKey: 'users' },
-  { href: '/admin/broker-accounts', labelKey: 'brokerAccounts' },
-  { href: '/admin/withdrawals', labelKey: 'withdrawals' },
-  { href: '/admin/rebate', labelKey: 'rebate' },
-  { href: '/admin/config', labelKey: 'config' },
-  { href: '/admin/audit-log', labelKey: 'auditLog' },
+  { href: Routes.Admin, labelKey: 'overview' },
+  { href: Routes.AdminUsers, labelKey: 'users' },
+  { href: Routes.AdminBrokerAccounts, labelKey: 'brokerAccounts' },
+  { href: Routes.AdminWithdrawals, labelKey: 'withdrawals' },
+  { href: Routes.AdminRebate, labelKey: 'rebate' },
+  { href: Routes.AdminConfig, labelKey: 'config' },
+  { href: Routes.AdminAuditLog, labelKey: 'auditLog' },
 ] as const;
 
 interface AdminSidebarNavProps {

@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { useRouter } from '@/i18n/navigation';
+import { Routes } from '@/shared/lib/routes';
 import type { AuthLoginRequest, AuthTwoFaResponse } from '@/shared/api/generated/types.gen';
 import { useAuthModal } from './useAuthModal';
 
@@ -30,7 +31,7 @@ export const useLogin = () => {
         return;
       }
 
-      router.push('/dashboard');
+      router.push(Routes.Dashboard);
     },
   });
 };

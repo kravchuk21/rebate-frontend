@@ -1,6 +1,7 @@
 import { redirect } from '@/i18n/navigation';
 import { getAccessToken } from '@/shared/lib/cookies';
 import { decodeAccessToken } from '@/shared/lib/decodeToken';
+import { Routes } from '@/shared/lib/routes';
 import { Sidebar } from '@/shared/components/dashboard/Sidebar';
 import { SidebarProvider } from '@/shared/components/dashboard/SidebarContext';
 import { PageTransition } from '@/shared/components/PageTransition';
@@ -16,13 +17,13 @@ export default async function DashboardLayout({
   const accessToken = await getAccessToken();
 
   if (!accessToken) {
-    redirect({ href: '/?modal=login', locale });
+    redirect({ href: `${Routes.Home}?modal=login`, locale });
   }
 
   const claims = decodeAccessToken(accessToken!);
 
   if (!claims) {
-    redirect({ href: '/?modal=login', locale });
+    redirect({ href: `${Routes.Home}?modal=login`, locale });
   }
 
   return (

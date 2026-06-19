@@ -3,10 +3,18 @@ import type { NextRequest } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 
 import { routing } from '@/i18n/routing';
+import { Routes } from '@/shared/lib/routes';
 
 const intlMiddleware = createMiddleware(routing);
 
-const PROTECTED_SEGMENTS = ['/dashboard', '/accounts', '/rebate', '/withdrawal', '/referrals', '/admin'];
+const PROTECTED_SEGMENTS = [
+  Routes.Dashboard,
+  Routes.Accounts,
+  Routes.Rebate,
+  Routes.Withdrawal,
+  Routes.Referrals,
+  Routes.Admin,
+];
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;

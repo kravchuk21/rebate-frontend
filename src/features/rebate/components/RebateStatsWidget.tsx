@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import type { RebateStatsResponse } from '@/shared/api/generated/types.gen';
 import { useRouter } from '@/i18n/navigation';
+import { Routes } from '@/shared/lib/routes';
 import { TrendChart, type TrendChartType } from '@/shared/components/charts';
 import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
 import { WidgetCard } from '@/shared/components/WidgetCard';
@@ -65,7 +66,7 @@ export const RebateStatsWidget = ({ fullMode = true }: RebateStatsWidgetProps) =
                 <RebateStatsSummary stats={stats} isLoading={isLoading} />
               </DashboardItem>
               <DashboardItem className='flex items-center justify-between'>
-                <Button variant="secondary" size="sm" onPress={() => router.push('/rebate')}>
+                <Button variant="secondary" size="sm" onPress={() => router.push(Routes.Rebate)}>
                   {t('viewAll')}
                   <Link.Icon />
                 </Button>

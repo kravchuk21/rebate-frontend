@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { Avatar, Typography } from '@heroui/react';
 import { Link } from '@/i18n/navigation';
+import { Routes } from '@/shared/lib/routes';
 
 interface SidebarUserProfileProps {
   email: string;
@@ -11,7 +12,7 @@ export const SidebarUserProfile = memo(function SidebarUserProfile({ email, role
   const initial = email.charAt(0).toUpperCase();
 
   return (
-    <Link href="/profile" className="flex items-center gap-3 px-1">
+    <Link href={Routes.Profile} className="flex items-center gap-3 px-1">
       <Avatar size='sm'>
         <Avatar.Image
           alt="Avatar"
