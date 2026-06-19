@@ -1,5 +1,5 @@
 import { ChevronDown } from "@gravity-ui/icons";
-import { Accordion } from "@heroui/react";
+import { Accordion, Typography } from "@heroui/react";
 import { getTranslations } from "next-intl/server";
 
 interface FAQCategory {
@@ -19,10 +19,10 @@ export async function FAQ({ locale }: FAQProps) {
   const categories = t.raw("categories") as FAQCategory[];
 
   return (
-    <div className="mx-auto flex w-full max-w-2xl flex-col gap-6">
+    <div className="flex flex-col gap-6">
       {categories.map((category) => (
-        <div key={category.title}>
-          <p className="text-md text-muted mb-2 font-medium">{category.title}</p>
+        <div key={category.title} className="flex flex-col gap-2">
+          <Typography.Paragraph color="muted">{category.title}</Typography.Paragraph>
           <Accordion className="w-full" variant="surface">
             {category.items.map((item, index) => (
               <Accordion.Item key={index}>
