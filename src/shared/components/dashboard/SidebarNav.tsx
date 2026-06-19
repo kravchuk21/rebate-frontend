@@ -1,12 +1,16 @@
 'use client';
 
-import { memo, useMemo } from 'react';
-import { Button } from '@heroui/react';
+import { memo, useMemo, type ComponentType, type SVGProps } from 'react';
+import { Chip } from '@heroui/react';
+import { useTranslations } from 'next-intl';
 import { useRouter, usePathname } from '@/i18n/navigation';
+import { SidebarButton } from './SidebarButton';
 
 export interface SidebarNavItem {
   href: string;
   label: string;
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
+  tag?: 'new';
 }
 
 interface SidebarNavProps {
@@ -15,44 +19,49 @@ interface SidebarNavProps {
   onNavigate?: () => void;
 }
 
-export const SidebarNav = memo(function SidebarNav({ items, onNavigate }: SidebarNavProps) {
+export const SidebarNav = memo(function SidebarNav({ items, ariaLabel, onNavigate }: SidebarNavProps) {
+  const t = useTranslations('common');
   const pathname = usePathname();
   const router = useRouter();
-
-  const cleanPathname = pathname.split('?')[0];
 
   const activeHref = useMemo(
     () =>
       (
         items
-          .filter(
-            (item) =>
-              cleanPathname === item.href || cleanPathname.startsWith(`${item.href}/`),
-          )
+          .filter((item) => pathname === item.href || pathname.startsWith(`${item.href}/`))
           .sort((a, b) => b.href.length - a.href.length)[0] ?? items[0]
       )?.href,
-    [items, cleanPathname],
+    [items, pathname],
   );
 
   return (
-    <div className="w-full flex flex-col gap-1">
-      {items.map((item) => (
-        <Button
-          key={item.href}
-          variant={item.href === activeHref ? 'tertiary' : 'ghost'}
-          fullWidth
-          className="justify-start"
-          onPress={() => {
-            if (pathname !== item.href) {
-              router.push(item.href);
-            }
+    <nav aria-label={ariaLabel} className="w-full flex flex-col gap-1">
+      {items.map((item) => {
+        const Icon = item.icon;
+        const isActive = item.href === activeHref;
 
-            onNavigate?.();
-          }}
-        >
-          {item.label}
-        </Button>
-      ))}
-    </div>
+        return (
+          <SidebarButton
+            key={item.href}
+            variant={isActive ? 'tertiary' : 'ghost'}
+            onPress={() => {
+              if (pathname !== item.href) {
+                router.push(item.href);
+              }
+
+              onNavigate?.();
+            }}
+          >
+            <Icon />
+            <span className="flex-1 text-start">{item.label}</span>
+            {item.tag === 'new' && (
+              <Chip size="sm" color="success" variant="soft">
+                {t('tagNew')}
+              </Chip>
+            )}
+          </SidebarButton>
+        );
+      })}
+    </nav>
   );
 });

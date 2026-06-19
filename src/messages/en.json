@@ -125,6 +125,8 @@
   },
   "common": {
     "logout": "Logout",
+    "help": "Help & Information",
+    "tagNew": "New",
     "openMenu": "Open menu",
     "copy": {
       "success": "Copied to clipboard",
@@ -132,6 +134,7 @@
     }
   },
   "nav": {
+    "ariaLabel": "Dashboard navigation",
     "dashboard": "Dashboard",
     "accounts": "Broker Accounts",
     "rebate": "Rebate History",
@@ -515,6 +518,7 @@
   },
   "admin": {
     "nav": {
+      "ariaLabel": "Admin navigation",
       "overview": "Overview",
       "users": "Users",
       "brokerAccounts": "Broker Accounts",

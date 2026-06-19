@@ -11,8 +11,8 @@ export const SidebarUserProfile = memo(function SidebarUserProfile({ email, role
   const initial = email.charAt(0).toUpperCase();
 
   return (
-    <Link href="/profile" className="flex items-center gap-3">
-      <Avatar>
+    <Link href="/profile" className="flex items-center gap-3 px-1">
+      <Avatar size='sm'>
         <Avatar.Image
           alt="Avatar"
           src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg"

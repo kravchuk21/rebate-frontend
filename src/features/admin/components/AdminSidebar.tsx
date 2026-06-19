@@ -1,20 +1,18 @@
 'use client';
 
+import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
-import { Drawer } from '@heroui/react';
+import { Persons, CreditCard, ArrowUpFromLine, ListCheck, Gear, ListCheckLock } from '@gravity-ui/icons';
 
-import { SidebarFooter } from '@/shared/components/dashboard/SidebarFooter';
-import { SidebarNav } from '@/shared/components/dashboard/SidebarNav';
-import { SidebarUserProfile } from '@/shared/components/dashboard/SidebarUserProfile';
-import { useSidebar } from '@/shared/components/dashboard/SidebarContext';
+import { SidebarShell } from '@/shared/components/dashboard/SidebarShell';
 
 const ADMIN_NAV_KEYS = [
-  { href: '/admin/users', labelKey: 'users' },
-  { href: '/admin/broker-accounts', labelKey: 'brokerAccounts' },
-  { href: '/admin/withdrawals', labelKey: 'withdrawals' },
-  { href: '/admin/rebate', labelKey: 'rebate' },
-  { href: '/admin/config', labelKey: 'config' },
-  { href: '/admin/audit-log', labelKey: 'auditLog' },
+  { href: '/admin/users', labelKey: 'users', icon: Persons },
+  { href: '/admin/broker-accounts', labelKey: 'brokerAccounts', icon: CreditCard },
+  { href: '/admin/withdrawals', labelKey: 'withdrawals', icon: ArrowUpFromLine },
+  { href: '/admin/rebate', labelKey: 'rebate', icon: ListCheck },
+  { href: '/admin/config', labelKey: 'config', icon: Gear },
+  { href: '/admin/audit-log', labelKey: 'auditLog', icon: ListCheckLock },
 ] as const;
 
 interface AdminSidebarProps {
@@ -24,37 +22,16 @@ interface AdminSidebarProps {
 
 export const AdminSidebar = ({ email, role }: AdminSidebarProps) => {
   const t = useTranslations('admin.nav');
-  const { drawer, isDesktopVisible } = useSidebar();
 
-  const items = ADMIN_NAV_KEYS.map((item) => ({ href: item.href, label: t(item.labelKey) }));
-
-  const content = (onNavigate?: () => void) => (
-    <div className="flex h-full flex-col gap-4">
-      <SidebarUserProfile email={email} role={role} />
-      <SidebarNav items={items} ariaLabel="Admin navigation" onNavigate={onNavigate} />
-      <div className="mt-auto">
-        <SidebarFooter />
-      </div>
-    </div>
+  const items = useMemo(
+    () =>
+      ADMIN_NAV_KEYS.map((item) => ({
+        href: item.href,
+        label: t(item.labelKey),
+        icon: item.icon,
+      })),
+    [t],
   );
 
-  return (
-    <>
-      <Drawer.Root state={drawer}>
-        <Drawer.Backdrop className="md:hidden">
-          <Drawer.Content placement="left" className="w-72">
-            <Drawer.Dialog className="p-4">
-              <Drawer.Body>{content(drawer.close)}</Drawer.Body>
-            </Drawer.Dialog>
-          </Drawer.Content>
-        </Drawer.Backdrop>
-      </Drawer.Root>
-
-      {isDesktopVisible && (
-        <aside className="hidden w-72 shrink-0 border-r p-4 md:sticky md:top-0 md:block md:h-screen md:overflow-y-auto">
-          {content()}
-        </aside>
-      )}
-    </>
-  );
+  return <SidebarShell email={email} role={role} items={items} ariaLabel={t('ariaLabel')} />;
 };

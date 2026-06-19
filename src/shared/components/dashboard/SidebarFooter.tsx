@@ -1,32 +1,35 @@
 'use client';
 
 import { memo } from 'react';
-import { Button } from '@heroui/react';
 import { useTranslations } from 'next-intl';
-import { ArrowRightFromSquare } from '@gravity-ui/icons';
+import { ArrowRightFromSquare, CircleQuestion } from '@gravity-ui/icons';
 
 import { LocaleSwitcher } from '@/shared/components/LocaleSwitcher';
 import { ThemeSwitcher } from '@/shared/components/dashboard/ThemeSwitcher';
 import { useLogout } from '@/features/auth/hooks/useLogout';
+import { useRouter } from '@/i18n/navigation';
+import { SidebarButton } from './SidebarButton';
 
 export const SidebarFooter = memo(function SidebarFooter() {
   const t = useTranslations('common');
   const logout = useLogout();
+  const router = useRouter();
 
   return (
     <div className="flex flex-col gap-1">
       <LocaleSwitcher />
       <ThemeSwitcher />
-      <Button
-        variant="tertiary"
-        fullWidth
-        size="sm"
+      <SidebarButton onPress={() => router.push('/faq')}>
+        <CircleQuestion />
+        {t('help')}
+      </SidebarButton>
+      <SidebarButton
         onPress={() => logout.mutate()}
         isDisabled={logout.isPending}
       >
         <ArrowRightFromSquare />
         {t('logout')}
-      </Button>
+      </SidebarButton>
     </div>
   );
 });

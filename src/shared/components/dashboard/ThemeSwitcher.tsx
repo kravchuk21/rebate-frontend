@@ -42,23 +42,23 @@ export const ThemeSwitcher = () => {
   };
 
   return (
-    <ButtonGroup variant="tertiary" size="sm" fullWidth>
+    <ButtonGroup variant="outline" size="sm" fullWidth>
       <Button
         onPress={() => select('light')}
-        variant={theme === 'light' ? 'secondary' : 'tertiary'}
+        // variant={theme === 'light' ? 'secondary' : 'tertiary'}
       >
         <Sun />
       </Button>
       <Button
         onPress={() => select('dark')}
-        variant={theme === 'dark' ? 'secondary' : 'tertiary'}
+        // variant={theme === 'dark' ? 'secondary' : 'tertiary'}
       >
         <ButtonGroup.Separator />
         <Moon />
       </Button>
       <Button
         onPress={() => select('system')}
-        variant={theme === 'system' ? 'secondary' : 'tertiary'}
+        // variant={theme === 'system' ? 'secondary' : 'tertiary'}
       >
         <ButtonGroup.Separator />
         <Display />

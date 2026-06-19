@@ -28,6 +28,15 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} data-theme="dark" suppressHydrationWarning>
+      <head>
+        <script
+          // Resolve the persisted theme before first paint to avoid a flash of the wrong theme.
+          // Must stay in sync with ThemeSwitcher (storage key + resolution logic).
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme')||'system';var r=t==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):t;document.documentElement.setAttribute('data-theme',r);}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className='bg-background text-foreground' suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <QueryProvider>

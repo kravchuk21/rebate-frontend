@@ -21,21 +21,26 @@ const SidebarContext = createContext<SidebarContextValue | null>(null);
 
 const DESKTOP_QUERY = '(min-width: 768px)';
 
+const getInitialIsDesktop = () =>
+  typeof window !== 'undefined' && window.matchMedia(DESKTOP_QUERY).matches;
+
 export const SidebarProvider = ({ children }: { children: React.ReactNode }) => {
   const drawer = useOverlayState();
   const [isDesktopVisible, setDesktopVisible] = useState(true);
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(getInitialIsDesktop);
 
   // Keep latest drawer/isDesktop available to the stable `toggle` callback without
   // making `toggle` (and therefore the context value) change identity every render.
   const drawerRef = useRef(drawer);
-  drawerRef.current = drawer;
   const isDesktopRef = useRef(isDesktop);
-  isDesktopRef.current = isDesktop;
+
+  useEffect(() => {
+    drawerRef.current = drawer;
+    isDesktopRef.current = isDesktop;
+  });
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(DESKTOP_QUERY);
-    setIsDesktop(mediaQuery.matches);
 
     const onChange = (event: MediaQueryListEvent) => {
       setIsDesktop(event.matches);

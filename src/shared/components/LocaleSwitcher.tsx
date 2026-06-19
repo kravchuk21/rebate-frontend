@@ -1,11 +1,11 @@
 'use client';
 
-import {useTransition} from 'react';
-import {useLocale} from 'next-intl';
-import {Button, ButtonGroup} from '@heroui/react';
+import { useTransition } from 'react';
+import { useLocale } from 'next-intl';
+import { Button, ButtonGroup } from '@heroui/react';
 
-import {usePathname, useRouter} from '@/i18n/navigation';
-import {routing} from '@/i18n/routing';
+import { usePathname, useRouter } from '@/i18n/navigation';
+import { routing } from '@/i18n/routing';
 
 export const LocaleSwitcher = () => {
   const locale = useLocale();
@@ -17,16 +17,16 @@ export const LocaleSwitcher = () => {
     if (nextLocale === locale) return;
 
     startTransition(() => {
-      router.replace(pathname, {locale: nextLocale});
+      router.replace(pathname, { locale: nextLocale });
     });
   };
 
   return (
-    <ButtonGroup fullWidth size="sm" isDisabled={isPending}>
+    <ButtonGroup fullWidth size="sm" variant="outline" isDisabled={isPending}>
       {routing.locales.map((cur, index) => (
         <Button
           key={cur}
-          variant={cur === locale ? 'secondary' : 'tertiary'}
+          // variant={cur === locale ? 'secondary' : 'tertiary'}
           onPress={() => handleChange(cur)}
         >
           {index > 0 && <ButtonGroup.Separator />}
