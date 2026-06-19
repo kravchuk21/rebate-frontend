@@ -15,6 +15,8 @@ import { formatAmount } from '@/features/withdrawal/lib/formatAmount';
 import { truncateAddress } from '@/features/withdrawal/lib/validateAddress';
 import { WithdrawalStatusChip } from '@/features/withdrawal/components/WithdrawalStatusChip';
 import { DataTable } from '@/shared/components/DataTable';
+import { useModal } from '@/shared/hooks/useModal';
+import { Modals } from '@/shared/lib/routes';
 import { formatDateYMD } from '@/shared/lib/formatDate';
 
 import { useAdminWithdrawals } from '../../hooks/useAdminWithdrawals';
@@ -31,7 +33,7 @@ export const AdminWithdrawalsTable = () => {
   const locale = useLocale();
   const [status, setStatus] = useState<string | null>(null);
   const [offset, setOffset] = useState(0);
-  const [updateTarget, setUpdateTarget] = useState<string | null>(null);
+  const { open: openUpdate } = useModal(Modals.UpdateWithdrawalStatus);
 
   const { data, isError } = useAdminWithdrawals({
     status: status ?? undefined,
@@ -107,7 +109,7 @@ export const AdminWithdrawalsTable = () => {
               variant="tertiary"
               isIconOnly
               size="sm"
-              onPress={() => setUpdateTarget(withdrawal.id ?? null)}
+              onPress={() => withdrawal.id && openUpdate({ withdrawalID: withdrawal.id })}
             >
               <Pencil/>
             </Button>
@@ -115,7 +117,7 @@ export const AdminWithdrawalsTable = () => {
         },
       }),
     ],
-    [t, locale],
+    [t, locale, openUpdate],
   );
 
   const table = useReactTable({
@@ -156,10 +158,7 @@ export const AdminWithdrawalsTable = () => {
         />
       </DashboardItem>
 
-      <UpdateWithdrawalStatusModal
-        withdrawalID={updateTarget}
-        onOpenChange={(open) => !open && setUpdateTarget(null)}
-      />
+      <UpdateWithdrawalStatusModal />
     </DashboardLayout>
   );
 };

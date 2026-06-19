@@ -13,6 +13,8 @@ import { formatAmount } from '@/features/withdrawal/lib/formatAmount';
 import { RebateStatusChip } from '@/features/rebate/components/RebateStatusChip';
 import { formatPeriodDate } from '@/features/rebate/lib/formatPeriodDate';
 import { DataTable } from '@/shared/components/DataTable';
+import { useModal } from '@/shared/hooks/useModal';
+import { Modals } from '@/shared/lib/routes';
 
 import { useAdminCalculations } from '../../hooks/useAdminCalculations';
 import { AdjustCalculationModal } from './AdjustCalculationModal';
@@ -27,9 +29,9 @@ export const AdminCalculationsTable = () => {
   const t = useTranslations('admin.rebate');
   const locale = useLocale();
   const [offset, setOffset] = useState(0);
-  const [isImportOpen, setIsImportOpen] = useState(false);
-  const [isTriggerOpen, setIsTriggerOpen] = useState(false);
-  const [adjustTarget, setAdjustTarget] = useState<RebateCalculationResponse | null>(null);
+  const { open: openImport } = useModal(Modals.ImportBrokerData);
+  const { open: openTrigger } = useModal(Modals.TriggerCalculation);
+  const { open: openAdjust } = useModal(Modals.AdjustCalculation);
 
   const { data, isError } = useAdminCalculations({ limit: LIMIT, offset });
 
@@ -75,13 +77,23 @@ export const AdminCalculationsTable = () => {
         id: 'actions',
         header: t('columns.actions'),
         cell: ({ row }) => (
-          <Button isIconOnly variant="tertiary" size="sm" onPress={() => setAdjustTarget(row.original)}>
+          <Button
+            isIconOnly
+            variant="tertiary"
+            size="sm"
+            onPress={() =>
+              openAdjust({
+                calculationID: row.original.id ?? '',
+                gross: String(row.original.gross_rebate ?? ''),
+              })
+            }
+          >
             <Pencil />
           </Button>
         ),
       }),
     ],
-    [t, locale],
+    [t, locale, openAdjust],
   );
 
   const table = useReactTable({
@@ -94,10 +106,10 @@ export const AdminCalculationsTable = () => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-end gap-2">
-        <Button variant="outline" onPress={() => setIsImportOpen(true)}>
+        <Button variant="outline" onPress={() => openImport()}>
           {t('import.title')}
         </Button>
-        <Button variant="outline" onPress={() => setIsTriggerOpen(true)}>
+        <Button variant="outline" onPress={() => openTrigger()}>
           {t('trigger.title')}
         </Button>
       </div>
@@ -112,9 +124,9 @@ export const AdminCalculationsTable = () => {
         />
       )}
 
-      <ImportBrokerDataModal isOpen={isImportOpen} onOpenChange={setIsImportOpen} />
-      <TriggerCalculationModal isOpen={isTriggerOpen} onOpenChange={setIsTriggerOpen} />
-      <AdjustCalculationModal calculation={adjustTarget} onOpenChange={(open) => !open && setAdjustTarget(null)} />
+      <ImportBrokerDataModal />
+      <TriggerCalculationModal />
+      <AdjustCalculationModal />
     </div>
   );
 };

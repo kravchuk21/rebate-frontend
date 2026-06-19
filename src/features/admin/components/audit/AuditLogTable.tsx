@@ -11,7 +11,10 @@ import { InfoIcon } from '@heroui/react';
 
 import type { AdminAuditLogEntryResponse } from '@/shared/api/generated/types.gen';
 // import { truncateAddress } from '@/features/withdrawal/lib/validateAddress';
+import { BaseModal } from '@/shared/components/BaseModal';
 import { DataTable } from '@/shared/components/DataTable';
+import { useModal } from '@/shared/hooks/useModal';
+import { Modals } from '@/shared/lib/routes';
 import { formatDateYMD } from '@/shared/lib/formatDate';
 
 import { useAdminAuditLog } from '../../hooks/useAdminAuditLog';
@@ -29,7 +32,12 @@ export const AuditLogTable = () => {
   const [debouncedAction, setDebouncedAction] = useState('');
   const [debouncedEntityType, setDebouncedEntityType] = useState('');
   const [offset, setOffset] = useState(0);
-  const [detailsEntry, setDetailsEntry] = useState<AdminAuditLogEntryResponse | null>(null);
+  const {
+    isOpen: isDetailsOpen,
+    open: openDetails,
+    close: closeDetails,
+    param: detailsParam,
+  } = useModal(Modals.AuditDetails);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -63,6 +71,12 @@ export const AuditLogTable = () => {
     | undefined;
   const entries = useMemo(() => responseData?.items ?? [], [responseData]);
   const totalCount = responseData?.total_count ?? 0;
+
+  const detailsEntryId = detailsParam('entryId');
+  const detailsEntry = useMemo(
+    () => entries.find((entry) => entry.id === detailsEntryId) ?? null,
+    [entries, detailsEntryId],
+  );
 
   // columnHelper.accessor('status', {
   //   header: t('columns.status'),
@@ -101,13 +115,18 @@ export const AuditLogTable = () => {
         id: 'details',
         header: t('columns.details'),
         cell: ({ row }) => (
-          <Button isIconOnly variant="tertiary" size="sm" onPress={() => setDetailsEntry(row.original)}>
+          <Button
+            isIconOnly
+            variant="tertiary"
+            size="sm"
+            onPress={() => row.original.id && openDetails({ entryId: row.original.id })}
+          >
             <InfoIcon />
           </Button>
         ),
       }),
     ],
-    [t, locale],
+    [t, locale, openDetails],
   );
 
   const table = useReactTable({
@@ -136,34 +155,31 @@ export const AuditLogTable = () => {
         />
       </DashboardItem>
 
-      <Modal isOpen={detailsEntry !== null} onOpenChange={(open) => !open && setDetailsEntry(null)}>
-        <Modal.Backdrop>
-          <Modal.Container scroll='outside'>
-            <Modal.Dialog className="sm:max-w-[480px]">
-              <Modal.CloseTrigger />
-              <Modal.Header>
-                <Modal.Heading>{t('details.title')}</Modal.Heading>
-              </Modal.Header>
-              <Modal.Body>
-                <DashboardLayout>
-                  <DashboardItem>
-                    <Typography.Paragraph size='sm' color='muted'>{t('details.oldValue')}</Typography.Paragraph>
-                    <Typography.Code>
-                      {JSON.stringify(detailsEntry?.old_value ?? null, null, 2)}
-                    </Typography.Code>
-                  </DashboardItem>
-                  <DashboardItem>
-                    <Typography.Paragraph size='sm' color='muted'>{t('details.newValue')}</Typography.Paragraph>
-                    <Typography.Code>
-                      {JSON.stringify(detailsEntry?.new_value ?? null, null, 2)}
-                    </Typography.Code>
-                  </DashboardItem>
-                </DashboardLayout>
-              </Modal.Body>
-            </Modal.Dialog>
-          </Modal.Container>
-        </Modal.Backdrop>
-      </Modal>
+      <BaseModal
+        isOpen={isDetailsOpen && detailsEntry !== null}
+        onOpenChange={(open) => !open && closeDetails()}
+        dialogClassName="sm:max-w-[480px]"
+      >
+        <Modal.Header>
+          <Modal.Heading>{t('details.title')}</Modal.Heading>
+        </Modal.Header>
+        <Modal.Body>
+          <DashboardLayout>
+            <DashboardItem>
+              <Typography.Paragraph size='sm' color='muted'>{t('details.oldValue')}</Typography.Paragraph>
+              <Typography.Code>
+                {JSON.stringify(detailsEntry?.old_value ?? null, null, 2)}
+              </Typography.Code>
+            </DashboardItem>
+            <DashboardItem>
+              <Typography.Paragraph size='sm' color='muted'>{t('details.newValue')}</Typography.Paragraph>
+              <Typography.Code>
+                {JSON.stringify(detailsEntry?.new_value ?? null, null, 2)}
+              </Typography.Code>
+            </DashboardItem>
+          </DashboardLayout>
+        </Modal.Body>
+      </BaseModal>
     </DashboardLayout>
   );
 };

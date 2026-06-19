@@ -18,7 +18,10 @@ import { useTranslations } from 'next-intl';
 import { Controller, useForm } from 'react-hook-form';
 
 import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
+import { BaseModal } from '@/shared/components/BaseModal';
 import { FormField } from '@/shared/components/FormField';
+import { useModal } from '@/shared/hooks/useModal';
+import { Modals } from '@/shared/lib/routes';
 
 import { useCreatePayoutMethod } from '../hooks/useCreatePayoutMethod';
 import {
@@ -26,15 +29,11 @@ import {
   type PayoutMethodFormValues,
 } from '../schemas/payoutMethodSchema';
 
-interface AddPayoutMethodModalProps {
-  isOpen: boolean;
-  onOpenChange: (isOpen: boolean) => void;
-}
-
 const networks = ['TRC20', 'ERC20', 'BEP20', 'SOL'] as const;
 
-export const AddPayoutMethodModal = ({ isOpen, onOpenChange }: AddPayoutMethodModalProps) => {
+export const AddPayoutMethodModal = () => {
   const t = useTranslations();
+  const { isOpen, close } = useModal(Modals.AddPayoutMethod);
   const createPayoutMethod = useCreatePayoutMethod();
 
   const {
@@ -53,7 +52,7 @@ export const AddPayoutMethodModal = ({ isOpen, onOpenChange }: AddPayoutMethodMo
       {
         onSuccess: () => {
           reset();
-          onOpenChange(false);
+          close();
         },
         onError: (error) => {
           toast.danger(getErrorMessage(error) ?? t('withdrawal.payoutMethods.errors.addFailed'));
@@ -66,88 +65,81 @@ export const AddPayoutMethodModal = ({ isOpen, onOpenChange }: AddPayoutMethodMo
     if (!open) {
       reset();
       createPayoutMethod.reset();
+      close();
     }
-    onOpenChange(open);
   };
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={handleOpenChange}>
-      <Modal.Backdrop>
-        <Modal.Container scroll='outside'>
-          <Modal.Dialog className="sm:max-w-[420px]">
-            <Modal.CloseTrigger />
-            <Modal.Header>
-              <Modal.Heading>{t('withdrawal.payoutMethods.form.title')}</Modal.Heading>
-              <Typography.Paragraph size='sm' color='muted'>
-                {t('withdrawal.payoutMethods.form.description')}
-              </Typography.Paragraph>
-            </Modal.Header>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <Modal.Body className="flex flex-col gap-4">
-                <FormField
-                  control={control}
-                  name="name"
-                  label={t('withdrawal.payoutMethods.form.name')}
-                  placeholder={t('withdrawal.payoutMethods.form.namePlaceholder')}
-                  error={errors.name?.message}
-                />
+    <BaseModal isOpen={isOpen} onOpenChange={handleOpenChange}>
+      <Modal.Header>
+        <Modal.Heading>{t('withdrawal.payoutMethods.form.title')}</Modal.Heading>
+        <Typography.Paragraph size='sm' color='muted'>
+          {t('withdrawal.payoutMethods.form.description')}
+        </Typography.Paragraph>
+      </Modal.Header>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Modal.Body className="flex flex-col gap-4">
+          <FormField
+            control={control}
+            name="name"
+            label={t('withdrawal.payoutMethods.form.name')}
+            placeholder={t('withdrawal.payoutMethods.form.namePlaceholder')}
+            error={errors.name?.message}
+          />
 
-                <Controller
-                  control={control}
-                  name="network"
-                  render={() => (
-                    <Select
-                      className="w-full"
-                      placeholder={t('withdrawal.payoutMethods.form.networkPlaceholder')}
-                      isInvalid={!!errors.network}
-                      variant="secondary"
-                    >
-                      <Label>{t('withdrawal.payoutMethods.form.network')}</Label>
-                      <Select.Trigger>
-                        <Select.Value />
-                        <Select.Indicator />
-                      </Select.Trigger>
-                      <Select.Popover>
-                        <ListBox>
-                          {networks.map((network) => (
-                            <ListBox.Item
-                              key={network}
-                              id={network}
-                              textValue={t(`withdrawal.payoutMethods.networks.${network}`)}
-                            >
-                              {t(`withdrawal.payoutMethods.networks.${network}`)}
-                              <ListBox.ItemIndicator />
-                            </ListBox.Item>
-                          ))}
-                        </ListBox>
-                      </Select.Popover>
-                      <FieldError>{errors.network?.message}</FieldError>
-                    </Select>
-                  )}
-                />
+          <Controller
+            control={control}
+            name="network"
+            render={() => (
+              <Select
+                className="w-full"
+                placeholder={t('withdrawal.payoutMethods.form.networkPlaceholder')}
+                isInvalid={!!errors.network}
+                variant="secondary"
+              >
+                <Label>{t('withdrawal.payoutMethods.form.network')}</Label>
+                <Select.Trigger>
+                  <Select.Value />
+                  <Select.Indicator />
+                </Select.Trigger>
+                <Select.Popover>
+                  <ListBox>
+                    {networks.map((network) => (
+                      <ListBox.Item
+                        key={network}
+                        id={network}
+                        textValue={t(`withdrawal.payoutMethods.networks.${network}`)}
+                      >
+                        {t(`withdrawal.payoutMethods.networks.${network}`)}
+                        <ListBox.ItemIndicator />
+                      </ListBox.Item>
+                    ))}
+                  </ListBox>
+                </Select.Popover>
+                <FieldError>{errors.network?.message}</FieldError>
+              </Select>
+            )}
+          />
 
-                <FormField
-                  control={control}
-                  name="address"
-                  label={t('withdrawal.payoutMethods.form.address')}
-                  placeholder={t('withdrawal.payoutMethods.form.addressPlaceholder')}
-                  error={errors.address?.message}
-                />
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="tertiary" slot="close">
-                  {t('withdrawal.payoutMethods.cancel')}
-                </Button>
-                <Button type="submit" variant="primary" isDisabled={createPayoutMethod.isPending}>
-                  {createPayoutMethod.isPending
-                    ? t('withdrawal.payoutMethods.form.submitting')
-                    : t('withdrawal.payoutMethods.form.submit')}
-                </Button>
-              </Modal.Footer>
-            </Form>
-          </Modal.Dialog>
-        </Modal.Container>
-      </Modal.Backdrop>
-    </Modal>
+          <FormField
+            control={control}
+            name="address"
+            label={t('withdrawal.payoutMethods.form.address')}
+            placeholder={t('withdrawal.payoutMethods.form.addressPlaceholder')}
+            error={errors.address?.message}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="tertiary" slot="close">
+            {t('withdrawal.payoutMethods.cancel')}
+          </Button>
+          <Button type="submit" variant="primary" isDisabled={createPayoutMethod.isPending}>
+            {createPayoutMethod.isPending
+              ? t('withdrawal.payoutMethods.form.submitting')
+              : t('withdrawal.payoutMethods.form.submit')}
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </BaseModal>
   );
 };

@@ -8,11 +8,12 @@ import { z } from 'zod';
 
 import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
 import { useTwoFADisable } from '@/features/auth/hooks/useTwoFADisable';
+import { BaseModal } from '@/shared/components/BaseModal';
 import { FormField } from '@/shared/components/FormField';
+import { useModal } from '@/shared/hooks/useModal';
+import { Modals } from '@/shared/lib/routes';
 
 interface TwoFADisableModalProps {
-  isOpen: boolean;
-  onOpenChange: (isOpen: boolean) => void;
   onDisabled: () => void;
 }
 
@@ -24,8 +25,9 @@ const createDisableSchema = (t: (key: string) => string) =>
 
 type DisableFormValues = z.infer<ReturnType<typeof createDisableSchema>>;
 
-export const TwoFADisableModal = ({ isOpen, onOpenChange, onDisabled }: TwoFADisableModalProps) => {
+export const TwoFADisableModal = ({ onDisabled }: TwoFADisableModalProps) => {
   const t = useTranslations();
+  const { isOpen, close } = useModal(Modals.TwoFADisable);
   const disable = useTwoFADisable();
 
   const {
@@ -42,15 +44,15 @@ export const TwoFADisableModal = ({ isOpen, onOpenChange, onDisabled }: TwoFADis
     if (!open) {
       reset();
       disable.reset();
+      close();
     }
-    onOpenChange(open);
   };
 
   const onSubmit = (data: DisableFormValues) => {
     disable.mutate(data, {
       onSuccess: () => {
         reset();
-        onOpenChange(false);
+        close();
         onDisabled();
       },
       onError: (error) => {
@@ -60,47 +62,40 @@ export const TwoFADisableModal = ({ isOpen, onOpenChange, onDisabled }: TwoFADis
   };
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={handleOpenChange}>
-      <Modal.Backdrop>
-        <Modal.Container scroll='outside'>
-          <Modal.Dialog className="sm:max-w-[420px]">
-            <Modal.CloseTrigger />
-            <Modal.Header>
-              <Modal.Heading>{t('profile.twoFA.disable.title')}</Modal.Heading>
-            </Modal.Header>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <Modal.Body className="flex flex-col gap-4">
-                <Typography.Paragraph size="sm">{t('profile.twoFA.disable.desc')}</Typography.Paragraph>
+    <BaseModal isOpen={isOpen} onOpenChange={handleOpenChange}>
+      <Modal.Header>
+        <Modal.Heading>{t('profile.twoFA.disable.title')}</Modal.Heading>
+      </Modal.Header>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Modal.Body className="flex flex-col gap-4">
+          <Typography.Paragraph size="sm">{t('profile.twoFA.disable.desc')}</Typography.Paragraph>
 
-                <FormField
-                  control={control}
-                  name="password"
-                  type="password"
-                  label={t('profile.twoFA.disable.password')}
-                  error={errors.password?.message}
-                />
+          <FormField
+            control={control}
+            name="password"
+            type="password"
+            label={t('profile.twoFA.disable.password')}
+            error={errors.password?.message}
+          />
 
-                <FormField
-                  control={control}
-                  name="code"
-                  label={t('profile.twoFA.disable.code')}
-                  error={errors.code?.message}
-                />
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="tertiary" slot="close">
-                  {t('profile.cancel')}
-                </Button>
-                <Button type="submit" variant="danger" isDisabled={disable.isPending}>
-                  {disable.isPending
-                    ? t('profile.twoFA.disable.submitting')
-                    : t('profile.twoFA.disable.submit')}
-                </Button>
-              </Modal.Footer>
-            </Form>
-          </Modal.Dialog>
-        </Modal.Container>
-      </Modal.Backdrop>
-    </Modal>
+          <FormField
+            control={control}
+            name="code"
+            label={t('profile.twoFA.disable.code')}
+            error={errors.code?.message}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="tertiary" slot="close">
+            {t('profile.cancel')}
+          </Button>
+          <Button type="submit" variant="danger" isDisabled={disable.isPending}>
+            {disable.isPending
+              ? t('profile.twoFA.disable.submitting')
+              : t('profile.twoFA.disable.submit')}
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </BaseModal>
   );
 };

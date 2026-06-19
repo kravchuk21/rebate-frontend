@@ -17,6 +17,8 @@ import { Persons } from '@gravity-ui/icons';
 import type { AdminUserResponse } from '@/shared/api/generated/types.gen';
 
 import { DataTable } from '@/shared/components/DataTable';
+import { useModal } from '@/shared/hooks/useModal';
+import { Modals } from '@/shared/lib/routes';
 import { getAdminErrorMessage } from '../../lib/getAdminErrorMessage';
 import { useAdminSuspendUser } from '../../hooks/useAdminSuspendUser';
 import { useAdminUnsuspendUser } from '../../hooks/useAdminUnsuspendUser';
@@ -48,8 +50,8 @@ export const UsersTable = () => {
   const [offset, setOffset] = useState(0);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [suspendTarget, setSuspendTarget] = useState<string | null>(null);
-  const [adjustBalanceTarget, setAdjustBalanceTarget] = useState<string | null>(null);
-  const [referrerTarget, setReferrerTarget] = useState<AdminUserResponse | null>(null);
+  const adjustBalanceModal = useModal(Modals.AdjustBalance);
+  const referrerModal = useModal(Modals.ChangeReferrer);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -128,11 +130,19 @@ export const UsersTable = () => {
                   <CirclePlay />
                 </Button>
               )}
-              <Button onPress={() => setAdjustBalanceTarget(user.id ?? null)}>
+              <Button onPress={() => user.id && adjustBalanceModal.open({ userID: user.id })}>
                 <ButtonGroup.Separator />
                 <Pencil />
               </Button>
-              <Button onPress={() => setReferrerTarget(user)}>
+              <Button
+                onPress={() =>
+                  user.id &&
+                  referrerModal.open({
+                    userID: user.id,
+                    ...(user.referred_by_email ? { referrerEmail: user.referred_by_email } : {}),
+                  })
+                }
+              >
                 <ButtonGroup.Separator />
                 <Persons />
               </Button>
@@ -143,7 +153,7 @@ export const UsersTable = () => {
       }),
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, dateFormatter],
+    [t, dateFormatter, adjustBalanceModal.open, referrerModal.open],
   );
 
   const table = useReactTable({
@@ -222,14 +232,8 @@ export const UsersTable = () => {
         </AlertDialog.Backdrop>
       </AlertDialog>
 
-      <AdjustBalanceModal
-        userID={adjustBalanceTarget}
-        onOpenChange={(open) => !open && setAdjustBalanceTarget(null)}
-      />
-      <ChangeReferrerModal
-        user={referrerTarget}
-        onOpenChange={(open) => !open && setReferrerTarget(null)}
-      />
+      <AdjustBalanceModal />
+      <ChangeReferrerModal />
     </DashboardLayout>
   );
 };

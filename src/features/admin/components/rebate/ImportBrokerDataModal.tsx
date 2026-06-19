@@ -7,7 +7,10 @@ import { Button, Form, Modal, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
+import { BaseModal } from '@/shared/components/BaseModal';
 import { FormField } from '@/shared/components/FormField';
+import { useModal } from '@/shared/hooks/useModal';
+import { Modals } from '@/shared/lib/routes';
 
 import { getAdminErrorMessage } from '../../lib/getAdminErrorMessage';
 import { useAdminImportBrokerData } from '../../hooks/useAdminImportBrokerData';
@@ -16,13 +19,9 @@ import {
   type ImportBrokerDataFormValues,
 } from '../../schemas/importBrokerDataSchema';
 
-interface ImportBrokerDataModalProps {
-  isOpen: boolean;
-  onOpenChange: (isOpen: boolean) => void;
-}
-
-export const ImportBrokerDataModal = ({ isOpen, onOpenChange }: ImportBrokerDataModalProps) => {
+export const ImportBrokerDataModal = () => {
   const t = useTranslations();
+  const { isOpen, close } = useModal(Modals.ImportBrokerData);
   const importBrokerData = useAdminImportBrokerData();
 
   const {
@@ -41,7 +40,7 @@ export const ImportBrokerDataModal = ({ isOpen, onOpenChange }: ImportBrokerData
       {
         onSuccess: () => {
           reset();
-          onOpenChange(false);
+          close();
         },
         onError: (error) => {
           toast.danger(getAdminErrorMessage(error) ?? t('admin.rebate.errors.importFailed'));
@@ -54,62 +53,55 @@ export const ImportBrokerDataModal = ({ isOpen, onOpenChange }: ImportBrokerData
     if (!open) {
       reset();
       importBrokerData.reset();
+      close();
     }
-    onOpenChange(open);
   };
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={handleOpenChange}>
-      <Modal.Backdrop>
-        <Modal.Container scroll='outside'>
-          <Modal.Dialog className="sm:max-w-[420px]">
-            <Modal.CloseTrigger />
-            <Modal.Header>
-              <Modal.Heading>{t('admin.rebate.import.title')}</Modal.Heading>
-            </Modal.Header>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <Modal.Body className="flex flex-col gap-4">
-                <FormField
-                  control={control}
-                  name="broker_account_id"
-                  label={t('admin.rebate.import.brokerAccount')}
-                  error={errors.broker_account_id?.message}
-                />
+    <BaseModal isOpen={isOpen} onOpenChange={handleOpenChange}>
+      <Modal.Header>
+        <Modal.Heading>{t('admin.rebate.import.title')}</Modal.Heading>
+      </Modal.Header>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Modal.Body className="flex flex-col gap-4">
+          <FormField
+            control={control}
+            name="broker_account_id"
+            label={t('admin.rebate.import.brokerAccount')}
+            error={errors.broker_account_id?.message}
+          />
 
-                <FormField
-                  control={control}
-                  name="date"
-                  label={t('admin.rebate.import.date')}
-                  error={errors.date?.message}
-                  inputProps={{ type: 'date' }}
-                />
+          <FormField
+            control={control}
+            name="date"
+            label={t('admin.rebate.import.date')}
+            error={errors.date?.message}
+            inputProps={{ type: 'date' }}
+          />
 
-                <FormField
-                  control={control}
-                  name="volume"
-                  label={t('admin.rebate.import.volume')}
-                  error={errors.volume?.message}
-                />
+          <FormField
+            control={control}
+            name="volume"
+            label={t('admin.rebate.import.volume')}
+            error={errors.volume?.message}
+          />
 
-                <FormField
-                  control={control}
-                  name="gross_rebate"
-                  label={t('admin.rebate.import.grossRebate')}
-                  error={errors.gross_rebate?.message}
-                />
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="tertiary" slot="close">
-                  {t('admin.brokerAccounts.reject.cancel')}
-                </Button>
-                <Button type="submit" variant="primary" isDisabled={importBrokerData.isPending}>
-                  {t('admin.rebate.import.submit')}
-                </Button>
-              </Modal.Footer>
-            </Form>
-          </Modal.Dialog>
-        </Modal.Container>
-      </Modal.Backdrop>
-    </Modal>
+          <FormField
+            control={control}
+            name="gross_rebate"
+            label={t('admin.rebate.import.grossRebate')}
+            error={errors.gross_rebate?.message}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="tertiary" slot="close">
+            {t('admin.brokerAccounts.reject.cancel')}
+          </Button>
+          <Button type="submit" variant="primary" isDisabled={importBrokerData.isPending}>
+            {t('admin.rebate.import.submit')}
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </BaseModal>
   );
 };

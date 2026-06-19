@@ -387,6 +387,7 @@
       "submit": "Request Withdrawal",
       "submitting": "Requesting...",
       "noMethods": "Add a payout method first",
+      "addMethod": "Add payout method",
       "validation": {
         "method": "Please select a payout method",
         "amount": "Amount is required",

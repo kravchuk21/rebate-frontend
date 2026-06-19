@@ -5,6 +5,9 @@ import { Toast } from '@heroui/react';
 
 import { routing } from '@/i18n/routing';
 import QueryProvider from '@/providers/QueryProvider';
+import { AuthProvider } from '@/features/auth/components/AuthProvider';
+import { getAccessToken } from '@/shared/lib/cookies';
+import { decodeAccessToken } from '@/shared/lib/decodeToken';
 import '../globals.css';
 
 export function generateStaticParams() {
@@ -25,6 +28,8 @@ export default async function LocaleLayout({
   }
 
   const messages = await getMessages();
+  const token = await getAccessToken();
+  const claims = token ? decodeAccessToken(token) : null;
 
   return (
     <html lang={locale} data-theme="dark" suppressHydrationWarning>
@@ -40,8 +45,10 @@ export default async function LocaleLayout({
       <body className='bg-background text-foreground' suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <QueryProvider>
-            <Toast.Provider />
-            {children}
+            <AuthProvider claims={claims}>
+              <Toast.Provider />
+              {children}
+            </AuthProvider>
           </QueryProvider>
         </NextIntlClientProvider>
       </body>

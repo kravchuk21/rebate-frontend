@@ -1,8 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Card, Chip, Typography, useOverlayState } from '@heroui/react';
+import { Button, Card, Chip } from '@heroui/react';
 import { useTranslations } from 'next-intl';
+
+import { useModal } from '@/shared/hooks/useModal';
+import { Modals } from '@/shared/lib/routes';
 
 import { TwoFADisableModal } from './TwoFADisableModal';
 import { TwoFASetupModal } from './TwoFASetupModal';
@@ -16,8 +19,8 @@ export const TwoFASection = ({ initialEnabled = false }: TwoFASectionProps) => {
   const t = useTranslations('profile.twoFA');
   const [enabled, setEnabled] = useState(initialEnabled);
 
-  const setupModal = useOverlayState();
-  const disableModal = useOverlayState();
+  const setupModal = useModal(Modals.TwoFASetup);
+  const disableModal = useModal(Modals.TwoFADisable);
 
   return (
     <WidgetCard>
@@ -34,27 +37,19 @@ export const TwoFASection = ({ initialEnabled = false }: TwoFASectionProps) => {
       <Card.Content>
         <div className="mt-auto">
           {enabled ? (
-            <Button variant="danger" onPress={disableModal.open}>
+            <Button variant="danger" onPress={() => disableModal.open()}>
               {t('disableBtn')}
             </Button>
           ) : (
-            <Button variant="primary" onPress={setupModal.open}>
+            <Button variant="primary" onPress={() => setupModal.open()}>
               {t('enableBtn')}
             </Button>
           )}
         </div>
       </Card.Content>
 
-      <TwoFASetupModal
-        isOpen={setupModal.isOpen}
-        onOpenChange={setupModal.setOpen}
-        onEnabled={() => setEnabled(true)}
-      />
-      <TwoFADisableModal
-        isOpen={disableModal.isOpen}
-        onOpenChange={disableModal.setOpen}
-        onDisabled={() => setEnabled(false)}
-      />
+      <TwoFASetupModal onEnabled={() => setEnabled(true)} />
+      <TwoFADisableModal onDisabled={() => setEnabled(false)} />
     </WidgetCard>
   );
 };

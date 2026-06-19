@@ -1,12 +1,14 @@
 'use client';
 
-import { useState } from 'react';
 import { Button, Tabs } from '@heroui/react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
 import { useRouter, usePathname } from '@/i18n/navigation';
+import { useModal } from '@/shared/hooks/useModal';
+import { Modals } from '@/shared/lib/routes';
 
+import { AddPayoutMethodModal } from './AddPayoutMethodModal';
 import { BalanceCard } from './BalanceCard';
 import { CreateWithdrawalModal } from './CreateWithdrawalModal';
 import { LedgerTable } from './LedgerTable';
@@ -19,7 +21,7 @@ type Tab = (typeof TABS)[number];
 
 export const WithdrawalPageClient = () => {
   const t = useTranslations('withdrawal');
-  const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
+  const { open: openWithdraw } = useModal(Modals.CreateWithdrawal);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -50,7 +52,7 @@ export const WithdrawalPageClient = () => {
               <BalanceCard />
             </DashboardItem>
             <DashboardItem className="flex items-center justify-end">
-              <Button onPress={() => setIsWithdrawModalOpen(true)}>
+              <Button onPress={() => openWithdraw()}>
                 {t('request.title')}
               </Button>
             </DashboardItem>
@@ -69,7 +71,8 @@ export const WithdrawalPageClient = () => {
         </Tabs.Panel>
       </Tabs>
 
-      <CreateWithdrawalModal isOpen={isWithdrawModalOpen} onOpenChange={setIsWithdrawModalOpen} />
+      <CreateWithdrawalModal />
+      <AddPayoutMethodModal />
     </>
   );
 };

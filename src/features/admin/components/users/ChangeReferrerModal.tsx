@@ -7,20 +7,20 @@ import { Button, Form, Modal, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
-import type { AdminUserResponse } from '@/shared/api/generated/types.gen';
+import { BaseModal } from '@/shared/components/BaseModal';
 import { FormField } from '@/shared/components/FormField';
+import { useModal } from '@/shared/hooks/useModal';
+import { Modals } from '@/shared/lib/routes';
 
 import { getAdminErrorMessage } from '../../lib/getAdminErrorMessage';
 import { useAdminChangeReferrer } from '../../hooks/useAdminChangeReferrer';
 import { changeReferrerSchema, type ChangeReferrerFormValues } from '../../schemas/changeReferrerSchema';
 
-interface ChangeReferrerModalProps {
-  user: AdminUserResponse | null;
-  onOpenChange: (isOpen: boolean) => void;
-}
-
-export const ChangeReferrerModal = ({ user, onOpenChange }: ChangeReferrerModalProps) => {
+export const ChangeReferrerModal = () => {
   const t = useTranslations();
+  const { isOpen, close, param } = useModal(Modals.ChangeReferrer);
+  const userID = param('userID');
+  const referrerEmail = param('referrerEmail');
   const changeReferrer = useAdminChangeReferrer();
 
   const {
@@ -34,17 +34,17 @@ export const ChangeReferrerModal = ({ user, onOpenChange }: ChangeReferrerModalP
   });
 
   const submit = (referrerID: string | null) => {
-    if (!user?.id) return;
+    if (!userID) return;
 
     changeReferrer.mutate(
       {
-        path: { userID: user.id },
+        path: { userID },
         body: { referrer_id: referrerID ?? undefined },
       },
       {
         onSuccess: () => {
           reset();
-          onOpenChange(false);
+          close();
         },
         onError: (error) => {
           toast.danger(getAdminErrorMessage(error) ?? t('admin.users.errors.referrerFailed'));
@@ -57,54 +57,47 @@ export const ChangeReferrerModal = ({ user, onOpenChange }: ChangeReferrerModalP
     if (!open) {
       reset();
       changeReferrer.reset();
+      close();
     }
-    onOpenChange(open);
   };
 
   return (
-    <Modal isOpen={user !== null} onOpenChange={handleOpenChange}>
-      <Modal.Backdrop>
-        <Modal.Container scroll='outside'>
-          <Modal.Dialog className="sm:max-w-[420px]">
-            <Modal.CloseTrigger />
-            <Modal.Header>
-              <Modal.Heading>{t('admin.users.changeReferrer.title')}</Modal.Heading>
-            </Modal.Header>
-            <Form onSubmit={handleSubmit((data) => submit(data.referrer_id || null))}>
-              <Modal.Body className="flex flex-col gap-4">
-                <p className="text-sm text-muted">
-                  {t('admin.users.changeReferrer.currentReferrer')}:{' '}
-                  {user?.referred_by_email ?? t('admin.users.changeReferrer.none')}
-                </p>
+    <BaseModal isOpen={isOpen} onOpenChange={handleOpenChange}>
+      <Modal.Header>
+        <Modal.Heading>{t('admin.users.changeReferrer.title')}</Modal.Heading>
+      </Modal.Header>
+      <Form onSubmit={handleSubmit((data) => submit(data.referrer_id || null))}>
+        <Modal.Body className="flex flex-col gap-4">
+          <p className="text-sm text-muted">
+            {t('admin.users.changeReferrer.currentReferrer')}:{' '}
+            {referrerEmail || t('admin.users.changeReferrer.none')}
+          </p>
 
-                <FormField
-                  control={control}
-                  name="referrer_id"
-                  label={t('admin.users.changeReferrer.newReferrerID')}
-                  placeholder={t('admin.users.changeReferrer.newReferrerIDPlaceholder')}
-                  error={errors.referrer_id?.message}
-                />
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="tertiary" slot="close">
-                  {t('admin.brokerAccounts.reject.cancel')}
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  isDisabled={changeReferrer.isPending}
-                  onPress={() => submit(null)}
-                >
-                  {t('admin.users.changeReferrer.remove')}
-                </Button>
-                <Button type="submit" variant="primary" isDisabled={changeReferrer.isPending}>
-                  {t('admin.users.changeReferrer.submit')}
-                </Button>
-              </Modal.Footer>
-            </Form>
-          </Modal.Dialog>
-        </Modal.Container>
-      </Modal.Backdrop>
-    </Modal>
+          <FormField
+            control={control}
+            name="referrer_id"
+            label={t('admin.users.changeReferrer.newReferrerID')}
+            placeholder={t('admin.users.changeReferrer.newReferrerIDPlaceholder')}
+            error={errors.referrer_id?.message}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="tertiary" slot="close">
+            {t('admin.brokerAccounts.reject.cancel')}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            isDisabled={changeReferrer.isPending}
+            onPress={() => submit(null)}
+          >
+            {t('admin.users.changeReferrer.remove')}
+          </Button>
+          <Button type="submit" variant="primary" isDisabled={changeReferrer.isPending}>
+            {t('admin.users.changeReferrer.submit')}
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </BaseModal>
   );
 };

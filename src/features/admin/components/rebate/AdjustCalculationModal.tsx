@@ -7,9 +7,11 @@ import { Button, Form, Modal, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
-import type { RebateCalculationResponse } from '@/shared/api/generated/types.gen';
 import { formatAmount } from '@/features/withdrawal/lib/formatAmount';
+import { BaseModal } from '@/shared/components/BaseModal';
 import { FormField } from '@/shared/components/FormField';
+import { useModal } from '@/shared/hooks/useModal';
+import { Modals } from '@/shared/lib/routes';
 
 import { getAdminErrorMessage } from '../../lib/getAdminErrorMessage';
 import { useAdminAdjustCalculation } from '../../hooks/useAdminAdjustCalculation';
@@ -18,13 +20,11 @@ import {
   type AdjustCalculationFormValues,
 } from '../../schemas/adjustCalculationSchema';
 
-interface AdjustCalculationModalProps {
-  calculation: RebateCalculationResponse | null;
-  onOpenChange: (isOpen: boolean) => void;
-}
-
-export const AdjustCalculationModal = ({ calculation, onOpenChange }: AdjustCalculationModalProps) => {
+export const AdjustCalculationModal = () => {
   const t = useTranslations();
+  const { isOpen, close, param } = useModal(Modals.AdjustCalculation);
+  const calculationID = param('calculationID');
+  const grossParam = param('gross');
   const adjustCalculation = useAdminAdjustCalculation();
 
   const {
@@ -38,14 +38,14 @@ export const AdjustCalculationModal = ({ calculation, onOpenChange }: AdjustCalc
   });
 
   const onSubmit = (data: AdjustCalculationFormValues) => {
-    if (!calculation?.id) return;
+    if (!calculationID) return;
 
     adjustCalculation.mutate(
-      { path: { calculationID: calculation.id }, body: data },
+      { path: { calculationID }, body: data },
       {
         onSuccess: () => {
           reset();
-          onOpenChange(false);
+          close();
         },
         onError: (error) => {
           toast.danger(getAdminErrorMessage(error) ?? t('admin.rebate.errors.adjustFailed'));
@@ -58,52 +58,45 @@ export const AdjustCalculationModal = ({ calculation, onOpenChange }: AdjustCalc
     if (!open) {
       reset();
       adjustCalculation.reset();
+      close();
     }
-    onOpenChange(open);
   };
 
   return (
-    <Modal isOpen={calculation !== null} onOpenChange={handleOpenChange}>
-      <Modal.Backdrop>
-        <Modal.Container scroll='outside'>
-          <Modal.Dialog className="sm:max-w-[420px]">
-            <Modal.CloseTrigger />
-            <Modal.Header>
-              <Modal.Heading>{t('admin.rebate.adjust.title')}</Modal.Heading>
-            </Modal.Header>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <Modal.Body className="flex flex-col gap-4">
-                <p className="text-sm text-muted">
-                  {t('admin.rebate.columns.grossRebate')}: {formatAmount(calculation?.gross_rebate)}
-                </p>
+    <BaseModal isOpen={isOpen} onOpenChange={handleOpenChange}>
+      <Modal.Header>
+        <Modal.Heading>{t('admin.rebate.adjust.title')}</Modal.Heading>
+      </Modal.Header>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Modal.Body className="flex flex-col gap-4">
+          <p className="text-sm text-muted">
+            {t('admin.rebate.columns.grossRebate')}: {formatAmount(grossParam ? Number(grossParam) : undefined)}
+          </p>
 
-                <FormField
-                  control={control}
-                  name="new_gross_rebate"
-                  label={t('admin.rebate.adjust.newGrossRebate')}
-                  error={errors.new_gross_rebate?.message}
-                />
+          <FormField
+            control={control}
+            name="new_gross_rebate"
+            label={t('admin.rebate.adjust.newGrossRebate')}
+            error={errors.new_gross_rebate?.message}
+          />
 
-                <FormField
-                  control={control}
-                  name="reason"
-                  label={t('admin.rebate.adjust.reason')}
-                  placeholder={t('admin.rebate.adjust.reasonPlaceholder')}
-                  error={errors.reason?.message}
-                />
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="tertiary" slot="close">
-                  {t('admin.brokerAccounts.reject.cancel')}
-                </Button>
-                <Button type="submit" variant="primary" isDisabled={adjustCalculation.isPending}>
-                  {t('admin.rebate.adjust.submit')}
-                </Button>
-              </Modal.Footer>
-            </Form>
-          </Modal.Dialog>
-        </Modal.Container>
-      </Modal.Backdrop>
-    </Modal>
+          <FormField
+            control={control}
+            name="reason"
+            label={t('admin.rebate.adjust.reason')}
+            placeholder={t('admin.rebate.adjust.reasonPlaceholder')}
+            error={errors.reason?.message}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="tertiary" slot="close">
+            {t('admin.brokerAccounts.reject.cancel')}
+          </Button>
+          <Button type="submit" variant="primary" isDisabled={adjustCalculation.isPending}>
+            {t('admin.rebate.adjust.submit')}
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </BaseModal>
   );
 };

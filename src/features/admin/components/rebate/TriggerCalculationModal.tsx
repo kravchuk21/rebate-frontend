@@ -7,7 +7,10 @@ import { Button, Form, Modal, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
+import { BaseModal } from '@/shared/components/BaseModal';
 import { FormField } from '@/shared/components/FormField';
+import { useModal } from '@/shared/hooks/useModal';
+import { Modals } from '@/shared/lib/routes';
 
 import { getAdminErrorMessage } from '../../lib/getAdminErrorMessage';
 import { useAdminTriggerCalculation } from '../../hooks/useAdminTriggerCalculation';
@@ -16,13 +19,9 @@ import {
   type TriggerCalculationFormValues,
 } from '../../schemas/triggerCalculationSchema';
 
-interface TriggerCalculationModalProps {
-  isOpen: boolean;
-  onOpenChange: (isOpen: boolean) => void;
-}
-
-export const TriggerCalculationModal = ({ isOpen, onOpenChange }: TriggerCalculationModalProps) => {
+export const TriggerCalculationModal = () => {
   const t = useTranslations();
+  const { isOpen, close } = useModal(Modals.TriggerCalculation);
   const triggerCalculation = useAdminTriggerCalculation();
 
   const {
@@ -41,7 +40,7 @@ export const TriggerCalculationModal = ({ isOpen, onOpenChange }: TriggerCalcula
       {
         onSuccess: () => {
           reset();
-          onOpenChange(false);
+          close();
         },
         onError: (error) => {
           toast.danger(getAdminErrorMessage(error) ?? t('admin.rebate.errors.triggerFailed'));
@@ -54,48 +53,41 @@ export const TriggerCalculationModal = ({ isOpen, onOpenChange }: TriggerCalcula
     if (!open) {
       reset();
       triggerCalculation.reset();
+      close();
     }
-    onOpenChange(open);
   };
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={handleOpenChange}>
-      <Modal.Backdrop>
-        <Modal.Container scroll='outside'>
-          <Modal.Dialog className="sm:max-w-[420px]">
-            <Modal.CloseTrigger />
-            <Modal.Header>
-              <Modal.Heading>{t('admin.rebate.trigger.title')}</Modal.Heading>
-            </Modal.Header>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <Modal.Body className="flex flex-col gap-4">
-                <FormField
-                  control={control}
-                  name="broker_account_id"
-                  label={t('admin.rebate.trigger.brokerAccount')}
-                  error={errors.broker_account_id?.message}
-                />
+    <BaseModal isOpen={isOpen} onOpenChange={handleOpenChange}>
+      <Modal.Header>
+        <Modal.Heading>{t('admin.rebate.trigger.title')}</Modal.Heading>
+      </Modal.Header>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Modal.Body className="flex flex-col gap-4">
+          <FormField
+            control={control}
+            name="broker_account_id"
+            label={t('admin.rebate.trigger.brokerAccount')}
+            error={errors.broker_account_id?.message}
+          />
 
-                <FormField
-                  control={control}
-                  name="date"
-                  label={t('admin.rebate.trigger.date')}
-                  error={errors.date?.message}
-                  inputProps={{ type: 'date' }}
-                />
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="tertiary" slot="close">
-                  {t('admin.brokerAccounts.reject.cancel')}
-                </Button>
-                <Button type="submit" variant="primary" isDisabled={triggerCalculation.isPending}>
-                  {t('admin.rebate.trigger.submit')}
-                </Button>
-              </Modal.Footer>
-            </Form>
-          </Modal.Dialog>
-        </Modal.Container>
-      </Modal.Backdrop>
-    </Modal>
+          <FormField
+            control={control}
+            name="date"
+            label={t('admin.rebate.trigger.date')}
+            error={errors.date?.message}
+            inputProps={{ type: 'date' }}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="tertiary" slot="close">
+            {t('admin.brokerAccounts.reject.cancel')}
+          </Button>
+          <Button type="submit" variant="primary" isDisabled={triggerCalculation.isPending}>
+            {t('admin.rebate.trigger.submit')}
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </BaseModal>
   );
 };

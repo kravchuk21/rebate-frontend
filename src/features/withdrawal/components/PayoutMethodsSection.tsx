@@ -12,11 +12,12 @@ import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
 import type { WithdrawalPayoutMethodResponse } from '@/shared/api/generated/types.gen';
 import { CopyButton } from '@/shared/components/CopyButton';
 import { DataTable } from '@/shared/components/DataTable';
+import { useModal } from '@/shared/hooks/useModal';
+import { Modals } from '@/shared/lib/routes';
 
 import { useDeletePayoutMethod } from '../hooks/useDeletePayoutMethod';
 import { usePayoutMethods } from '../hooks/usePayoutMethods';
 import { truncateAddress } from '../lib/validateAddress';
-import { AddPayoutMethodModal } from './AddPayoutMethodModal';
 import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
 
 interface RowActionsProps {
@@ -84,7 +85,7 @@ const columnHelper = createColumnHelper<WithdrawalPayoutMethodResponse>();
 
 export const PayoutMethodsSection = () => {
   const t = useTranslations('withdrawal.payoutMethods');
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { open } = useModal(Modals.AddPayoutMethod);
   const [offset, setOffset] = useState(0);
   const { data, isError } = usePayoutMethods();
 
@@ -129,7 +130,6 @@ export const PayoutMethodsSection = () => {
         ),
       }),
     ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [t],
   );
 
@@ -147,7 +147,7 @@ export const PayoutMethodsSection = () => {
             <Card.Header>
               <div className='flex items-center justify-between'>
                 <Card.Title>{t('title')}</Card.Title>
-                <Button onPress={() => setIsModalOpen(true)}>{t('add')}</Button>
+                <Button onPress={() => open()}>{t('add')}</Button>
               </div>
             </Card.Header>
           </Card>
@@ -164,8 +164,6 @@ export const PayoutMethodsSection = () => {
           />
         </DashboardItem>
       )}
-
-      <AddPayoutMethodModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} />
     </DashboardLayout>
   );
 };
