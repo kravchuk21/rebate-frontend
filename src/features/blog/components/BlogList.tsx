@@ -1,6 +1,5 @@
-import { Typography } from "@heroui/react";
-
 import { Link } from "@/i18n/navigation";
+import { Card, Avatar, Typography } from "@heroui/react";
 import type { BlogPostMeta } from "@/features/blog/lib/posts";
 
 interface BlogListProps {
@@ -8,16 +7,29 @@ interface BlogListProps {
 }
 
 export const BlogList = ({ posts }: BlogListProps) => (
-  <div className="mx-auto flex w-full max-w-2xl flex-col gap-6">
+  <div className="flex flex-col gap-6">
     {posts.map((post) => (
       <Link
         key={post.slug}
         href={`/blog/${post.slug}`}
-        className="border-border/40 hover:border-primary/50 flex flex-col gap-2 rounded-2xl border p-6 transition-colors"
       >
-        <span className="text-muted text-xs">{post.date}</span>
-        <Typography type="h4">{post.title}</Typography>
-        <p className="text-muted">{post.description}</p>
+        <Card>
+          <Typography.Paragraph size="sm" color='muted'>{post.date}</Typography.Paragraph>
+          <Card.Header>
+            <Card.Title>{post.title}</Card.Title>
+            <Card.Description>{post.description}</Card.Description>
+          </Card.Header>
+          <Card.Footer className="flex gap-2">
+            <Avatar aria-label="Sliceback logo picture" className="size-5">
+              <Avatar.Image
+                alt="Sliceback logo"
+                src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg"
+              />
+              <Avatar.Fallback>SB</Avatar.Fallback>
+            </Avatar>
+            <Typography.Paragraph size="xs">By Sliceback team</Typography.Paragraph>
+          </Card.Footer>
+        </Card>
       </Link>
     ))}
   </div>

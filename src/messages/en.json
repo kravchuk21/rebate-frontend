@@ -124,6 +124,7 @@
     }
   },
   "common": {
+    "home": "Home",
     "logout": "Logout",
     "help": "Help & Information",
     "tagNew": "New",

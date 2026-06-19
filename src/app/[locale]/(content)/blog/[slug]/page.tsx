@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
-import { Link } from "@/i18n/navigation";
-import { routing } from "@/i18n/routing";
+import { getPathname } from "@/i18n/navigation";
 import { Routes } from "@/shared/lib/routes";
+import { PageIntro } from "@/shared/components/PageIntro";
 import { getAllSlugs, getPostBySlug } from "@/features/blog/lib/posts";
 import { BlogArticle } from "@/features/blog/components/BlogArticle";
 
@@ -50,15 +50,19 @@ export default async function BlogPostPage({
   }
 
   const t = await getTranslations({ locale, namespace: "blog" });
+  const tCommon = await getTranslations({ locale, namespace: "common" });
 
   return (
-    <div className="min-h-screen px-6 py-12 md:py-24">
-      <div className="mx-auto mb-8 w-full max-w-2xl">
-        <Link href={Routes.Blog} className="text-muted hover:text-foreground text-sm">
-          {t("backToBlog")}
-        </Link>
-      </div>
+    <>
+      <PageIntro
+        breadcrumbs={[
+          { label: tCommon("home"), href: getPathname({ href: Routes.Home, locale }) },
+          { label: t("title"), href: getPathname({ href: Routes.Blog, locale }) },
+          { label: post.title },
+        ]}
+        title={post.title}
+      />
       <BlogArticle post={post} />
-    </div>
+    </>
   );
 }

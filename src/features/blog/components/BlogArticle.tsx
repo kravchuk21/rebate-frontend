@@ -1,4 +1,4 @@
-import { Typography } from "@heroui/react";
+import { Typography, Avatar } from "@heroui/react";
 
 import type { BlogPost } from "@/features/blog/lib/posts";
 
@@ -7,8 +7,18 @@ interface BlogArticleProps {
 }
 
 export const BlogArticle = ({ post }: BlogArticleProps) => (
-  <article className="mx-auto w-full max-w-2xl">
-    <p className="text-muted mb-2 text-xs">{post.date}</p>
+  <article className="flex flex-col gap-4">
+    <div className="flex gap-2">
+      <Avatar aria-label="Sliceback logo picture" className="size-5">
+        <Avatar.Image
+          alt="Sliceback logo"
+          src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg"
+        />
+        <Avatar.Fallback>SB</Avatar.Fallback>
+      </Avatar>
+      <Typography.Paragraph size="xs">By Sliceback team</Typography.Paragraph>
+      <Typography.Paragraph size="xs" color="muted">{post.date}</Typography.Paragraph>
+    </div>
     <Typography.Prose
       className="flex flex-col gap-3"
       dangerouslySetInnerHTML={{ __html: post.contentHtml }}

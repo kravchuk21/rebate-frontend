@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
+import { getPathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
+import { Routes } from "@/shared/lib/routes";
+import { PageIntro } from "@/shared/components/PageIntro";
 import { getAllPosts } from "@/features/blog/lib/posts";
 import { BlogList } from "@/features/blog/components/BlogList";
+import { Typography } from "@heroui/react";
 
 export const dynamic = "force-static";
 
@@ -28,19 +32,24 @@ export async function generateMetadata({
 export default async function BlogPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "blog" });
+  const tCommon = await getTranslations({ locale, namespace: "common" });
   const posts = getAllPosts(locale);
 
   return (
-    <div className="min-h-screen px-6 py-12 md:py-24">
-      <div className="mx-auto mb-12 w-full max-w-2xl text-center">
-        <h1 className="mb-4 text-3xl font-extrabold tracking-tight md:text-4xl">{t("title")}</h1>
-        <p className="text-muted">{t("description")}</p>
-      </div>
+    <>
+      <PageIntro
+        breadcrumbs={[
+          { label: tCommon("home"), href: getPathname({ href: Routes.Home, locale }) },
+          { label: t("title") },
+        ]}
+        title={t("title")}
+        description={t("description")}
+      />
       {posts.length > 0 ? (
         <BlogList posts={posts} />
       ) : (
-        <p className="text-muted text-center">{t("empty")}</p>
+        <Typography.Paragraph color="muted" className="text-center">{t("empty")}</Typography.Paragraph>
       )}
-    </div>
+    </>
   );
 }
