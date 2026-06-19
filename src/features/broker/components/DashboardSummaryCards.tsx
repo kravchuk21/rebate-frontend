@@ -17,6 +17,7 @@ import { formatAmount } from '@/features/withdrawal/lib/formatAmount';
 import { useReferralStats } from '@/features/referral/hooks/useReferralStats';
 
 import { useMyAccounts } from '../hooks/useMyAccounts';
+import { WidgetCard } from '@/shared/components/WidgetCard';
 
 export const DashboardSummaryCards = () => {
   const t = useTranslations('dashboard.cards');
@@ -32,69 +33,53 @@ export const DashboardSummaryCards = () => {
   const balance = balanceData?.data as WithdrawalBalanceResponse | undefined;
   const referralStats = referralData?.data as ReferralStatsResponse | undefined;
 
+  const summaryCards = [
+    {
+      title: t('accounts'),
+      isLoading: false,
+      value: approvedCount,
+      actionLabel: t('manageAccounts'),
+      href: '/accounts',
+    },
+    {
+      title: t('balance'),
+      isLoading: isBalanceLoading,
+      value: `${formatAmount(balance?.available)} USDT`,
+      actionLabel: t('withdrawFunds'),
+      href: '/withdrawal',
+    },
+    {
+      title: t('referralCode'),
+      isLoading: isReferralLoading,
+      value: referralStats?.referral_code ?? '—',
+      actionLabel: t('viewReferrals'),
+      href: '/referrals',
+    },
+  ] as const;
+
   return (
     <DashboardLayout>
-      <DashboardItem span={4}>
-        <Card>
-          <Card.Header>
-            <Card.Title>{t('accounts')}</Card.Title>
-          </Card.Header>
-          <Card.Content>
-            <Typography.Paragraph>
-              {approvedCount}
-            </Typography.Paragraph>
-          </Card.Content>
-          <Card.Footer>
-            <Button variant="secondary" size="sm" onPress={() => router.push('/accounts')}>
-              {t('manageAccounts')}
-            </Button>
-          </Card.Footer>
-        </Card>
-      </DashboardItem>
-
-      <DashboardItem span={4}>
-        <Card>
-          <Card.Header>
-            <Card.Title>{t('balance')}</Card.Title>
-          </Card.Header>
-          <Card.Content>
-            {isBalanceLoading ? (
-              <Skeleton className="h-7 w-full" />
-            ) : (
-              <Typography.Paragraph>
-                {formatAmount(balance?.available)} USDT
-              </Typography.Paragraph>
-            )}
-          </Card.Content>
-          <Card.Footer>
-            <Button variant="secondary" size="sm" onPress={() => router.push('/withdrawal')}>
-              {t('withdrawFunds')}
-            </Button>
-          </Card.Footer>
-        </Card>
-      </DashboardItem>
-
-      <DashboardItem span={4}>
-        <Card>
-          <Card.Header>
-            <Card.Title>{t('referralCode')}</Card.Title>
-          </Card.Header>
-          <Card.Content>
-            {isReferralLoading ? (
-              <Skeleton className="h-7 w-full" />
-            ) : (
-              <Typography.Paragraph>
-                {referralStats?.referral_code ?? '—'}
-              </Typography.Paragraph>
-            )}
-          </Card.Content>
-          <Card.Footer>
-            <Button variant="secondary" size="sm" onPress={() => router.push('/referrals')}>
-              {t('viewReferrals')}
-            </Button>
-          </Card.Footer>
-        </Card>
-      </DashboardItem>
+      {summaryCards.map((card) => (
+        <DashboardItem key={card.title} span={4}>
+          <WidgetCard>
+            <Card.Header>
+              <Card.Title>{card.title}</Card.Title>
+            </Card.Header>
+            <Card.Content>
+              {card.isLoading ? (
+                <Skeleton className="h-7 w-full" />
+              ) : (
+                <Typography.Paragraph>{card.value}</Typography.Paragraph>
+              )}
+            </Card.Content>
+            <Card.Footer>
+              <Button variant="secondary" size="sm" onPress={() => router.push(card.href)}>
+                {card.actionLabel}
+              </Button>
+            </Card.Footer>
+          </WidgetCard>
+        </DashboardItem>
+      ))}
     </DashboardLayout>
   );
 };

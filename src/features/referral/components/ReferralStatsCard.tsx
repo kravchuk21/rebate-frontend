@@ -7,6 +7,7 @@ import type { ReferralStatsResponse } from '@/shared/api/generated/types.gen';
 import { formatAmount } from '@/features/withdrawal/lib/formatAmount';
 
 import { useReferralStats } from '../hooks/useReferralStats';
+import { WidgetCard } from '@/shared/components/WidgetCard';
 
 export const ReferralStatsCard = () => {
   const t = useTranslations('referrals.stats');
@@ -15,11 +16,11 @@ export const ReferralStatsCard = () => {
   const stats = data?.data as ReferralStatsResponse | undefined;
 
   return (
-    <Card variant="secondary">
+    <WidgetCard>
       <Card.Header>
         <Card.Title>{t('title')}</Card.Title>
       </Card.Header>
-      <Card.Content className="flex flex-col gap-2">
+      <Card.Content className="flex flex-col">
         {isError ? (
           <Typography.Paragraph size="sm" className="text-danger">—</Typography.Paragraph>
         ) : isLoading ? (
@@ -50,6 +51,6 @@ export const ReferralStatsCard = () => {
           </>
         )}
       </Card.Content>
-    </Card>
+    </WidgetCard>
   );
 };

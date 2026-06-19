@@ -10,6 +10,7 @@ import { TrendChart, type TrendChartType } from '@/shared/components/charts';
 import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
 
 import { useRebateStats } from '../hooks/useRebateStats';
+import { WidgetCard } from '@/shared/components/WidgetCard';
 
 type RangeMode = 'last_7_days' | 'last_30_days';
 
@@ -51,7 +52,7 @@ export const RebateStatsWidget = () => {
   if (isError) return null;
 
   return (
-    <Card>
+    <WidgetCard>
       <Card.Header>
         <div className="flex items-center justify-between gap-4">
           <Card.Title>{t('title')}</Card.Title>
@@ -118,6 +119,6 @@ export const RebateStatsWidget = () => {
           </DashboardItem>
         </DashboardLayout>
       </Card.Content>
-    </Card>
+    </WidgetCard>
   );
 };

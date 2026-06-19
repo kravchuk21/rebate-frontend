@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import type { ReferralStatsResponse } from '@/shared/api/generated/types.gen';
 
 import { useReferralStats } from '../hooks/useReferralStats';
+import { WidgetCard } from '@/shared/components/WidgetCard';
 
 export const ReferralLinkCard = () => {
   const t = useTranslations('referrals.link');
@@ -24,7 +25,7 @@ export const ReferralLinkCard = () => {
   };
 
   return (
-    <Card className="h-full">
+    <WidgetCard>
       <Card.Header>
         <Card.Title>{t('title')}</Card.Title>
         <Card.Description>{t('description')}</Card.Description>
@@ -41,6 +42,6 @@ export const ReferralLinkCard = () => {
           </div>
         )}
       </Card.Content>
-    </Card>
+    </WidgetCard>
   );
 };

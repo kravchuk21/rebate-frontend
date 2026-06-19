@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { TwoFADisableModal } from './TwoFADisableModal';
 import { TwoFASetupModal } from './TwoFASetupModal';
+import { WidgetCard } from '@/shared/components/WidgetCard';
 
 interface TwoFASectionProps {
   initialEnabled?: boolean;
@@ -19,7 +20,7 @@ export const TwoFASection = ({ initialEnabled = false }: TwoFASectionProps) => {
   const disableModal = useOverlayState();
 
   return (
-    <Card variant="secondary" className='h-full'>
+    <WidgetCard>
       <Card.Header>
         <Card.Title className="flex gap-2 items-start">
           {t('title')}
@@ -54,6 +55,6 @@ export const TwoFASection = ({ initialEnabled = false }: TwoFASectionProps) => {
         onOpenChange={disableModal.setOpen}
         onDisabled={() => setEnabled(false)}
       />
-    </Card>
+    </WidgetCard>
   );
 };

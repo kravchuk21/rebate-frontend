@@ -2,7 +2,8 @@
 
 import '@/shared/api/instance';
 
-import { Alert, Card, Skeleton, Typography } from '@heroui/react';
+import { useEffect } from 'react';
+import { Card, Skeleton, Typography, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
 import type { WithdrawalBalanceResponse } from '@/shared/api/generated/types.gen';
@@ -11,89 +12,57 @@ import { useBalance } from '../hooks/useBalance';
 import { formatAmount } from '../lib/formatAmount';
 import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
 import { InfoTooltip } from './InfoTooltip';
+import { WidgetCard } from '@/shared/components/WidgetCard';
 
 export const BalanceCard = () => {
   const t = useTranslations('withdrawal.balance');
   const { data, isLoading, isError } = useBalance();
 
-  if (isError) {
-    return (
-      <Alert status="danger">
-        <Alert.Content>
-          <Alert.Description>{t('errors.loadFailed')}</Alert.Description>
-        </Alert.Content>
-      </Alert>
-    );
-  }
+  useEffect(() => {
+    if (isError) toast.danger(t('errors.loadFailed'));
+  }, [isError, t]);
 
   const balance = data?.data as WithdrawalBalanceResponse | undefined;
 
+  const items: Array<{ key: 'total' | 'frozen' | 'available' }> = [
+    { key: 'total' },
+    { key: 'frozen' },
+    { key: 'available' },
+  ];
+
   return (
-    <Card variant='transparent' className='p-0'>
+    <WidgetCard className='p-0' variant='transparent'>
       <Card.Header>
         <Card.Title>{t('title')}</Card.Title>
       </Card.Header>
       <Card.Content>
         <DashboardLayout>
-          <DashboardItem span={4}>
-            <Card variant='secondary'>
-              <Card.Header>
-                <div className='flex justify-between items-center'>
-                  <Card.Title>{t('total')}</Card.Title>
-                  <InfoTooltip title={t('totalHint.title')} description={t('totalHint.description')} />
-                </div>
-              </Card.Header>
-              <Card.Content>
-                {isLoading ? (
-                  <Skeleton className="h-7 w-full" />
-                ) : (
-                  <Typography.Paragraph>
-                    {formatAmount(balance?.total)} USDT
-                  </Typography.Paragraph>
-                )}
-              </Card.Content>
-            </Card>
-          </DashboardItem>
-          <DashboardItem span={4}>
-            <Card variant='secondary'>
-              <Card.Header>
-                <div className='flex justify-between items-center'>
-                  <Card.Title>{t('frozen')}</Card.Title>
-                  <InfoTooltip title={t('frozenHint.title')} description={t('frozenHint.description')} />
-                </div>
-              </Card.Header>
-              <Card.Content>
-                {isLoading ? (
-                  <Skeleton className="h-7 w-full" />
-                ) : (
-                  <Typography.Paragraph>
-                    {formatAmount(balance?.frozen)} USDT
-                  </Typography.Paragraph>
-                )}
-              </Card.Content>
-            </Card>
-          </DashboardItem>
-          <DashboardItem span={4}>
-            <Card variant='secondary'>
-              <Card.Header>
-                <div className='flex justify-between items-center'>
-                  <Card.Title>{t('available')}</Card.Title>
-                  <InfoTooltip title={t('availableHint.title')} description={t('availableHint.description')} />
-                </div>
-              </Card.Header>
-              <Card.Content>
-                {isLoading ? (
-                  <Skeleton className="h-7 w-full" />
-                ) : (
-                  <Typography.Paragraph>
-                    {formatAmount(balance?.available)} USDT
-                  </Typography.Paragraph>
-                )}
-              </Card.Content>
-            </Card>
-          </DashboardItem>
+          {items.map(({ key }) => (
+            <DashboardItem key={key} span={4}>
+              <WidgetCard>
+                <Card.Header>
+                  <div className='flex justify-between items-center'>
+                    <Card.Title>{t(key)}</Card.Title>
+                    <InfoTooltip
+                      title={t(`${key}Hint.title`)}
+                      description={t(`${key}Hint.description`)}
+                    />
+                  </div>
+                </Card.Header>
+                <Card.Content>
+                  {isLoading ? (
+                    <Skeleton className="h-7 w-full" />
+                  ) : (
+                    <Typography.Paragraph>
+                      {formatAmount(balance?.[key])} USDT
+                    </Typography.Paragraph>
+                  )}
+                </Card.Content>
+              </WidgetCard>
+            </DashboardItem>
+          ))}
         </DashboardLayout>
       </Card.Content>
-    </Card>
+    </WidgetCard>
   );
 };

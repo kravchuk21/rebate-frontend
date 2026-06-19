@@ -35,19 +35,19 @@ export default async function ProfilePage({
     <>
       <PageHeader title={t('title')} />
       <DashboardLayout>
-        <DashboardItem span={12}>
+        <DashboardItem>
           <ProfileAccountInfo email={claims.email} role={claims.role} />
         </DashboardItem>
 
-        <DashboardItem span={12}>
+        <DashboardItem>
           <ReferralLinkCard />
         </DashboardItem>
 
-        <DashboardItem span={7}>
+        <DashboardItem span={6}>
           <ChangePasswordSection />
         </DashboardItem>
 
-        <DashboardItem span={5}>
+        <DashboardItem span={6}>
           <TwoFASection initialEnabled={claims.two_fa_enabled ?? false} />
         </DashboardItem>
       </DashboardLayout>

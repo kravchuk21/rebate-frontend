@@ -5,8 +5,10 @@ import { Button, Card, Form, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
 
 import { FormField } from '@/shared/components/FormField';
+import { WidgetCard } from '@/shared/components/WidgetCard';
 
 const createPasswordSchema = (t: (key: string) => string) =>
   z
@@ -34,51 +36,59 @@ export const ChangePasswordSection = () => {
   });
 
   const onSubmit = () => {
-    toast.default(t('profile.password.notAvailable'));
+    toast(t('profile.password.notAvailable'));
   };
 
   return (
-    <Card variant="secondary">
+    <WidgetCard>
       <Card.Header>
         <Card.Title>{t('profile.password.title')}</Card.Title>
         <Card.Description>{t('profile.password.description')}</Card.Description>
       </Card.Header>
       <Card.Content>
         <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
-          <FormField
-            control={control}
-            name="current"
-            type="password"
-            variant="primary"
-            label={t('profile.password.current')}
-            error={errors.current?.message}
-          />
+          <DashboardLayout>
+            <DashboardItem>
+              <FormField
+                control={control}
+                name="current"
+                type="password"
+                variant="primary"
+                label={t('profile.password.current')}
+                error={errors.current?.message}
+              />
+            </DashboardItem>
 
-          <div className="flex gap-3">
-            <FormField
-              control={control}
-              name="newPassword"
-              type="password"
-              variant="primary"
-              label={t('profile.password.new')}
-              error={errors.newPassword?.message}
-            />
+            <DashboardItem span={6}>
+              <FormField
+                control={control}
+                name="newPassword"
+                type="password"
+                variant="primary"
+                label={t('profile.password.new')}
+                error={errors.newPassword?.message}
+              />
+            </DashboardItem>
 
-            <FormField
-              control={control}
-              name="confirm"
-              type="password"
-              variant="primary"
-              label={t('profile.password.confirm')}
-              error={errors.confirm?.message}
-            />
-          </div>
+            <DashboardItem span={6}>
+              <FormField
+                control={control}
+                name="confirm"
+                type="password"
+                variant="primary"
+                label={t('profile.password.confirm')}
+                error={errors.confirm?.message}
+              />
+            </DashboardItem>
 
-          <Button type="submit" variant="primary">
-            {t('profile.password.submit')}
-          </Button>
+            <DashboardItem>
+              <Button type="submit" variant="primary">
+                {t('profile.password.submit')}
+              </Button>
+            </DashboardItem>
+          </DashboardLayout>
         </Form>
       </Card.Content>
-    </Card>
+    </WidgetCard>
   );
 };
