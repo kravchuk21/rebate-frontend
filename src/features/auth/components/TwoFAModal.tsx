@@ -51,6 +51,7 @@ export const TwoFAModal = () => {
       </div>
 
       <InputOTP
+        variant='secondary'
         maxLength={6}
         value={code}
         onChange={setCode}

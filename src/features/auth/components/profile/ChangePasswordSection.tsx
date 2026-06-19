@@ -53,7 +53,6 @@ export const ChangePasswordSection = () => {
                 control={control}
                 name="current"
                 type="password"
-                variant="primary"
                 label={t('profile.password.current')}
                 error={errors.current?.message}
               />
@@ -64,7 +63,6 @@ export const ChangePasswordSection = () => {
                 control={control}
                 name="newPassword"
                 type="password"
-                variant="primary"
                 label={t('profile.password.new')}
                 error={errors.newPassword?.message}
               />
@@ -75,7 +73,6 @@ export const ChangePasswordSection = () => {
                 control={control}
                 name="confirm"
                 type="password"
-                variant="primary"
                 label={t('profile.password.confirm')}
                 error={errors.confirm?.message}
               />

@@ -3,7 +3,7 @@
 import '@/shared/api/instance';
 
 import { useEffect } from 'react';
-import { Button, Card, Form, Skeleton, toast } from '@heroui/react';
+import { Button, Form, toast } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
@@ -12,6 +12,7 @@ import { FormField } from '@/shared/components/FormField';
 
 import { useAdminConfig } from '../../hooks/useAdminConfig';
 import { useAdminSetConfig } from '../../hooks/useAdminSetConfig';
+import { WidgetCard } from '@/shared/components/WidgetCard';
 
 const CONFIG_KEYS = [
   'our_fee_rate',
@@ -59,12 +60,12 @@ const ConfigForm = ({ values }: { values: Partial<ConfigFormValues> }) => {
   };
 
   return (
-    <Card variant='secondary'>
+    <WidgetCard>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <DashboardLayout>
           {CONFIG_KEYS.map((key) => (
             <DashboardItem key={key} span={6}>
-              <FormField variant='primary' control={control} name={key} label={t(`labels.${key}`)} />
+              <FormField control={control} name={key} label={t(`labels.${key}`)} />
             </DashboardItem>
           ))}
           <DashboardItem span={12}>
@@ -76,7 +77,7 @@ const ConfigForm = ({ values }: { values: Partial<ConfigFormValues> }) => {
           </DashboardItem>
         </DashboardLayout>
       </Form>
-    </Card>
+    </WidgetCard>
   );
 };
 
