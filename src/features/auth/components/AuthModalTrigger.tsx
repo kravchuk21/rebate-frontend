@@ -9,7 +9,7 @@ export const AuthModalTrigger = () => {
   const t = useTranslations("landing");
 
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-3 items-center justify-center">
       <Button variant="tertiary" onPress={() => open("login")}>
         {t("signIn")}
       </Button>

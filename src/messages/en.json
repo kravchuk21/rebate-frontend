@@ -1,11 +1,65 @@
 {
   "landing": {
+    "badge": "Now paying out daily",
     "tagline": "Earn rebates from your trading. Automatically.",
-    "description": "Connect your broker account and receive daily rebate payouts in crypto.",
+    "description": "Connect your broker account and receive daily rebate payouts in crypto — no extra fees, no manual work.",
+    "heroNote": "Free to join · Connect in minutes · Withdraw anytime",
     "signIn": "Sign In",
     "getStarted": "Get Started",
     "blog": "Blog",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "stats": {
+      "title": "Trusted by active traders",
+      "items": [
+        { "value": "$2.4M+", "label": "Rebates paid out" },
+        { "value": "12,000+", "label": "Accounts" },
+        { "value": "30+", "label": "Supported brokers" },
+        { "value": "24h", "label": "Payout frequency" }
+      ]
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "subtitle": "Start earning in three simple steps.",
+      "steps": [
+        { "title": "Connect your account", "description": "Link your existing broker account in a few clicks — no need to change how you trade." },
+        { "title": "Trade as usual", "description": "Keep trading on your favorite platform. We track your eligible volume automatically." },
+        { "title": "Get paid daily", "description": "Receive rebate payouts in crypto every day, straight to your wallet." }
+      ]
+    },
+    "features": {
+      "title": "Everything you need to maximize your rebates",
+      "subtitle": "A transparent, automated rebate platform built for serious traders.",
+      "items": [
+        { "title": "Daily payouts", "description": "Rebates are calculated and paid out every 24 hours — no waiting for month-end." },
+        { "title": "Crypto withdrawals", "description": "Withdraw your earnings anytime to your preferred crypto wallet." },
+        { "title": "Top brokers", "description": "Works with 30+ leading brokers. Keep the account you already trust." },
+        { "title": "Bank-grade security", "description": "Two-factor authentication and encrypted data keep your account safe." },
+        { "title": "Referral program", "description": "Invite other traders and earn a share of their rebates, automatically." },
+        { "title": "Full transparency", "description": "Track every calculation and payout in real time from your dashboard." }
+      ]
+    },
+    "faqPreview": {
+      "title": "Frequently asked questions",
+      "subtitle": "Everything you need to know before getting started.",
+      "viewAll": "View all questions",
+      "items": [
+        { "question": "What is a trading rebate?", "answer": "A rebate is a portion of the trading commission returned to you. We share the rebate we receive from brokers directly with you." },
+        { "question": "Does it cost anything to join?", "answer": "No. Creating an account and connecting your broker is completely free — you only ever earn." },
+        { "question": "How often do I get paid?", "answer": "Rebates are calculated daily and paid out in crypto every 24 hours." },
+        { "question": "Which brokers are supported?", "answer": "We support 30+ leading brokers. Check the dashboard for the full, up-to-date list." }
+      ]
+    },
+    "cta": {
+      "title": "Start earning on every trade",
+      "description": "Join thousands of traders already getting daily rebates. It only takes a minute.",
+      "button": "Get Started"
+    },
+    "footer": {
+      "tagline": "Automated trading rebates, paid daily in crypto.",
+      "product": "Product",
+      "resources": "Resources",
+      "rights": "All rights reserved."
+    }
   },
   "blog": {
     "title": "Blog",
