@@ -58,6 +58,59 @@
   }
 }
 
+/*
+ * Content pages (blog, FAQ, …) are centered, text-first layouts, so they get a
+ * softer, more editorial transition than the dashboard: the outgoing page eases
+ * up and blurs out, the incoming page rises and sharpens into place.
+ */
+::view-transition-old(.content-page-out) {
+  animation:
+    180ms cubic-bezier(0.4, 0, 1, 1) both content-fade-out,
+    180ms cubic-bezier(0.4, 0, 1, 1) both content-leave;
+}
+::view-transition-new(.content-page-in) {
+  animation:
+    340ms cubic-bezier(0.16, 1, 0.3, 1) 120ms both content-fade-in,
+    420ms cubic-bezier(0.16, 1, 0.3, 1) 120ms both content-enter;
+}
+
+@keyframes content-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes content-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes content-leave {
+  from {
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+  to {
+    transform: translateY(-12px) scale(0.99);
+    filter: blur(4px);
+  }
+}
+@keyframes content-enter {
+  from {
+    transform: translateY(16px) scale(0.985);
+    filter: blur(6px);
+  }
+  to {
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*),
   ::view-transition-old(*),

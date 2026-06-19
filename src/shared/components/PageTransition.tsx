@@ -13,11 +13,23 @@ import { usePathname } from "next/navigation";
  * on the pathname forces an unmount + remount on each route change, which
  * triggers exit on the old page and enter on the new one.
  */
-export function PageTransition({ children }: { children: React.ReactNode }) {
+interface PageTransitionProps {
+  children: React.ReactNode;
+  /** Class applied to `::view-transition-new` on the incoming page. */
+  enter?: string;
+  /** Class applied to `::view-transition-old` on the outgoing page. */
+  exit?: string;
+}
+
+export function PageTransition({
+  children,
+  enter = "dashboard-content-in",
+  exit = "dashboard-content-out",
+}: PageTransitionProps) {
   const pathname = usePathname();
 
   return (
-    <ViewTransition key={pathname} enter="dashboard-content-in" exit="dashboard-content-out">
+    <ViewTransition key={pathname} enter={enter} exit={exit}>
       {children}
     </ViewTransition>
   );
