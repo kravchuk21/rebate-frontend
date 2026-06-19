@@ -258,6 +258,7 @@
     },
     "submit": {
       "title": "Add Broker Account",
+      "description": "Select your broker and enter your trading account UID to link it for rebate tracking.",
       "broker": "Broker",
       "brokerPlaceholder": "Select a broker",
       "uid": "Trading Account UID",
@@ -378,6 +379,7 @@
     },
     "request": {
       "title": "Request Withdrawal",
+      "description": "Choose a payout method and enter the amount you'd like to withdraw.",
       "method": "Payout Method",
       "methodPlaceholder": "Select payout method",
       "amount": "Amount (USDT)",

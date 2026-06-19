@@ -3,7 +3,7 @@
 import "@/shared/api/instance";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, FieldError, Form, Label, ListBox, Modal, Select, toast } from "@heroui/react";
+import { Button, FieldError, Form, Label, ListBox, Modal, Select, toast, Typography } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { Controller, useForm } from "react-hook-form";
 
@@ -16,6 +16,7 @@ import { Modals } from "@/shared/lib/routes";
 
 import { useBrokers } from "../hooks/useBrokers";
 import { useSubmitAccount } from "../hooks/useSubmitAccount";
+import { DashboardLayout, DashboardItem } from "@/shared/components/layout";
 import {
   createSubmitAccountSchema,
   type SubmitAccountFormValues,
@@ -71,45 +72,54 @@ export const SubmitAccountModal = () => {
         <Modal.Heading>{t("accounts.submit.title")}</Modal.Heading>
       </Modal.Header>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Modal.Body className="flex flex-col gap-4">
-          <Controller
-            control={control}
-            name="broker_id"
-            render={({ field }) => (
-              <Select
-                className="w-full"
-                placeholder={t("accounts.submit.brokerPlaceholder")}
-                selectedKey={field.value || null}
-                onSelectionChange={(key) => field.onChange(key ? String(key) : "")}
-                isInvalid={!!errors.broker_id}
-              >
-                <Label>{t("accounts.submit.broker")}</Label>
-                <Select.Trigger>
-                  <Select.Value />
-                  <Select.Indicator />
-                </Select.Trigger>
-                <Select.Popover>
-                  <ListBox>
-                    {brokers.map((broker) => (
-                      <ListBox.Item key={broker.id} id={broker.id} textValue={broker.name}>
-                        {broker.name}
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                    ))}
-                  </ListBox>
-                </Select.Popover>
-                <FieldError>{errors.broker_id?.message}</FieldError>
-              </Select>
-            )}
-          />
-
-          <FormField
-            control={control}
-            name="uid"
-            label={t("accounts.submit.uid")}
-            placeholder={t("accounts.submit.uidPlaceholder")}
-            error={errors.uid?.message}
-          />
+        <Modal.Body>
+          <DashboardLayout>
+            <DashboardItem>
+              <Typography.Paragraph color="muted" size="sm">{t("accounts.submit.description")}</Typography.Paragraph>
+            </DashboardItem>
+            <DashboardItem>
+              <Controller
+                control={control}
+                name="broker_id"
+                render={({ field }) => (
+                  <Select
+                    className="w-full"
+                    variant="secondary"
+                    placeholder={t("accounts.submit.brokerPlaceholder")}
+                    value={field.value || null}
+                    onChange={(key) => field.onChange(key ? String(key) : "")}
+                    isInvalid={!!errors.broker_id}
+                  >
+                    <Label>{t("accounts.submit.broker")}</Label>
+                    <Select.Trigger>
+                      <Select.Value />
+                      <Select.Indicator />
+                    </Select.Trigger>
+                    <Select.Popover>
+                      <ListBox>
+                        {brokers.map((broker) => (
+                          <ListBox.Item key={broker.id} id={broker.id} textValue={broker.name}>
+                            {broker.name}
+                            <ListBox.ItemIndicator />
+                          </ListBox.Item>
+                        ))}
+                      </ListBox>
+                    </Select.Popover>
+                    <FieldError>{errors.broker_id?.message}</FieldError>
+                  </Select>
+                )}
+              />
+            </DashboardItem>
+            <DashboardItem>
+              <FormField
+                control={control}
+                name="uid"
+                label={t("accounts.submit.uid")}
+                placeholder={t("accounts.submit.uidPlaceholder")}
+                error={errors.uid?.message}
+              />
+            </DashboardItem>
+          </DashboardLayout>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="tertiary" slot="close">
@@ -122,6 +132,6 @@ export const SubmitAccountModal = () => {
           </Button>
         </Modal.Footer>
       </Form>
-    </BaseModal>
+    </BaseModal >
   );
 };

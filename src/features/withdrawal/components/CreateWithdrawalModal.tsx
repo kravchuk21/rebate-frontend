@@ -3,7 +3,7 @@
 import "@/shared/api/instance";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, FieldError, Form, Label, ListBox, Modal, Select, toast } from "@heroui/react";
+import { Button, FieldError, Form, Label, ListBox, Modal, Select, toast, Typography } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { Controller, useForm } from "react-hook-form";
 
@@ -13,6 +13,7 @@ import { BaseModal } from "@/shared/components/BaseModal";
 import { FormField } from "@/shared/components/FormField";
 import { useModal } from "@/shared/hooks/useModal";
 import { Modals } from "@/shared/lib/routes";
+import { DashboardLayout, DashboardItem } from "@/shared/components/layout";
 
 import { useCreateWithdrawal } from "../hooks/useCreateWithdrawal";
 import { usePayoutMethods } from "../hooks/usePayoutMethods";
@@ -73,8 +74,15 @@ export const CreateWithdrawalModal = () => {
 
       {methods.length === 0 ? (
         <>
-          <Modal.Body className="flex flex-col gap-4 py-8 text-center">
-            <p className="text-muted">{t("withdrawal.request.noMethods")}</p>
+          <Modal.Body>
+            <DashboardLayout>
+              <DashboardItem>
+                <Typography.Paragraph color="muted" size="sm">{t("withdrawal.request.description")}</Typography.Paragraph>
+              </DashboardItem>
+              <DashboardItem>
+                <Typography.Paragraph color="muted" size="sm">{t("withdrawal.request.noMethods")}</Typography.Paragraph>
+              </DashboardItem>
+            </DashboardLayout>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="tertiary" slot="close">
@@ -87,53 +95,63 @@ export const CreateWithdrawalModal = () => {
         </>
       ) : (
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Modal.Body className="flex flex-col gap-4">
-            <Controller
-              control={control}
-              name="payout_method_id"
-              render={({ field }) => (
-                <Select
-                  variant="secondary"
-                  className="w-full"
-                  placeholder={t("withdrawal.request.methodPlaceholder")}
-                  value={field.value || null}
-                  onChange={(key) => field.onChange(key ? String(key) : "")}
-                  isInvalid={!!errors.payout_method_id}
-                >
-                  <Label>{t("withdrawal.request.method")}</Label>
-                  <Select.Trigger>
-                    <Select.Value />
-                    <Select.Indicator />
-                  </Select.Trigger>
-                  <Select.Popover>
-                    <ListBox>
-                      {methods.map((method) => (
-                        <ListBox.Item
-                          key={method.id}
-                          id={method.id}
-                          textValue={`${method.name} (${method.network})`}
-                        >
-                          {method.name} ({method.network})
-                          <ListBox.ItemIndicator />
-                        </ListBox.Item>
-                      ))}
-                    </ListBox>
-                  </Select.Popover>
-                  <FieldError>{errors.payout_method_id?.message}</FieldError>
-                </Select>
-              )}
-            />
+          <Modal.Body>
+            <DashboardLayout>
+              <DashboardItem>
+                <Typography.Paragraph color="muted" size="sm">{t("withdrawal.request.description")}</Typography.Paragraph>
+              </DashboardItem>
 
-            <FormField
-              control={control}
-              name="amount"
-              label={t("withdrawal.request.amount")}
-              placeholder={t("withdrawal.request.amountPlaceholder")}
-              error={errors.amount?.message}
-              inputProps={{ type: "number", step: "0.01", min: "0" }}
-            />
-
-            <p className="text-muted text-sm">{t("withdrawal.request.feeNote")}</p>
+              <DashboardItem>
+                <Controller
+                  control={control}
+                  name="payout_method_id"
+                  render={({ field }) => (
+                    <Select
+                      variant="secondary"
+                      className="w-full"
+                      placeholder={t("withdrawal.request.methodPlaceholder")}
+                      value={field.value || null}
+                      onChange={(key) => field.onChange(key ? String(key) : "")}
+                      isInvalid={!!errors.payout_method_id}
+                    >
+                      <Label>{t("withdrawal.request.method")}</Label>
+                      <Select.Trigger>
+                        <Select.Value />
+                        <Select.Indicator />
+                      </Select.Trigger>
+                      <Select.Popover>
+                        <ListBox>
+                          {methods.map((method) => (
+                            <ListBox.Item
+                              key={method.id}
+                              id={method.id}
+                              textValue={`${method.name} (${method.network})`}
+                            >
+                              {method.name} ({method.network})
+                              <ListBox.ItemIndicator />
+                            </ListBox.Item>
+                          ))}
+                        </ListBox>
+                      </Select.Popover>
+                      <FieldError>{errors.payout_method_id?.message}</FieldError>
+                    </Select>
+                  )}
+                />
+              </DashboardItem>
+              <DashboardItem>
+                <FormField
+                  control={control}
+                  name="amount"
+                  label={t("withdrawal.request.amount")}
+                  placeholder={t("withdrawal.request.amountPlaceholder")}
+                  error={errors.amount?.message}
+                  inputProps={{ type: "number", step: "0.01", min: "0" }}
+                />
+              </DashboardItem>
+              <DashboardItem>
+                <Typography.Paragraph color="muted" size="sm">{t("withdrawal.request.feeNote")}</Typography.Paragraph>
+              </DashboardItem>
+            </DashboardLayout>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="tertiary" slot="close">
