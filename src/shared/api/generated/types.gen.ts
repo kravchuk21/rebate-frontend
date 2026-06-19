@@ -205,6 +205,21 @@ export type RebateCalculationResponse = {
     user_payout_amount?: number;
 };
 
+export type RebateDailyStat = {
+    amount?: number;
+    date?: string;
+};
+
+export type RebateStatsResponse = {
+    all_time?: number;
+    current_month?: number;
+    last_30_days_breakdown?: Array<RebateDailyStat>;
+    last_7_days?: number;
+    last_7_days_breakdown?: Array<RebateDailyStat>;
+    last_month?: number;
+    today?: number;
+};
+
 export type ReferralAdminEntryResponse = {
     email?: string;
     joined_at?: string;
@@ -2597,6 +2612,37 @@ export type GetRebateCalculationsByIdResponses = {
 };
 
 export type GetRebateCalculationsByIdResponse = GetRebateCalculationsByIdResponses[keyof GetRebateCalculationsByIdResponses];
+
+export type GetRebateStatsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/rebate/stats';
+};
+
+export type GetRebateStatsErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal Server Error
+     */
+    500: ErrorResponse;
+};
+
+export type GetRebateStatsError = GetRebateStatsErrors[keyof GetRebateStatsErrors];
+
+export type GetRebateStatsResponses = {
+    /**
+     * OK
+     */
+    200: SuccessResponse & {
+        data?: RebateStatsResponse;
+    };
+};
+
+export type GetRebateStatsResponse = GetRebateStatsResponses[keyof GetRebateStatsResponses];
 
 export type GetReferralsData = {
     body?: never;

@@ -3557,6 +3557,55 @@
                 }
             }
         },
+        "/rebate/stats": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Returns today, last 7 days, current month, last month, all-time totals, and daily breakdowns for the last 7 and 30 days (chart data).",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "rebate"
+                ],
+                "summary": "Get my rebate statistics",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/SuccessResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/RebateStatsResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/referrals": {
             "get": {
                 "security": [
@@ -4413,6 +4462,49 @@
                     "type": "string"
                 },
                 "user_payout_amount": {
+                    "type": "number"
+                }
+            }
+        },
+        "RebateDailyStat": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "number"
+                },
+                "date": {
+                    "type": "string"
+                }
+            }
+        },
+        "RebateStatsResponse": {
+            "type": "object",
+            "properties": {
+                "all_time": {
+                    "type": "number"
+                },
+                "current_month": {
+                    "type": "number"
+                },
+                "last_30_days_breakdown": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RebateDailyStat"
+                    }
+                },
+                "last_7_days": {
+                    "type": "number"
+                },
+                "last_7_days_breakdown": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RebateDailyStat"
+                    }
+                },
+                "last_month": {
+                    "type": "number"
+                },
+                "today": {
                     "type": "number"
                 }
             }

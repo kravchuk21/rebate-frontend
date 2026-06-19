@@ -35,7 +35,7 @@ export const DashboardSummaryCards = () => {
   return (
     <DashboardLayout>
       <DashboardItem span={4}>
-        <Card variant="secondary">
+        <Card>
           <Card.Header>
             <Card.Title>{t('accounts')}</Card.Title>
           </Card.Header>
@@ -53,7 +53,7 @@ export const DashboardSummaryCards = () => {
       </DashboardItem>
 
       <DashboardItem span={4}>
-        <Card variant="secondary">
+        <Card>
           <Card.Header>
             <Card.Title>{t('balance')}</Card.Title>
           </Card.Header>
@@ -75,7 +75,7 @@ export const DashboardSummaryCards = () => {
       </DashboardItem>
 
       <DashboardItem span={4}>
-        <Card variant="secondary">
+        <Card>
           <Card.Header>
             <Card.Title>{t('referralCode')}</Card.Title>
           </Card.Header>

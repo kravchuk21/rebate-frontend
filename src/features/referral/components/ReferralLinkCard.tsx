@@ -24,7 +24,7 @@ export const ReferralLinkCard = () => {
   };
 
   return (
-    <Card variant="secondary" className="h-full">
+    <Card className="h-full">
       <Card.Header>
         <Card.Title>{t('title')}</Card.Title>
         <Card.Description>{t('description')}</Card.Description>
@@ -34,7 +34,7 @@ export const ReferralLinkCard = () => {
           <Skeleton className="h-10 w-full" />
         ) : (
           <div className="flex items-center gap-2 mt-auto">
-            <Input className="flex-1" value={stats?.referral_url ?? '—'} disabled />
+            <Input variant='secondary' className="flex-1" value={stats?.referral_url ?? '—'} disabled />
             <Button onPress={handleCopy} isDisabled={!stats?.referral_url}>
               {copied ? t('copied') : t('copy')}
             </Button>

@@ -3,6 +3,7 @@ import { PageHeader } from '@/shared/components/dashboard/PageHeader';
 
 import { DashboardSummaryCards } from '@/features/broker/components/DashboardSummaryCards';
 import { ReferralLinkCard } from '@/features/referral/components/ReferralLinkCard';
+import { RebateStatsWidget } from '@/features/rebate/components/RebateStatsWidget';
 import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
 
 export default async function DashboardPage() {
@@ -17,6 +18,9 @@ export default async function DashboardPage() {
         </DashboardItem>
         <DashboardItem>
           <ReferralLinkCard />
+        </DashboardItem>
+        <DashboardItem span={6}>
+          <RebateStatsWidget />
         </DashboardItem>
       </DashboardLayout>
     </>
