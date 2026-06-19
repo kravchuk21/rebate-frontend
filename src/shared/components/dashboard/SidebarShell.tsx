@@ -1,6 +1,7 @@
 'use client';
 
 import { Drawer } from '@heroui/react';
+import { AnimatePresence, motion } from 'motion/react';
 
 import { SidebarFooter } from './SidebarFooter';
 import { SidebarNav, type SidebarNavItem } from './SidebarNav';
@@ -39,11 +40,19 @@ export const SidebarShell = ({ email, role, items, ariaLabel }: SidebarShellProp
         </Drawer.Backdrop>
       </Drawer.Root>
 
-      {isDesktopVisible && (
-        <aside className="hidden w-72 shrink-0 border-r p-4 md:sticky md:top-0 md:block md:h-screen md:overflow-y-auto">
-          {content()}
-        </aside>
-      )}
+      <AnimatePresence initial={false}>
+        {isDesktopVisible && (
+          <motion.aside
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: 288, opacity: 1 }}
+            exit={{ width: 0, opacity: 0 }}
+            transition={{ duration: 0.2, ease: 'easeInOut' }}
+            className="sticky top-0 hidden h-screen shrink-0 overflow-hidden border-r md:block"
+          >
+            <div className="h-full w-72 p-4">{content()}</div>
+          </motion.aside>
+        )}
+      </AnimatePresence>
     </>
   );
 };
