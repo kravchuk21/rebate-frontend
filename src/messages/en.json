@@ -432,6 +432,7 @@
     "stats": {
       "title": "Rebate Stats",
       "rangeLabel": "Range",
+      "viewAll": "View all history",
       "ranges": {
         "last_7_days": "Last 7 days",
         "last_30_days": "Last month"
@@ -442,6 +443,12 @@
         "today": "Today",
         "currentMonth": "Current month",
         "lastMonth": "Last month"
+      },
+      "summaryTable": {
+        "title": "Summary",
+        "period": "Period",
+        "sum": "Sum",
+        "empty": "No data"
       },
       "chartType": {
         "bar": "Bar mode",
