@@ -1,6 +1,6 @@
 "use client";
 
-import { Typography, Link, Separator } from "@heroui/react";
+import { Typography, Link } from "@heroui/react";
 import { useTranslations } from "next-intl";
 
 import { Routes } from "@/shared/lib/routes";

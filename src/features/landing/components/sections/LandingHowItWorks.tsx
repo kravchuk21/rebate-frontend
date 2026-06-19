@@ -24,8 +24,8 @@ export const LandingHowItWorks = () => {
 
       <DashboardLayout>
         {steps.map((step) => (
-          <DashboardItem span={4}>
-            <Card key={step.title} className="h-full">
+          <DashboardItem span={4} key={step.title} >
+            <Card className="h-full">
               <Card.Header>
                 <Card.Title>{step.title}</Card.Title>
                 <Card.Description>

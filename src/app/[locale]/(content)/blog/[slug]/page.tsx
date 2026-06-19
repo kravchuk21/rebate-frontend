@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
-import { getPathname } from "@/i18n/navigation";
 import { Routes } from "@/shared/lib/routes";
 import { PageIntro } from "@/shared/components/PageIntro";
 import { getAllSlugs, getPostBySlug } from "@/features/blog/lib/posts";
@@ -56,8 +55,8 @@ export default async function BlogPostPage({
     <>
       <PageIntro
         breadcrumbs={[
-          { label: tCommon("home"), href: getPathname({ href: Routes.Home, locale }) },
-          { label: t("title"), href: getPathname({ href: Routes.Blog, locale }) },
+          { label: tCommon("home"), href: Routes.Home },
+          { label: t("title"), href: Routes.Blog },
           { label: post.title },
         ]}
         title={post.title}

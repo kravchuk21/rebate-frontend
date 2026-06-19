@@ -2,11 +2,12 @@ import Script from "next/script";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { Toast } from "@heroui/react";
+import { Toast, isRTL } from "@heroui/react";
 
 import { themeInitScript } from "@/shared/lib/theme";
 import { routing } from "@/i18n/routing";
 import QueryProvider from "@/providers/QueryProvider";
+import { AriaRouterProvider } from "@/providers/AriaRouterProvider";
 import { AuthProvider } from "@/features/auth/components/AuthProvider";
 import { getAccessToken } from "@/shared/lib/cookies";
 import { decodeAccessToken } from "@/shared/lib/decodeToken";
@@ -34,7 +35,7 @@ export default async function LocaleLayout({
   const claims = token ? decodeAccessToken(token) : null;
 
   return (
-    <html lang={locale} data-theme="dark" suppressHydrationWarning>
+    <html lang={locale} dir={isRTL(locale) ? "rtl" : "ltr"} data-theme="dark" suppressHydrationWarning>
       <body className="bg-background text-foreground" suppressHydrationWarning>
         {/* Resolve the persisted theme before first paint to avoid a flash of the
             wrong theme. beforeInteractive injects this into <head> and runs it
@@ -42,13 +43,15 @@ export default async function LocaleLayout({
         <Script id="theme-init" strategy="beforeInteractive">
           {themeInitScript}
         </Script>
-        <NextIntlClientProvider messages={messages}>
-          <QueryProvider>
-            <AuthProvider claims={claims}>
-              <Toast.Provider />
-              {children}
-            </AuthProvider>
-          </QueryProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <AriaRouterProvider>
+            <QueryProvider>
+              <AuthProvider claims={claims}>
+                <Toast.Provider />
+                {children}
+              </AuthProvider>
+            </QueryProvider>
+          </AriaRouterProvider>
         </NextIntlClientProvider>
       </body>
     </html>

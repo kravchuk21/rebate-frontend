@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-import { getPathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { Routes } from "@/shared/lib/routes";
 import { PageIntro } from "@/shared/components/PageIntro";
@@ -39,7 +38,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
     <>
       <PageIntro
         breadcrumbs={[
-          { label: tCommon("home"), href: getPathname({ href: Routes.Home, locale }) },
+          { label: tCommon("home"), href: Routes.Home },
           { label: t("title") },
         ]}
         title={t("title")}

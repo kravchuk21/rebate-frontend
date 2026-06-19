@@ -1,11 +1,11 @@
 "use client";
 
-import { ArrowRight, ChevronDown } from "@gravity-ui/icons";
-import { Accordion, Button, Typography } from "@heroui/react";
+import { ChevronDown } from "@gravity-ui/icons";
+import { Accordion, Typography, Link } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { DashboardLayout, DashboardItem } from "@/shared/components/layout";
 
-import { Link } from "@/i18n/navigation";
+// import { Link } from "@/i18n/navigation";
 import { Routes } from "@/shared/lib/routes";
 
 interface FaqItem {
@@ -51,9 +51,8 @@ export const LandingFaqPreview = () => {
 
       <DashboardItem className="text-center">
         <Link href={Routes.Faq}>
-          <Button variant="tertiary">
-            {t("faqPreview.viewAll")}
-          </Button>
+          {t("faqPreview.viewAll")}
+          <Link.Icon/>
         </Link>
       </DashboardItem>
     </DashboardLayout >

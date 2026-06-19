@@ -12,7 +12,7 @@ export const LandingHero = () => {
   return (
     <DashboardLayout className="flex flex-col items-center">
       <DashboardItem>
-        <Chip color="accent" size="sm">
+        <Chip color="success">
           <Chip.Label>{t("badge")}</Chip.Label>
         </Chip>
       </DashboardItem>

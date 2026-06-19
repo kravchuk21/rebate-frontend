@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-
 import { redirect } from "@/i18n/navigation";
 import { getAccessToken } from "@/shared/lib/cookies";
 import { Routes } from "@/shared/lib/routes";
@@ -24,8 +22,6 @@ export default async function HomePage({
   const { ref } = await searchParams;
 
   return (
-    <Suspense fallback={null}>
-      <LandingClient defaultReferralCode={ref} />
-    </Suspense>
+    <LandingClient defaultReferralCode={ref} />
   );
 }
