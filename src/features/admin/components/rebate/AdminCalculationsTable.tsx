@@ -19,7 +19,7 @@ import { AdjustCalculationModal } from './AdjustCalculationModal';
 import { ImportBrokerDataModal } from './ImportBrokerDataModal';
 import { TriggerCalculationModal } from './TriggerCalculationModal';
 
-const LIMIT = 10;
+const LIMIT = 20;
 
 const columnHelper = createColumnHelper<RebateCalculationResponse>();
 

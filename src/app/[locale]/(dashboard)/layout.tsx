@@ -3,6 +3,7 @@ import { getAccessToken } from '@/shared/lib/cookies';
 import { decodeAccessToken } from '@/shared/lib/decodeToken';
 import { Sidebar } from '@/shared/components/dashboard/Sidebar';
 import { SidebarProvider } from '@/shared/components/dashboard/SidebarContext';
+import { PageTransition } from '@/shared/components/PageTransition';
 
 export default async function DashboardLayout({
   children,
@@ -28,7 +29,9 @@ export default async function DashboardLayout({
     <SidebarProvider>
       <div className="flex min-h-screen flex-col md:flex-row">
         <Sidebar email={claims!.email} role={claims!.role} />
-        <main className="flex-1 flex flex-col gap-6 p-4">{children}</main>
+        <main className="flex-1 flex flex-col gap-6 p-4">
+          <PageTransition>{children}</PageTransition>
+        </main>
       </div>
     </SidebarProvider>
   );

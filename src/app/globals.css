@@ -1,2 +1,68 @@
 @import "tailwindcss";
 @import "@heroui/styles";
+
+/*
+ * The browser captures the whole page under the `root` group by default and
+ * crossfades it. We only want the content area (the keyed PageTransition
+ * boundary) to animate, so the sidebar and page chrome stay put. Suppressing
+ * the root animation makes everything outside the content boundary swap
+ * instantly — invisible, since those pixels don't change between routes.
+ */
+::view-transition-group(root),
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-old(.dashboard-content-out) {
+  animation:
+    150ms ease-in both dashboard-fade-out,
+    150ms ease-in both dashboard-slide-down;
+}
+::view-transition-new(.dashboard-content-in) {
+  animation:
+    220ms ease-out 100ms both dashboard-fade-in,
+    280ms ease-out 100ms both dashboard-slide-up;
+}
+
+@keyframes dashboard-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes dashboard-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes dashboard-slide-down {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(8px);
+  }
+}
+@keyframes dashboard-slide-up {
+  from {
+    transform: translateY(8px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}

@@ -78,7 +78,7 @@ const RowActions = ({ method }: RowActionsProps) => {
   );
 };
 
-const LIMIT = 10;
+const LIMIT = 20;
 
 const columnHelper = createColumnHelper<WithdrawalPayoutMethodResponse>();
 

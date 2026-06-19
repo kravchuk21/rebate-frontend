@@ -26,7 +26,7 @@ import { ChangeReferrerModal } from './ChangeReferrerModal';
 import { UserStatusChip } from './UserStatusChip';
 import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
 
-const LIMIT = 10;
+const LIMIT = 20;
 
 function toSortDescriptor(sorting: SortingState): SortDescriptor | undefined {
   const first = sorting[0];

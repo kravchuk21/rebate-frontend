@@ -12,6 +12,7 @@ import { DataTable } from '@/shared/components/DataTable';
 import { useMyCalculations } from '../hooks/useMyCalculations';
 import { formatPeriodDate } from '../lib/formatPeriodDate';
 import { RebateStatusChip } from './RebateStatusChip';
+import { CopyButton } from '@/shared/components/CopyButton';
 
 const LIMIT = 20;
 
@@ -43,7 +44,7 @@ export const RebateTable = () => {
       columnHelper.display({
         id: 'uid',
         header: t('columns.uid'),
-        cell: ({ row }) => row.original.broker_account?.uid ?? '—',
+        cell: ({ row }) => <div className="flex items-center gap-2">{row.original.broker_account?.uid ?? '—'}{row.original.broker_account?.uid && <CopyButton value={row.original.broker_account?.uid ?? '—'} />}</div>,
       }),
       columnHelper.accessor('period_date', {
         header: t('columns.period'),

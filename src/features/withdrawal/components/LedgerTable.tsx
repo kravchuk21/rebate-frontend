@@ -14,7 +14,7 @@ import { useLedger } from '../hooks/useLedger';
 import { formatAmountWithSign } from '../lib/formatAmount';
 import { LedgerTypeChip } from './LedgerTypeChip';
 
-const LIMIT = 10;
+const LIMIT = 20;
 
 const columnHelper = createColumnHelper<WithdrawalLedgerEntryResponse>();
 
