@@ -2,7 +2,7 @@
 
 import '@/shared/api/instance';
 
-import { Button, Card, Skeleton, Typography } from '@heroui/react';
+import { Button, Card, Link, Skeleton, Typography } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
 import { useRouter } from '@/i18n/navigation';
@@ -76,6 +76,7 @@ export const DashboardSummaryCards = () => {
             <Card.Footer>
               <Button variant="secondary" size="sm" onPress={() => router.push(card.href)}>
                 {card.actionLabel}
+                <Link.Icon />
               </Button>
             </Card.Footer>
           </WidgetCard>
