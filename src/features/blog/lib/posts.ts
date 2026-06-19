@@ -1,9 +1,9 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import matter from 'gray-matter';
-import { marked } from 'marked';
+import fs from "node:fs";
+import path from "node:path";
+import matter from "gray-matter";
+import { marked } from "marked";
 
-const BLOG_DIR = path.join(process.cwd(), 'src/content/blog');
+const BLOG_DIR = path.join(process.cwd(), "src/content/blog");
 
 export interface BlogPostMeta {
   slug: string;
@@ -21,7 +21,7 @@ const localeDir = (locale: string) => path.join(BLOG_DIR, locale);
 const readPostFile = (locale: string, slug: string): string | null => {
   const filePath = path.join(localeDir(locale), `${slug}.md`);
   if (!fs.existsSync(filePath)) return null;
-  return fs.readFileSync(filePath, 'utf8');
+  return fs.readFileSync(filePath, "utf8");
 };
 
 export const getAllSlugs = (locale: string): string[] => {
@@ -29,8 +29,8 @@ export const getAllSlugs = (locale: string): string[] => {
   if (!fs.existsSync(dir)) return [];
   return fs
     .readdirSync(dir)
-    .filter((file) => file.endsWith('.md'))
-    .map((file) => file.replace(/\.md$/, ''));
+    .filter((file) => file.endsWith(".md"))
+    .map((file) => file.replace(/\.md$/, ""));
 };
 
 export const getAllPosts = (locale: string): BlogPostMeta[] =>

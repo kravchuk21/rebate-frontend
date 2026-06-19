@@ -1,36 +1,36 @@
-'use client';
+"use client";
 
-import { useEffect, useMemo, useState } from 'react';
-import { Button, Card, Link, Skeleton, toast } from '@heroui/react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useEffect, useMemo, useState } from "react";
+import { Button, Card, Link, Skeleton, toast } from "@heroui/react";
+import { useLocale, useTranslations } from "next-intl";
 
-import type { RebateStatsResponse } from '@/shared/api/generated/types.gen';
-import { useRouter } from '@/i18n/navigation';
-import { Routes } from '@/shared/lib/routes';
-import { TrendChart, type TrendChartType } from '@/shared/components/charts';
-import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
-import { WidgetCard } from '@/shared/components/WidgetCard';
+import type { RebateStatsResponse } from "@/shared/api/generated/types.gen";
+import { useRouter } from "@/i18n/navigation";
+import { Routes } from "@/shared/lib/routes";
+import { TrendChart, type TrendChartType } from "@/shared/components/charts";
+import { DashboardLayout, DashboardItem } from "@/shared/components/layout";
+import { WidgetCard } from "@/shared/components/WidgetCard";
 
-import { useRebateStats } from '../hooks/useRebateStats';
-import { buildTrendChart, type RangeMode } from '../lib/buildTrendChart';
-import { RebateChartTypeSwitch } from './RebateChartTypeSwitch';
-import { RebateRangeSelect } from './RebateRangeSelect';
-import { RebateStatsSummary } from './RebateStatsSummary';
+import { useRebateStats } from "../hooks/useRebateStats";
+import { buildTrendChart, type RangeMode } from "../lib/buildTrendChart";
+import { RebateChartTypeSwitch } from "./RebateChartTypeSwitch";
+import { RebateRangeSelect } from "./RebateRangeSelect";
+import { RebateStatsSummary } from "./RebateStatsSummary";
 
 interface RebateStatsWidgetProps {
   fullMode?: boolean;
 }
 
 export const RebateStatsWidget = ({ fullMode = true }: RebateStatsWidgetProps) => {
-  const t = useTranslations('rebate.stats');
+  const t = useTranslations("rebate.stats");
   const locale = useLocale();
   const router = useRouter();
-  const [range, setRange] = useState<RangeMode>('last_7_days');
-  const [chartType, setChartType] = useState<TrendChartType>('line');
+  const [range, setRange] = useState<RangeMode>("last_7_days");
+  const [chartType, setChartType] = useState<TrendChartType>("line");
   const { data, isLoading, isError } = useRebateStats();
 
   useEffect(() => {
-    if (isError) toast.danger(t('errors.loadFailed'));
+    if (isError) toast.danger(t("errors.loadFailed"));
   }, [isError, t]);
 
   const stats = data?.data as RebateStatsResponse | undefined;
@@ -47,7 +47,7 @@ export const RebateStatsWidget = ({ fullMode = true }: RebateStatsWidgetProps) =
         <div className="flex items-center justify-between gap-4">
           {fullMode ? (
             <>
-              <Card.Title>{t('title')}</Card.Title>
+              <Card.Title>{t("title")}</Card.Title>
               {rangeSelect}
             </>
           ) : (
@@ -65,9 +65,9 @@ export const RebateStatsWidget = ({ fullMode = true }: RebateStatsWidgetProps) =
               <DashboardItem>
                 <RebateStatsSummary stats={stats} isLoading={isLoading} />
               </DashboardItem>
-              <DashboardItem className='flex items-center justify-between'>
+              <DashboardItem className="flex items-center justify-between">
                 <Button variant="secondary" size="sm" onPress={() => router.push(Routes.Rebate)}>
-                  {t('viewAll')}
+                  {t("viewAll")}
                   <Link.Icon />
                 </Button>
                 {chartSwitch}

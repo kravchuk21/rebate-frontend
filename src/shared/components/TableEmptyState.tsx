@@ -1,5 +1,5 @@
-import { Tray } from '@gravity-ui/icons';
-import { EmptyState, Typography } from '@heroui/react';
+import { Tray } from "@gravity-ui/icons";
+import { EmptyState, Typography } from "@heroui/react";
 
 interface TableEmptyStateProps {
   label: string;

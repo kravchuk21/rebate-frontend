@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { Label, ListBox, Select } from '@heroui/react';
-import { useTranslations } from 'next-intl';
+import { Label, ListBox, Select } from "@heroui/react";
+import { useTranslations } from "next-intl";
 
-import { RANGE_MODES, type RangeMode } from '../lib/buildTrendChart';
+import { RANGE_MODES, type RangeMode } from "../lib/buildTrendChart";
 
 interface RebateRangeSelectProps {
   value: RangeMode;
@@ -11,11 +11,11 @@ interface RebateRangeSelectProps {
 }
 
 export const RebateRangeSelect = ({ value, onChange }: RebateRangeSelectProps) => {
-  const t = useTranslations('rebate.stats');
+  const t = useTranslations("rebate.stats");
 
   return (
     <Select variant="secondary" value={value} onChange={(key) => onChange(key as RangeMode)}>
-      <Label className="sr-only">{t('rangeLabel')}</Label>
+      <Label className="sr-only">{t("rangeLabel")}</Label>
       <Select.Trigger>
         <Select.Value />
         <Select.Indicator />

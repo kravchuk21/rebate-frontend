@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useTransition } from 'react';
-import { useLocale } from 'next-intl';
-import { Button, ButtonGroup } from '@heroui/react';
+import { useTransition } from "react";
+import { useLocale } from "next-intl";
+import { Button, ButtonGroup } from "@heroui/react";
 
-import { usePathname, useRouter } from '@/i18n/navigation';
-import { routing } from '@/i18n/routing';
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { routing } from "@/i18n/routing";
 
 export const LocaleSwitcher = () => {
   const locale = useLocale();

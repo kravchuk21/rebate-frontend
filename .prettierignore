@@ -1,0 +1,10 @@
+.next
+out
+build
+node_modules
+next-env.d.ts
+src/shared/api/generated
+swagger.json
+.agents
+.claude
+AGENTS.md

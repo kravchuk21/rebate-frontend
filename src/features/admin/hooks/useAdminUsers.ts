@@ -1,6 +1,6 @@
-import '@/shared/api/instance';
+import "@/shared/api/instance";
 
-import { useGetAdminUsersQuery } from '@/shared/api/generated/hooks/admin/useGetAdminUsersQuery.gen';
+import { useGetAdminUsersQuery } from "@/shared/api/generated/hooks/admin/useGetAdminUsersQuery.gen";
 
 export const useAdminUsers = (params?: {
   search?: string;

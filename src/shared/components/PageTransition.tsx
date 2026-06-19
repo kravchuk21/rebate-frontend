@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { ViewTransition } from 'react';
-import { usePathname } from 'next/navigation';
+import { ViewTransition } from "react";
+import { usePathname } from "next/navigation";
 
 /**
  * Animates the dashboard/admin content area on route changes.

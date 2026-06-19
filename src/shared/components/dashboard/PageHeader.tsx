@@ -1,6 +1,6 @@
-import { Typography } from '@heroui/react';
+import { Typography } from "@heroui/react";
 
-import { SidebarToggle } from './SidebarToggle';
+import { SidebarToggle } from "./SidebarToggle";
 
 interface PageHeaderProps {
   title: string;

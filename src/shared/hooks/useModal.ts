@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import { useSearchParams } from 'next/navigation';
-import { useCallback } from 'react';
+import { useSearchParams } from "next/navigation";
+import { useCallback } from "react";
 
-import { useAuth, type AuthState } from '@/features/auth/components/AuthProvider';
-import { usePathname, useRouter } from '@/i18n/navigation';
-import { MODAL_ACCESS, MODAL_PARAMS } from '@/shared/lib/modals';
-import { Modals } from '@/shared/lib/routes';
+import { useAuth, type AuthState } from "@/features/auth/components/AuthProvider";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { MODAL_ACCESS, MODAL_PARAMS } from "@/shared/lib/modals";
+import { Modals } from "@/shared/lib/routes";
 
-const MODAL_KEY = 'modal';
+const MODAL_KEY = "modal";
 
 export const canAccessModal = (id: Modals, auth: AuthState): boolean => {
   switch (MODAL_ACCESS[id]) {
-    case 'public':
+    case "public":
       return true;
-    case 'auth':
+    case "auth":
       return auth.isAuthenticated;
-    case 'admin':
-      return auth.role === 'admin';
+    case "admin":
+      return auth.role === "admin";
     default:
       return false;
   }

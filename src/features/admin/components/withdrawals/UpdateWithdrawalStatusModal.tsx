@@ -1,30 +1,30 @@
-'use client';
+"use client";
 
-import '@/shared/api/instance';
+import "@/shared/api/instance";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, FieldError, Form, Label, ListBox, Modal, Select, toast } from '@heroui/react';
-import { useTranslations } from 'next-intl';
-import { Controller, useForm, useWatch } from 'react-hook-form';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, FieldError, Form, Label, ListBox, Modal, Select, toast } from "@heroui/react";
+import { useTranslations } from "next-intl";
+import { Controller, useForm, useWatch } from "react-hook-form";
 
-import { BaseModal } from '@/shared/components/BaseModal';
-import { FormField } from '@/shared/components/FormField';
-import { useModal } from '@/shared/hooks/useModal';
-import { Modals } from '@/shared/lib/routes';
+import { BaseModal } from "@/shared/components/BaseModal";
+import { FormField } from "@/shared/components/FormField";
+import { useModal } from "@/shared/hooks/useModal";
+import { Modals } from "@/shared/lib/routes";
 
-import { getAdminErrorMessage } from '../../lib/getAdminErrorMessage';
-import { useAdminUpdateWithdrawalStatus } from '../../hooks/useAdminUpdateWithdrawalStatus';
+import { getAdminErrorMessage } from "../../lib/getAdminErrorMessage";
+import { useAdminUpdateWithdrawalStatus } from "../../hooks/useAdminUpdateWithdrawalStatus";
 import {
   createUpdateWithdrawalStatusSchema,
   type UpdateWithdrawalStatusFormValues,
-} from '../../schemas/updateWithdrawalStatusSchema';
+} from "../../schemas/updateWithdrawalStatusSchema";
 
-const statuses = ['processing', 'completed', 'rejected'] as const;
+const statuses = ["processing", "completed", "rejected"] as const;
 
 export const UpdateWithdrawalStatusModal = () => {
   const t = useTranslations();
   const { isOpen, close, param } = useModal(Modals.UpdateWithdrawalStatus);
-  const withdrawalID = param('withdrawalID');
+  const withdrawalID = param("withdrawalID");
   const updateStatus = useAdminUpdateWithdrawalStatus();
 
   const {
@@ -34,10 +34,10 @@ export const UpdateWithdrawalStatusModal = () => {
     formState: { errors },
   } = useForm<UpdateWithdrawalStatusFormValues>({
     resolver: zodResolver(createUpdateWithdrawalStatusSchema(t)),
-    defaultValues: { status: '', tx_hash: '', reason: '', admin_note: '' },
+    defaultValues: { status: "", tx_hash: "", reason: "", admin_note: "" },
   });
 
-  const selectedStatus = useWatch({ control, name: 'status' });
+  const selectedStatus = useWatch({ control, name: "status" });
 
   const onSubmit = (data: UpdateWithdrawalStatusFormValues) => {
     if (!withdrawalID) return;
@@ -58,7 +58,7 @@ export const UpdateWithdrawalStatusModal = () => {
           close();
         },
         onError: (error) => {
-          toast.danger(getAdminErrorMessage(error) ?? t('admin.withdrawals.errors.updateFailed'));
+          toast.danger(getAdminErrorMessage(error) ?? t("admin.withdrawals.errors.updateFailed"));
         },
       },
     );
@@ -75,7 +75,7 @@ export const UpdateWithdrawalStatusModal = () => {
   return (
     <BaseModal isOpen={isOpen} onOpenChange={handleOpenChange}>
       <Modal.Header>
-        <Modal.Heading>{t('admin.withdrawals.updateStatus.title')}</Modal.Heading>
+        <Modal.Heading>{t("admin.withdrawals.updateStatus.title")}</Modal.Heading>
       </Modal.Header>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body className="flex flex-col gap-4">
@@ -86,10 +86,10 @@ export const UpdateWithdrawalStatusModal = () => {
               <Select
                 className="w-full"
                 value={field.value || null}
-                onChange={(key) => field.onChange(key ? String(key) : '')}
+                onChange={(key) => field.onChange(key ? String(key) : "")}
                 isInvalid={!!errors.status}
               >
-                <Label>{t('admin.withdrawals.updateStatus.status')}</Label>
+                <Label>{t("admin.withdrawals.updateStatus.status")}</Label>
                 <Select.Trigger>
                   <Select.Value />
                   <Select.Indicator />
@@ -113,22 +113,22 @@ export const UpdateWithdrawalStatusModal = () => {
             )}
           />
 
-          {selectedStatus === 'completed' && (
+          {selectedStatus === "completed" && (
             <FormField
               control={control}
               name="tx_hash"
-              label={t('admin.withdrawals.updateStatus.txHash')}
-              placeholder={t('admin.withdrawals.updateStatus.txHashPlaceholder')}
+              label={t("admin.withdrawals.updateStatus.txHash")}
+              placeholder={t("admin.withdrawals.updateStatus.txHashPlaceholder")}
               error={errors.tx_hash?.message}
             />
           )}
 
-          {selectedStatus === 'rejected' && (
+          {selectedStatus === "rejected" && (
             <FormField
               control={control}
               name="reason"
-              label={t('admin.withdrawals.updateStatus.reason')}
-              placeholder={t('admin.withdrawals.updateStatus.reasonPlaceholder')}
+              label={t("admin.withdrawals.updateStatus.reason")}
+              placeholder={t("admin.withdrawals.updateStatus.reasonPlaceholder")}
               error={errors.reason?.message}
             />
           )}
@@ -136,15 +136,15 @@ export const UpdateWithdrawalStatusModal = () => {
           <FormField
             control={control}
             name="admin_note"
-            label={t('admin.withdrawals.updateStatus.adminNote')}
+            label={t("admin.withdrawals.updateStatus.adminNote")}
           />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="tertiary" slot="close">
-            {t('admin.brokerAccounts.reject.cancel')}
+            {t("admin.brokerAccounts.reject.cancel")}
           </Button>
           <Button type="submit" variant="primary" isDisabled={updateStatus.isPending}>
-            {t('admin.withdrawals.updateStatus.submit')}
+            {t("admin.withdrawals.updateStatus.submit")}
           </Button>
         </Modal.Footer>
       </Form>

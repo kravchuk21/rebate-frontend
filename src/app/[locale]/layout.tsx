@@ -1,14 +1,14 @@
-import { notFound } from 'next/navigation';
-import { NextIntlClientProvider, hasLocale } from 'next-intl';
-import { getMessages } from 'next-intl/server';
-import { Toast } from '@heroui/react';
+import { notFound } from "next/navigation";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { getMessages } from "next-intl/server";
+import { Toast } from "@heroui/react";
 
-import { routing } from '@/i18n/routing';
-import QueryProvider from '@/providers/QueryProvider';
-import { AuthProvider } from '@/features/auth/components/AuthProvider';
-import { getAccessToken } from '@/shared/lib/cookies';
-import { decodeAccessToken } from '@/shared/lib/decodeToken';
-import '../globals.css';
+import { routing } from "@/i18n/routing";
+import QueryProvider from "@/providers/QueryProvider";
+import { AuthProvider } from "@/features/auth/components/AuthProvider";
+import { getAccessToken } from "@/shared/lib/cookies";
+import { decodeAccessToken } from "@/shared/lib/decodeToken";
+import "../globals.css";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -42,7 +42,7 @@ export default async function LocaleLayout({
           }}
         />
       </head>
-      <body className='bg-background text-foreground' suppressHydrationWarning>
+      <body className="bg-background text-foreground" suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <QueryProvider>
             <AuthProvider claims={claims}>

@@ -1,25 +1,25 @@
-'use client';
+"use client";
 
-import '@/shared/api/instance';
+import "@/shared/api/instance";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, FieldError, Form, Label, ListBox, Modal, Select, toast } from '@heroui/react';
-import { useTranslations } from 'next-intl';
-import { Controller, useForm } from 'react-hook-form';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, FieldError, Form, Label, ListBox, Modal, Select, toast } from "@heroui/react";
+import { useTranslations } from "next-intl";
+import { Controller, useForm } from "react-hook-form";
 
-import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
-import type { BrokerResponse } from '@/shared/api/generated/types.gen';
-import { BaseModal } from '@/shared/components/BaseModal';
-import { FormField } from '@/shared/components/FormField';
-import { useModal } from '@/shared/hooks/useModal';
-import { Modals } from '@/shared/lib/routes';
+import { getErrorMessage } from "@/features/auth/lib/getErrorMessage";
+import type { BrokerResponse } from "@/shared/api/generated/types.gen";
+import { BaseModal } from "@/shared/components/BaseModal";
+import { FormField } from "@/shared/components/FormField";
+import { useModal } from "@/shared/hooks/useModal";
+import { Modals } from "@/shared/lib/routes";
 
-import { useBrokers } from '../hooks/useBrokers';
-import { useSubmitAccount } from '../hooks/useSubmitAccount';
+import { useBrokers } from "../hooks/useBrokers";
+import { useSubmitAccount } from "../hooks/useSubmitAccount";
 import {
   createSubmitAccountSchema,
   type SubmitAccountFormValues,
-} from '../schemas/submitAccountSchema';
+} from "../schemas/submitAccountSchema";
 
 export const SubmitAccountModal = () => {
   const t = useTranslations();
@@ -39,7 +39,7 @@ export const SubmitAccountModal = () => {
     formState: { errors },
   } = useForm<SubmitAccountFormValues>({
     resolver: zodResolver(createSubmitAccountSchema(t)),
-    defaultValues: { broker_id: '', uid: '' },
+    defaultValues: { broker_id: "", uid: "" },
   });
 
   const onSubmit = (data: SubmitAccountFormValues) => {
@@ -51,7 +51,7 @@ export const SubmitAccountModal = () => {
           close();
         },
         onError: (error) => {
-          toast.danger(getErrorMessage(error) ?? t('accounts.errors.submitFailed'));
+          toast.danger(getErrorMessage(error) ?? t("accounts.errors.submitFailed"));
         },
       },
     );
@@ -68,7 +68,7 @@ export const SubmitAccountModal = () => {
   return (
     <BaseModal isOpen={isOpen} onOpenChange={handleOpenChange}>
       <Modal.Header>
-        <Modal.Heading>{t('accounts.submit.title')}</Modal.Heading>
+        <Modal.Heading>{t("accounts.submit.title")}</Modal.Heading>
       </Modal.Header>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body className="flex flex-col gap-4">
@@ -78,12 +78,12 @@ export const SubmitAccountModal = () => {
             render={({ field }) => (
               <Select
                 className="w-full"
-                placeholder={t('accounts.submit.brokerPlaceholder')}
+                placeholder={t("accounts.submit.brokerPlaceholder")}
                 selectedKey={field.value || null}
-                onSelectionChange={(key) => field.onChange(key ? String(key) : '')}
+                onSelectionChange={(key) => field.onChange(key ? String(key) : "")}
                 isInvalid={!!errors.broker_id}
               >
-                <Label>{t('accounts.submit.broker')}</Label>
+                <Label>{t("accounts.submit.broker")}</Label>
                 <Select.Trigger>
                   <Select.Value />
                   <Select.Indicator />
@@ -91,11 +91,7 @@ export const SubmitAccountModal = () => {
                 <Select.Popover>
                   <ListBox>
                     {brokers.map((broker) => (
-                      <ListBox.Item
-                        key={broker.id}
-                        id={broker.id}
-                        textValue={broker.name}
-                      >
+                      <ListBox.Item key={broker.id} id={broker.id} textValue={broker.name}>
                         {broker.name}
                         <ListBox.ItemIndicator />
                       </ListBox.Item>
@@ -110,19 +106,19 @@ export const SubmitAccountModal = () => {
           <FormField
             control={control}
             name="uid"
-            label={t('accounts.submit.uid')}
-            placeholder={t('accounts.submit.uidPlaceholder')}
+            label={t("accounts.submit.uid")}
+            placeholder={t("accounts.submit.uidPlaceholder")}
             error={errors.uid?.message}
           />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="tertiary" slot="close">
-            {t('accounts.submit.cancel')}
+            {t("accounts.submit.cancel")}
           </Button>
           <Button type="submit" variant="primary" isDisabled={submitAccount.isPending}>
             {submitAccount.isPending
-              ? t('accounts.submit.submitting')
-              : t('accounts.submit.submit')}
+              ? t("accounts.submit.submitting")
+              : t("accounts.submit.submit")}
           </Button>
         </Modal.Footer>
       </Form>

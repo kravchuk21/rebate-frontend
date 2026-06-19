@@ -1,30 +1,30 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { Skeleton, Table, toast } from '@heroui/react';
-import { useTranslations } from 'next-intl';
+import { useEffect } from "react";
+import { Skeleton, Table, toast } from "@heroui/react";
+import { useTranslations } from "next-intl";
 
-import type { RebateStatsResponse } from '@/shared/api/generated/types.gen';
-import { formatAmount } from '@/features/withdrawal/lib/formatAmount';
+import type { RebateStatsResponse } from "@/shared/api/generated/types.gen";
+import { formatAmount } from "@/features/withdrawal/lib/formatAmount";
 
-import { useRebateStats } from '../hooks/useRebateStats';
+import { useRebateStats } from "../hooks/useRebateStats";
 
-type SummaryField = 'all_time' | 'last_7_days' | 'today' | 'current_month' | 'last_month';
+type SummaryField = "all_time" | "last_7_days" | "today" | "current_month" | "last_month";
 
 const SUMMARY_ROWS: { labelKey: string; field: SummaryField }[] = [
-  { labelKey: 'allTime', field: 'all_time' },
-  { labelKey: 'last7Days', field: 'last_7_days' },
-  { labelKey: 'today', field: 'today' },
-  { labelKey: 'currentMonth', field: 'current_month' },
-  { labelKey: 'lastMonth', field: 'last_month' },
+  { labelKey: "allTime", field: "all_time" },
+  { labelKey: "last7Days", field: "last_7_days" },
+  { labelKey: "today", field: "today" },
+  { labelKey: "currentMonth", field: "current_month" },
+  { labelKey: "lastMonth", field: "last_month" },
 ];
 
 export const RebateSummaryTable = () => {
-  const t = useTranslations('rebate.stats');
+  const t = useTranslations("rebate.stats");
   const { data, isLoading, isError } = useRebateStats();
 
   useEffect(() => {
-    if (isError) toast.danger(t('errors.loadFailed'));
+    if (isError) toast.danger(t("errors.loadFailed"));
   }, [isError, t]);
 
   const stats = data?.data as RebateStatsResponse | undefined;
@@ -32,15 +32,15 @@ export const RebateSummaryTable = () => {
   if (isError) return null;
 
   return (
-    <Table className='h-full'>
+    <Table className="h-full">
       <Table.ScrollContainer>
-        <Table.Content aria-label={t('summaryTable.title')}>
+        <Table.Content aria-label={t("summaryTable.title")}>
           <Table.Header>
             <Table.Column id="period" isRowHeader className="text-nowrap">
-              {t('summaryTable.period')}
+              {t("summaryTable.period")}
             </Table.Column>
             <Table.Column id="sum" className="text-nowrap">
-              {t('summaryTable.sum')}
+              {t("summaryTable.sum")}
             </Table.Column>
           </Table.Header>
           <Table.Body>

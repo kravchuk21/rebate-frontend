@@ -1,11 +1,11 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation } from "@tanstack/react-query";
 
-import type { Auth2FaInitiateResponse } from '@/shared/api/generated/types.gen';
+import type { Auth2FaInitiateResponse } from "@/shared/api/generated/types.gen";
 
 export const useTwoFAInitiate = () =>
   useMutation({
     mutationFn: async () => {
-      const res = await fetch('/api/auth/2fa/initiate', { method: 'POST' });
+      const res = await fetch("/api/auth/2fa/initiate", { method: "POST" });
       const body = await res.json();
 
       if (!res.ok) {

@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import '@/shared/api/instance';
+import "@/shared/api/instance";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Form, Modal, toast } from '@heroui/react';
-import { useTranslations } from 'next-intl';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Form, Modal, toast } from "@heroui/react";
+import { useTranslations } from "next-intl";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 
-import { BaseModal } from '@/shared/components/BaseModal';
-import { FormField } from '@/shared/components/FormField';
+import { BaseModal } from "@/shared/components/BaseModal";
+import { FormField } from "@/shared/components/FormField";
 
-import { createReasonSchema, type ReasonFormValues } from '../../schemas/reasonSchema';
+import { createReasonSchema, type ReasonFormValues } from "../../schemas/reasonSchema";
 
 interface RejectReasonModalProps {
-  type: 'reject' | 'revoke';
+  type: "reject" | "revoke";
   isOpen: boolean;
   isPending: boolean;
   error?: unknown;
@@ -32,7 +32,7 @@ export const RejectReasonModal = ({
   onOpenChange,
   onSubmit,
 }: RejectReasonModalProps) => {
-  const t = useTranslations('admin.brokerAccounts');
+  const t = useTranslations("admin.brokerAccounts");
 
   const {
     control,
@@ -41,7 +41,7 @@ export const RejectReasonModal = ({
     formState: { errors },
   } = useForm<ReasonFormValues>({
     resolver: zodResolver(createReasonSchema(t(`${type}.validation.reason`))),
-    defaultValues: { reason: '' },
+    defaultValues: { reason: "" },
   });
 
   const handleOpenChange = (open: boolean) => {
@@ -79,7 +79,7 @@ export const RejectReasonModal = ({
         </Modal.Body>
         <Modal.Footer>
           <Button variant="tertiary" slot="close">
-            {t('reject.cancel')}
+            {t("reject.cancel")}
           </Button>
           <Button type="submit" variant="primary" isDisabled={isPending}>
             {t(`${type}.submit`)}

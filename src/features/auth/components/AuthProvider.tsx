@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { createContext, useContext, useMemo, type ReactNode } from 'react';
+import { createContext, useContext, useMemo, type ReactNode } from "react";
 
-import type { TokenClaims } from '@/shared/lib/decodeToken';
+import type { TokenClaims } from "@/shared/lib/decodeToken";
 
 export interface AuthState {
   isAuthenticated: boolean;
@@ -18,7 +18,7 @@ const AuthContext = createContext<AuthState>({
 
 interface AuthProviderProps {
   /** JWT claims decoded server-side, or `null` for an anonymous visitor. */
-  claims: Pick<TokenClaims, 'role' | 'email'> | null;
+  claims: Pick<TokenClaims, "role" | "email"> | null;
   children: ReactNode;
 }
 

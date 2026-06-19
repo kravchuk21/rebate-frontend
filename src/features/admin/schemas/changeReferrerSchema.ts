@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const changeReferrerSchema = z.object({
   referrer_id: z.string(),

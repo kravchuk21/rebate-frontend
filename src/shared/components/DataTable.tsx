@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import type { SortDescriptor } from '@heroui/react';
-import type { Table as ReactTableInstance } from '@tanstack/react-table';
+import type { SortDescriptor } from "@heroui/react";
+import type { Table as ReactTableInstance } from "@tanstack/react-table";
 
-import { useCallback } from 'react';
-import { Table } from '@heroui/react';
-import { flexRender } from '@tanstack/react-table';
+import { useCallback } from "react";
+import { Table } from "@heroui/react";
+import { flexRender } from "@tanstack/react-table";
 
-import { TableEmptyState } from './TableEmptyState';
-import { TablePagination } from './TablePagination';
+import { TableEmptyState } from "./TableEmptyState";
+import { TablePagination } from "./TablePagination";
 
 interface DataTablePagination {
   offset: number;
@@ -40,10 +40,7 @@ export function DataTable<T>({
   const rowHeaderId = rowHeaderColumnId ?? headers[0]?.id;
   const rows = table.getRowModel().rows;
 
-  const renderEmptyState = useCallback(
-    () => <TableEmptyState label={emptyLabel} />,
-    [emptyLabel],
-  );
+  const renderEmptyState = useCallback(() => <TableEmptyState label={emptyLabel} />, [emptyLabel]);
 
   return (
     <Table>
@@ -67,7 +64,7 @@ export function DataTable<T>({
                 id={header.id}
                 allowsSorting={onSortChange ? header.column.getCanSort() : false}
                 isRowHeader={header.id === rowHeaderId}
-                className='text-nowrap'
+                className="text-nowrap"
               >
                 {flexRender(header.column.columnDef.header, header.getContext())}
               </Table.Column>
@@ -75,7 +72,7 @@ export function DataTable<T>({
           </Table.Header>
           <Table.Body items={rows} renderEmptyState={renderEmptyState}>
             {(row) => (
-              <Table.Row id={row.id} className='text-nowrap'>
+              <Table.Row id={row.id} className="text-nowrap">
                 {row.getVisibleCells().map((cell) => (
                   <Table.Cell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

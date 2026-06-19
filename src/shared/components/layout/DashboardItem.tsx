@@ -24,7 +24,5 @@ type Props = {
 };
 
 export function DashboardItem({ children, span = 12, className }: Props) {
-  return (
-    <div className={cn("col-span-1", SPAN[span], className)}>{children}</div>
-  );
+  return <div className={cn("col-span-1", SPAN[span], className)}>{children}</div>;
 }

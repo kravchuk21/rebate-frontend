@@ -9,7 +9,7 @@ export interface TokenClaims {
 
 export const decodeAccessToken = (token: string): TokenClaims | null => {
   try {
-    const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64url').toString());
+    const payload = JSON.parse(Buffer.from(token.split(".")[1], "base64url").toString());
     return payload as TokenClaims;
   } catch {
     return null;

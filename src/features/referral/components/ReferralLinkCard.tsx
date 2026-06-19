@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button, Card, Skeleton, Input } from '@heroui/react';
-import { useTranslations } from 'next-intl';
+import { useState } from "react";
+import { Button, Card, Skeleton, Input } from "@heroui/react";
+import { useTranslations } from "next-intl";
 
-import type { ReferralStatsResponse } from '@/shared/api/generated/types.gen';
+import type { ReferralStatsResponse } from "@/shared/api/generated/types.gen";
 
-import { useReferralStats } from '../hooks/useReferralStats';
-import { WidgetCard } from '@/shared/components/WidgetCard';
+import { useReferralStats } from "../hooks/useReferralStats";
+import { WidgetCard } from "@/shared/components/WidgetCard";
 
 export const ReferralLinkCard = () => {
-  const t = useTranslations('referrals.link');
+  const t = useTranslations("referrals.link");
   const { data, isLoading } = useReferralStats();
   const [copied, setCopied] = useState(false);
 
@@ -27,17 +27,22 @@ export const ReferralLinkCard = () => {
   return (
     <WidgetCard>
       <Card.Header>
-        <Card.Title>{t('title')}</Card.Title>
-        <Card.Description>{t('description')}</Card.Description>
+        <Card.Title>{t("title")}</Card.Title>
+        <Card.Description>{t("description")}</Card.Description>
       </Card.Header>
       <Card.Content>
         {isLoading ? (
           <Skeleton className="h-10 w-full" />
         ) : (
-          <div className="flex items-center gap-2 mt-auto">
-            <Input variant='secondary' className="flex-1" value={stats?.referral_url ?? '—'} disabled />
+          <div className="mt-auto flex items-center gap-2">
+            <Input
+              variant="secondary"
+              className="flex-1"
+              value={stats?.referral_url ?? "—"}
+              disabled
+            />
             <Button onPress={handleCopy} isDisabled={!stats?.referral_url}>
-              {copied ? t('copied') : t('copy')}
+              {copied ? t("copied") : t("copy")}
             </Button>
           </div>
         )}

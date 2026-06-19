@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { Chip } from '@heroui/react';
+import { Chip } from "@heroui/react";
 
-const colorMap: Record<string, 'success' | 'danger' | 'default'> = {
-  active: 'success',
-  suspended: 'danger',
+const colorMap: Record<string, "success" | "danger" | "default"> = {
+  active: "success",
+  suspended: "danger",
 };
 
 interface UserStatusChipProps {
@@ -12,5 +12,5 @@ interface UserStatusChipProps {
 }
 
 export const UserStatusChip = ({ status }: UserStatusChipProps) => (
-  <Chip color={colorMap[status] ?? 'default'}>{status}</Chip>
+  <Chip color={colorMap[status] ?? "default"}>{status}</Chip>
 );

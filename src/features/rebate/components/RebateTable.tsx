@@ -1,31 +1,31 @@
-'use client';
+"use client";
 
-import { useEffect, useMemo, useState } from 'react';
-import { toast } from '@heroui/react';
-import { useLocale, useTranslations } from 'next-intl';
-import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { useEffect, useMemo, useState } from "react";
+import { toast } from "@heroui/react";
+import { useLocale, useTranslations } from "next-intl";
+import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
-import type { RebateCalculationResponse } from '@/shared/api/generated/types.gen';
-import { formatAmount } from '@/features/withdrawal/lib/formatAmount';
-import { DataTable } from '@/shared/components/DataTable';
+import type { RebateCalculationResponse } from "@/shared/api/generated/types.gen";
+import { formatAmount } from "@/features/withdrawal/lib/formatAmount";
+import { DataTable } from "@/shared/components/DataTable";
 
-import { useMyCalculations } from '../hooks/useMyCalculations';
-import { formatPeriodDate } from '../lib/formatPeriodDate';
-import { RebateStatusChip } from './RebateStatusChip';
-import { CopyButton } from '@/shared/components/CopyButton';
+import { useMyCalculations } from "../hooks/useMyCalculations";
+import { formatPeriodDate } from "../lib/formatPeriodDate";
+import { RebateStatusChip } from "./RebateStatusChip";
+import { CopyButton } from "@/shared/components/CopyButton";
 
 const LIMIT = 20;
 
 const columnHelper = createColumnHelper<RebateCalculationResponse>();
 
 export const RebateTable = () => {
-  const t = useTranslations('rebate');
+  const t = useTranslations("rebate");
   const locale = useLocale();
   const [offset, setOffset] = useState(0);
   const { data, isError } = useMyCalculations(LIMIT, offset);
 
   useEffect(() => {
-    if (isError) toast.danger(t('errors.loadFailed'));
+    if (isError) toast.danger(t("errors.loadFailed"));
   }, [isError, t]);
 
   const responseData = data?.data as
@@ -37,42 +37,49 @@ export const RebateTable = () => {
   const columns = useMemo(
     () => [
       columnHelper.display({
-        id: 'broker',
-        header: t('columns.broker'),
-        cell: ({ row }) => row.original.broker_account?.broker_name ?? '—',
+        id: "broker",
+        header: t("columns.broker"),
+        cell: ({ row }) => row.original.broker_account?.broker_name ?? "—",
       }),
       columnHelper.display({
-        id: 'uid',
-        header: t('columns.uid'),
-        cell: ({ row }) => <div className="flex items-center gap-2">{row.original.broker_account?.uid ?? '—'}{row.original.broker_account?.uid && <CopyButton value={row.original.broker_account?.uid ?? '—'} />}</div>,
+        id: "uid",
+        header: t("columns.uid"),
+        cell: ({ row }) => (
+          <div className="flex items-center gap-2">
+            {row.original.broker_account?.uid ?? "—"}
+            {row.original.broker_account?.uid && (
+              <CopyButton value={row.original.broker_account?.uid ?? "—"} />
+            )}
+          </div>
+        ),
       }),
-      columnHelper.accessor('period_date', {
-        header: t('columns.period'),
+      columnHelper.accessor("period_date", {
+        header: t("columns.period"),
         cell: (info) => formatPeriodDate(info.getValue(), locale),
       }),
-      columnHelper.accessor('broker_volume', {
-        header: t('columns.volume'),
+      columnHelper.accessor("broker_volume", {
+        header: t("columns.volume"),
         cell: (info) => formatAmount(info.getValue()),
       }),
-      columnHelper.accessor('gross_rebate', {
-        header: t('columns.grossRebate'),
+      columnHelper.accessor("gross_rebate", {
+        header: t("columns.grossRebate"),
         cell: (info) => `${formatAmount(info.getValue())} USDT`,
       }),
-      columnHelper.accessor('our_fee_amount', {
-        header: t('columns.ourFee'),
+      columnHelper.accessor("our_fee_amount", {
+        header: t("columns.ourFee"),
         cell: (info) => `${formatAmount(info.getValue())} USDT`,
       }),
-      columnHelper.accessor('referrer_amount', {
-        header: t('columns.referrerAmount'),
+      columnHelper.accessor("referrer_amount", {
+        header: t("columns.referrerAmount"),
         cell: (info) => `${formatAmount(info.getValue())} USDT`,
       }),
-      columnHelper.accessor('user_payout_amount', {
-        header: t('columns.yourPayout'),
+      columnHelper.accessor("user_payout_amount", {
+        header: t("columns.yourPayout"),
         cell: (info) => `${formatAmount(info.getValue())} USDT`,
       }),
-      columnHelper.accessor('status', {
-        header: t('columns.status'),
-        cell: (info) => <RebateStatusChip status={info.getValue() ?? ''} />,
+      columnHelper.accessor("status", {
+        header: t("columns.status"),
+        cell: (info) => <RebateStatusChip status={info.getValue() ?? ""} />,
       }),
     ],
     [t, locale],
@@ -90,8 +97,8 @@ export const RebateTable = () => {
   return (
     <DataTable
       table={table}
-      ariaLabel={t('title')}
-      emptyLabel={t('empty')}
+      ariaLabel={t("title")}
+      emptyLabel={t("empty")}
       rowHeaderColumnId="broker"
       pagination={{ offset, limit: LIMIT, totalCount, onOffsetChange: setOffset }}
     />

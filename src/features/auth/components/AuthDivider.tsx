@@ -1,11 +1,11 @@
-import { Separator, Typography } from '@heroui/react';
-import { useTranslations } from 'next-intl';
+import { Separator, Typography } from "@heroui/react";
+import { useTranslations } from "next-intl";
 
 interface AuthDividerProps {
   translationKey?: string;
 }
 
-export const AuthDivider = ({ translationKey = 'auth.login.or' }: AuthDividerProps) => {
+export const AuthDivider = ({ translationKey = "auth.login.or" }: AuthDividerProps) => {
   const t = useTranslations();
 
   return (

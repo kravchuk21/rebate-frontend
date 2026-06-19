@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { Drawer } from '@heroui/react';
-import { AnimatePresence, motion } from 'motion/react';
+import { Drawer } from "@heroui/react";
+import { AnimatePresence, motion } from "motion/react";
 
-import { SidebarFooter } from './SidebarFooter';
-import { SidebarNav, type SidebarNavItem } from './SidebarNav';
-import { SidebarUserProfile } from './SidebarUserProfile';
-import { useSidebar } from './SidebarContext';
+import { SidebarFooter } from "./SidebarFooter";
+import { SidebarNav, type SidebarNavItem } from "./SidebarNav";
+import { SidebarUserProfile } from "./SidebarUserProfile";
+import { useSidebar } from "./SidebarContext";
 
 interface SidebarShellProps {
   email: string;
@@ -46,7 +46,7 @@ export const SidebarShell = ({ email, role, items, ariaLabel }: SidebarShellProp
             initial={{ width: 0, opacity: 0 }}
             animate={{ width: 288, opacity: 1 }}
             exit={{ width: 0, opacity: 0 }}
-            transition={{ duration: 0.2, ease: 'easeInOut' }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
             className="sticky top-0 hidden h-screen shrink-0 overflow-hidden border-r md:block"
           >
             <div className="h-full w-72 p-4">{content()}</div>

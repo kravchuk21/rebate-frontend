@@ -1,39 +1,39 @@
-'use client';
+"use client";
 
-import '@/shared/api/instance';
+import "@/shared/api/instance";
 
-import { useEffect } from 'react';
-import { Card, Skeleton, Typography, toast } from '@heroui/react';
-import { useTranslations } from 'next-intl';
+import { useEffect } from "react";
+import { Card, Skeleton, Typography, toast } from "@heroui/react";
+import { useTranslations } from "next-intl";
 
-import type { WithdrawalBalanceResponse } from '@/shared/api/generated/types.gen';
+import type { WithdrawalBalanceResponse } from "@/shared/api/generated/types.gen";
 
-import { useBalance } from '../hooks/useBalance';
-import { formatAmount } from '../lib/formatAmount';
-import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
-import { InfoTooltip } from './InfoTooltip';
-import { WidgetCard } from '@/shared/components/WidgetCard';
+import { useBalance } from "../hooks/useBalance";
+import { formatAmount } from "../lib/formatAmount";
+import { DashboardLayout, DashboardItem } from "@/shared/components/layout";
+import { InfoTooltip } from "./InfoTooltip";
+import { WidgetCard } from "@/shared/components/WidgetCard";
 
 export const BalanceCard = () => {
-  const t = useTranslations('withdrawal.balance');
+  const t = useTranslations("withdrawal.balance");
   const { data, isLoading, isError } = useBalance();
 
   useEffect(() => {
-    if (isError) toast.danger(t('errors.loadFailed'));
+    if (isError) toast.danger(t("errors.loadFailed"));
   }, [isError, t]);
 
   const balance = data?.data as WithdrawalBalanceResponse | undefined;
 
-  const items: Array<{ key: 'total' | 'frozen' | 'available' }> = [
-    { key: 'total' },
-    { key: 'frozen' },
-    { key: 'available' },
+  const items: Array<{ key: "total" | "frozen" | "available" }> = [
+    { key: "total" },
+    { key: "frozen" },
+    { key: "available" },
   ];
 
   return (
-    <WidgetCard className='p-0' variant='transparent'>
+    <WidgetCard className="p-0" variant="transparent">
       <Card.Header>
-        <Card.Title>{t('title')}</Card.Title>
+        <Card.Title>{t("title")}</Card.Title>
       </Card.Header>
       <Card.Content>
         <DashboardLayout>
@@ -41,7 +41,7 @@ export const BalanceCard = () => {
             <DashboardItem key={key} span={4}>
               <WidgetCard>
                 <Card.Header>
-                  <div className='flex justify-between items-center'>
+                  <div className="flex items-center justify-between">
                     <Card.Title>{t(key)}</Card.Title>
                     <InfoTooltip
                       title={t(`${key}Hint.title`)}
@@ -53,9 +53,7 @@ export const BalanceCard = () => {
                   {isLoading ? (
                     <Skeleton className="h-7 w-full" />
                   ) : (
-                    <Typography.Paragraph>
-                      {formatAmount(balance?.[key])} USDT
-                    </Typography.Paragraph>
+                    <Typography.Paragraph>{formatAmount(balance?.[key])} USDT</Typography.Paragraph>
                   )}
                 </Card.Content>
               </WidgetCard>

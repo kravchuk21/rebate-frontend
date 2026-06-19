@@ -1,6 +1,6 @@
-import '@/shared/api/instance';
+import "@/shared/api/instance";
 
-import { useGetBalanceQuery } from '@/shared/api/generated/hooks/withdrawal/useGetBalanceQuery.gen';
+import { useGetBalanceQuery } from "@/shared/api/generated/hooks/withdrawal/useGetBalanceQuery.gen";
 
 export const useBalance = () =>
   useGetBalanceQuery({

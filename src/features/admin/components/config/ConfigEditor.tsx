@@ -1,27 +1,27 @@
-'use client';
+"use client";
 
-import '@/shared/api/instance';
+import "@/shared/api/instance";
 
-import { useEffect } from 'react';
-import { Button, Form, toast } from '@heroui/react';
-import { useTranslations } from 'next-intl';
-import { useForm } from 'react-hook-form';
+import { useEffect } from "react";
+import { Button, Form, toast } from "@heroui/react";
+import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
 
-import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
-import { FormField } from '@/shared/components/FormField';
+import { DashboardLayout, DashboardItem } from "@/shared/components/layout";
+import { FormField } from "@/shared/components/FormField";
 
-import { useAdminConfig } from '../../hooks/useAdminConfig';
-import { useAdminSetConfig } from '../../hooks/useAdminSetConfig';
-import { WidgetCard } from '@/shared/components/WidgetCard';
+import { useAdminConfig } from "../../hooks/useAdminConfig";
+import { useAdminSetConfig } from "../../hooks/useAdminSetConfig";
+import { WidgetCard } from "@/shared/components/WidgetCard";
 
 const CONFIG_KEYS = [
-  'our_fee_rate',
-  'referral_rate',
-  'min_withdrawal_amount',
-  'network_fee_TRC20',
-  'network_fee_ERC20',
-  'network_fee_BEP20',
-  'network_fee_SOL',
+  "our_fee_rate",
+  "referral_rate",
+  "min_withdrawal_amount",
+  "network_fee_TRC20",
+  "network_fee_ERC20",
+  "network_fee_BEP20",
+  "network_fee_SOL",
 ] as const;
 
 type ConfigKey = (typeof CONFIG_KEYS)[number];
@@ -29,7 +29,7 @@ type ConfigKey = (typeof CONFIG_KEYS)[number];
 type ConfigFormValues = Record<ConfigKey, string>;
 
 const ConfigForm = ({ values }: { values: Partial<ConfigFormValues> }) => {
-  const t = useTranslations('admin.config');
+  const t = useTranslations("admin.config");
   const setConfig = useAdminSetConfig();
 
   const {
@@ -38,13 +38,13 @@ const ConfigForm = ({ values }: { values: Partial<ConfigFormValues> }) => {
     formState: { dirtyFields },
   } = useForm<ConfigFormValues>({
     values: CONFIG_KEYS.reduce(
-      (acc, key) => ({ ...acc, [key]: values[key] ?? '' }),
+      (acc, key) => ({ ...acc, [key]: values[key] ?? "" }),
       {} as ConfigFormValues,
     ),
   });
 
   const onSubmit = async (data: ConfigFormValues) => {
-    const changedKeys = (Object.keys(dirtyFields) as ConfigKey[]);
+    const changedKeys = Object.keys(dirtyFields) as ConfigKey[];
     if (changedKeys.length === 0) return;
 
     try {
@@ -53,9 +53,9 @@ const ConfigForm = ({ values }: { values: Partial<ConfigFormValues> }) => {
           setConfig.mutateAsync({ path: { key }, body: { value: data[key] } }),
         ),
       );
-      toast.success(t('saved'));
+      toast.success(t("saved"));
     } catch {
-      toast.danger(t('saveFailed'));
+      toast.danger(t("saveFailed"));
     }
   };
 
@@ -71,7 +71,7 @@ const ConfigForm = ({ values }: { values: Partial<ConfigFormValues> }) => {
           <DashboardItem span={12}>
             <div className="flex justify-end">
               <Button type="submit" variant="primary" isDisabled={setConfig.isPending}>
-                {t('save')}
+                {t("save")}
               </Button>
             </div>
           </DashboardItem>
@@ -82,14 +82,15 @@ const ConfigForm = ({ values }: { values: Partial<ConfigFormValues> }) => {
 };
 
 export const ConfigEditor = () => {
-  const t = useTranslations('admin.config');
+  const t = useTranslations("admin.config");
   const { data, isLoading, isError } = useAdminConfig();
 
   useEffect(() => {
-    if (isError) toast.danger(t('errors.loadFailed'));
+    if (isError) toast.danger(t("errors.loadFailed"));
   }, [isError, t]);
 
-  const items = (data?.data as { items?: { key: string; value: string }[] } | undefined)?.items ?? [];
+  const items =
+    (data?.data as { items?: { key: string; value: string }[] } | undefined)?.items ?? [];
   const values = items.reduce(
     (acc, item) => ({ ...acc, [item.key]: item.value }),
     {} as Record<string, string>,

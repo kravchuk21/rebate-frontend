@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { WidgetCard } from '@/shared/components/WidgetCard';
-import { Card, Typography } from '@heroui/react';
-import { useTranslations } from 'next-intl';
+import { WidgetCard } from "@/shared/components/WidgetCard";
+import { Card, Typography } from "@heroui/react";
+import { useTranslations } from "next-intl";
 
 interface ProfileAccountInfoProps {
   email: string;
@@ -10,20 +10,24 @@ interface ProfileAccountInfoProps {
 }
 
 export const ProfileAccountInfo = ({ email, role }: ProfileAccountInfoProps) => {
-  const t = useTranslations('profile.account');
+  const t = useTranslations("profile.account");
 
   return (
     <WidgetCard>
       <Card.Header>
-        <Card.Title>{t('title')}</Card.Title>
+        <Card.Title>{t("title")}</Card.Title>
       </Card.Header>
       <Card.Content className="flex flex-col">
         <div className="flex items-center justify-between">
-          <Typography.Paragraph size="sm" color="muted">{t('email')}</Typography.Paragraph>
+          <Typography.Paragraph size="sm" color="muted">
+            {t("email")}
+          </Typography.Paragraph>
           <Typography.Paragraph size="sm">{email}</Typography.Paragraph>
         </div>
         <div className="flex items-center justify-between">
-          <Typography.Paragraph size="sm" color="muted">{t('role')}</Typography.Paragraph>
+          <Typography.Paragraph size="sm" color="muted">
+            {t("role")}
+          </Typography.Paragraph>
           <Typography type="body-sm">{role}</Typography>
         </div>
       </Card.Content>

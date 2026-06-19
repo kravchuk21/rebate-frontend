@@ -1,27 +1,27 @@
-'use client';
+"use client";
 
-import '@/shared/api/instance';
+import "@/shared/api/instance";
 
-import { Button, Card, Link, Skeleton, Typography } from '@heroui/react';
-import { useTranslations } from 'next-intl';
+import { Button, Card, Link, Skeleton, Typography } from "@heroui/react";
+import { useTranslations } from "next-intl";
 
-import { useRouter } from '@/i18n/navigation';
-import { Routes } from '@/shared/lib/routes';
-import { DashboardLayout, DashboardItem } from '@/shared/components/layout';
+import { useRouter } from "@/i18n/navigation";
+import { Routes } from "@/shared/lib/routes";
+import { DashboardLayout, DashboardItem } from "@/shared/components/layout";
 import type {
   BrokerAccountDetailResponse,
   ReferralStatsResponse,
   WithdrawalBalanceResponse,
-} from '@/shared/api/generated/types.gen';
-import { useBalance } from '@/features/withdrawal/hooks/useBalance';
-import { formatAmount } from '@/features/withdrawal/lib/formatAmount';
-import { useReferralStats } from '@/features/referral/hooks/useReferralStats';
+} from "@/shared/api/generated/types.gen";
+import { useBalance } from "@/features/withdrawal/hooks/useBalance";
+import { formatAmount } from "@/features/withdrawal/lib/formatAmount";
+import { useReferralStats } from "@/features/referral/hooks/useReferralStats";
 
-import { useMyAccounts } from '../hooks/useMyAccounts';
-import { WidgetCard } from '@/shared/components/WidgetCard';
+import { useMyAccounts } from "../hooks/useMyAccounts";
+import { WidgetCard } from "@/shared/components/WidgetCard";
 
 export const DashboardSummaryCards = () => {
-  const t = useTranslations('dashboard.cards');
+  const t = useTranslations("dashboard.cards");
   const router = useRouter();
   const { data } = useMyAccounts();
   const { data: balanceData, isLoading: isBalanceLoading } = useBalance();
@@ -29,31 +29,31 @@ export const DashboardSummaryCards = () => {
 
   const accounts =
     (data?.data as { items?: BrokerAccountDetailResponse[] } | undefined)?.items ?? [];
-  const approvedCount = accounts.filter((account) => account.status === 'approved').length;
+  const approvedCount = accounts.filter((account) => account.status === "approved").length;
 
   const balance = balanceData?.data as WithdrawalBalanceResponse | undefined;
   const referralStats = referralData?.data as ReferralStatsResponse | undefined;
 
   const summaryCards = [
     {
-      title: t('accounts'),
+      title: t("accounts"),
       isLoading: false,
       value: approvedCount,
-      actionLabel: t('manageAccounts'),
+      actionLabel: t("manageAccounts"),
       href: Routes.Accounts,
     },
     {
-      title: t('balance'),
+      title: t("balance"),
       isLoading: isBalanceLoading,
       value: `${formatAmount(balance?.available)} USDT`,
-      actionLabel: t('withdrawFunds'),
+      actionLabel: t("withdrawFunds"),
       href: Routes.Withdrawal,
     },
     {
-      title: t('referralCode'),
+      title: t("referralCode"),
       isLoading: isReferralLoading,
-      value: referralStats?.referral_code ?? '—',
-      actionLabel: t('viewReferrals'),
+      value: referralStats?.referral_code ?? "—",
+      actionLabel: t("viewReferrals"),
       href: Routes.Referrals,
     },
   ] as const;

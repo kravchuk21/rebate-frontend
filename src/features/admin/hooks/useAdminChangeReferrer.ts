@@ -1,9 +1,9 @@
-import '@/shared/api/instance';
+import "@/shared/api/instance";
 
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from "@tanstack/react-query";
 
-import { getAdminUsersQueryKey } from '@/shared/api/generated/hooks/admin/useGetAdminUsersQuery.gen';
-import { usePutAdminUserByUserIDReferrerMutation } from '@/shared/api/generated/hooks/admin/usePutAdminUserByUserIDReferrerMutation.gen';
+import { getAdminUsersQueryKey } from "@/shared/api/generated/hooks/admin/useGetAdminUsersQuery.gen";
+import { usePutAdminUserByUserIDReferrerMutation } from "@/shared/api/generated/hooks/admin/usePutAdminUserByUserIDReferrerMutation.gen";
 
 export const useAdminChangeReferrer = () => {
   const queryClient = useQueryClient();

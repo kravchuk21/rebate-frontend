@@ -1,8 +1,8 @@
-import { cookies } from 'next/headers';
+import { cookies } from "next/headers";
 
 export const COOKIE_NAMES = {
-  accessToken: 'access_token',
-  refreshToken: 'refresh_token',
+  accessToken: "access_token",
+  refreshToken: "refresh_token",
 } as const;
 
 export const getAccessToken = async (): Promise<string | undefined> => {

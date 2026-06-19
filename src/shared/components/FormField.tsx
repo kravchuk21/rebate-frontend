@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { FieldError, Input, Label, TextField } from '@heroui/react';
-import type { ComponentProps } from 'react';
-import { type Control, Controller, type FieldPath, type FieldValues } from 'react-hook-form';
+import { FieldError, Input, Label, TextField } from "@heroui/react";
+import type { ComponentProps } from "react";
+import { type Control, Controller, type FieldPath, type FieldValues } from "react-hook-form";
 
 interface FormFieldProps<T extends FieldValues> {
   control: Control<T>;
@@ -12,7 +12,7 @@ interface FormFieldProps<T extends FieldValues> {
   type?: string;
   error?: string;
   isRequired?: boolean;
-  variant?: 'primary' | 'secondary';
+  variant?: "primary" | "secondary";
   inputProps?: ComponentProps<typeof Input>;
 }
 
@@ -21,10 +21,10 @@ export function FormField<T extends FieldValues>({
   name,
   label,
   placeholder,
-  type = 'text',
+  type = "text",
   error,
   isRequired,
-  variant = 'secondary',
+  variant = "secondary",
   inputProps,
 }: FormFieldProps<T>) {
   return (

@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { Button } from '@heroui/react';
-import { useTranslations } from 'next-intl';
+import { Button } from "@heroui/react";
+import { useTranslations } from "next-intl";
 
-import { LocaleSwitcher } from '@/shared/components/LocaleSwitcher';
-import { useLogout } from '@/features/auth/hooks/useLogout';
+import { LocaleSwitcher } from "@/shared/components/LocaleSwitcher";
+import { useLogout } from "@/features/auth/hooks/useLogout";
 
 export const AdminHeader = () => {
-  const t = useTranslations('common');
+  const t = useTranslations("common");
   const logout = useLogout();
 
   return (
@@ -21,7 +21,7 @@ export const AdminHeader = () => {
           onPress={() => logout.mutate()}
           isDisabled={logout.isPending}
         >
-          {t('logout')}
+          {t("logout")}
         </Button>
       </div>
     </header>

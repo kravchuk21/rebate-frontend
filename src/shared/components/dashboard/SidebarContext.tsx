@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   createContext,
@@ -8,8 +8,8 @@ import {
   useMemo,
   useRef,
   useState,
-} from 'react';
-import { useOverlayState, type UseOverlayStateReturn } from '@heroui/react';
+} from "react";
+import { useOverlayState, type UseOverlayStateReturn } from "@heroui/react";
 
 interface SidebarContextValue {
   drawer: UseOverlayStateReturn;
@@ -19,10 +19,10 @@ interface SidebarContextValue {
 
 const SidebarContext = createContext<SidebarContextValue | null>(null);
 
-const DESKTOP_QUERY = '(min-width: 768px)';
+const DESKTOP_QUERY = "(min-width: 768px)";
 
 const getInitialIsDesktop = () =>
-  typeof window !== 'undefined' && window.matchMedia(DESKTOP_QUERY).matches;
+  typeof window !== "undefined" && window.matchMedia(DESKTOP_QUERY).matches;
 
 export const SidebarProvider = ({ children }: { children: React.ReactNode }) => {
   const drawer = useOverlayState();
@@ -50,8 +50,8 @@ export const SidebarProvider = ({ children }: { children: React.ReactNode }) => 
       }
     };
 
-    mediaQuery.addEventListener('change', onChange);
-    return () => mediaQuery.removeEventListener('change', onChange);
+    mediaQuery.addEventListener("change", onChange);
+    return () => mediaQuery.removeEventListener("change", onChange);
   }, []);
 
   const toggle = useCallback(() => {
@@ -74,7 +74,7 @@ export const useSidebar = () => {
   const ctx = useContext(SidebarContext);
 
   if (!ctx) {
-    throw new Error('useSidebar must be used within a SidebarProvider');
+    throw new Error("useSidebar must be used within a SidebarProvider");
   }
 
   return ctx;

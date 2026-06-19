@@ -1,9 +1,9 @@
-import '@/shared/api/instance';
+import "@/shared/api/instance";
 
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from "@tanstack/react-query";
 
-import { getAdminUsersQueryKey } from '@/shared/api/generated/hooks/admin/useGetAdminUsersQuery.gen';
-import { usePostAdminUserByUserIDSuspendMutation } from '@/shared/api/generated/hooks/admin/usePostAdminUserByUserIDSuspendMutation.gen';
+import { getAdminUsersQueryKey } from "@/shared/api/generated/hooks/admin/useGetAdminUsersQuery.gen";
+import { usePostAdminUserByUserIDSuspendMutation } from "@/shared/api/generated/hooks/admin/usePostAdminUserByUserIDSuspendMutation.gen";
 
 export const useAdminSuspendUser = () => {
   const queryClient = useQueryClient();

@@ -1,13 +1,13 @@
-import type { ResponseError } from '@siberiacancode/fetches';
+import type { ResponseError } from "@siberiacancode/fetches";
 
-import type { ErrorResponse } from '@/shared/api/generated/types.gen';
+import type { ErrorResponse } from "@/shared/api/generated/types.gen";
 
 type ApiErrorResponse = ErrorResponse;
 
 export const getErrorMessage = (error: unknown): string | undefined => {
-  if (error && typeof error === 'object' && 'error' in error) {
+  if (error && typeof error === "object" && "error" in error) {
     const message = (error as ApiErrorResponse).error;
-    if (typeof message === 'string') return message;
+    if (typeof message === "string") return message;
   }
 
   const responseError = error as ResponseError | undefined;

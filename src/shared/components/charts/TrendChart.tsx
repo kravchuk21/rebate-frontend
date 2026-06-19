@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useSyncExternalStore } from 'react';
+import { useSyncExternalStore } from "react";
 import {
   BarElement,
   CategoryScale,
@@ -11,19 +11,27 @@ import {
   LineElement,
   PointElement,
   Tooltip,
-} from 'chart.js';
-import { Bar, Line } from 'react-chartjs-2';
+} from "chart.js";
+import { Bar, Line } from "react-chartjs-2";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, Filler, Tooltip);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  Filler,
+  Tooltip,
+);
 
-const DEFAULT_LABELS = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
+const DEFAULT_LABELS = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, "0"));
 
 const AXIS_FONT = {
   size: 11,
   family: 'system-ui, -apple-system, "Segoe UI", sans-serif',
 };
 
-export type TrendChartType = 'bar' | 'line';
+export type TrendChartType = "bar" | "line";
 
 interface TrendChartProps {
   data: number[];
@@ -47,14 +55,14 @@ interface ChartColors {
 }
 
 const FALLBACK_COLORS: ChartColors = {
-  accent: '#3b82f6',
-  accentHover: '#60a5fa',
-  accentSoft: 'rgba(59, 130, 246, 0.15)',
-  muted: '#9ca3af',
-  border: 'rgba(255, 255, 255, 0.08)',
-  overlay: '#1f1f1f',
-  overlayForeground: '#fff',
-  surface: '#fff',
+  accent: "#3b82f6",
+  accentHover: "#60a5fa",
+  accentSoft: "rgba(59, 130, 246, 0.15)",
+  muted: "#9ca3af",
+  border: "rgba(255, 255, 255, 0.08)",
+  overlay: "#1f1f1f",
+  overlayForeground: "#fff",
+  surface: "#fff",
   barRadius: 10,
   tooltipRadius: 6,
 };
@@ -63,24 +71,24 @@ const FALLBACK_COLORS: ChartColors = {
 // canvas rendering always matches the active theme.
 function readChartColors(): ChartColors {
   const probes = {
-    accent: 'bg-accent',
-    accentHover: 'bg-accent-hover',
-    accentSoft: 'bg-accent-soft',
-    muted: 'text-muted',
-    border: 'border border-border',
-    overlay: 'bg-overlay',
-    overlayForeground: 'text-overlay-foreground',
-    surface: 'bg-surface',
-    barRadius: 'rounded-lg',
-    tooltipRadius: 'rounded-xl',
+    accent: "bg-accent",
+    accentHover: "bg-accent-hover",
+    accentSoft: "bg-accent-soft",
+    muted: "text-muted",
+    border: "border border-border",
+    overlay: "bg-overlay",
+    overlayForeground: "text-overlay-foreground",
+    surface: "bg-surface",
+    barRadius: "rounded-lg",
+    tooltipRadius: "rounded-xl",
   } as const;
 
-  const container = document.createElement('div');
-  container.style.cssText = 'position:fixed;top:-9999px;left:-9999px;visibility:hidden;';
+  const container = document.createElement("div");
+  container.style.cssText = "position:fixed;top:-9999px;left:-9999px;visibility:hidden;";
 
   const elements = Object.fromEntries(
     Object.entries(probes).map(([key, className]) => {
-      const el = document.createElement('div');
+      const el = document.createElement("div");
       el.className = className;
       container.appendChild(el);
       return [key, el];
@@ -98,9 +106,11 @@ function readChartColors(): ChartColors {
     overlay: getComputedStyle(elements.overlay).backgroundColor,
     overlayForeground: getComputedStyle(elements.overlayForeground).color,
     surface: getComputedStyle(elements.surface).backgroundColor,
-    barRadius: parseFloat(getComputedStyle(elements.barRadius).borderRadius) || FALLBACK_COLORS.barRadius,
+    barRadius:
+      parseFloat(getComputedStyle(elements.barRadius).borderRadius) || FALLBACK_COLORS.barRadius,
     tooltipRadius:
-      parseFloat(getComputedStyle(elements.tooltipRadius).borderRadius) || FALLBACK_COLORS.tooltipRadius,
+      parseFloat(getComputedStyle(elements.tooltipRadius).borderRadius) ||
+      FALLBACK_COLORS.tooltipRadius,
   };
 
   document.body.removeChild(container);
@@ -126,7 +136,10 @@ function subscribe(onStoreChange: () => void) {
     cachedColors = null;
     onStoreChange();
   });
-  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'class'] });
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme", "class"],
+  });
 
   return () => observer.disconnect();
 }
@@ -140,7 +153,7 @@ export const TrendChart = ({
   labels = DEFAULT_LABELS,
   max = 60,
   className,
-  type = 'line',
+  type = "line",
 }: TrendChartProps) => {
   const colors = useChartColors();
 
@@ -173,8 +186,8 @@ export const TrendChart = ({
   };
 
   return (
-    <div className={className ?? 'h-80 w-full p-2'}>
-      {type === 'line' ? (
+    <div className={className ?? "h-80 w-full p-2"}>
+      {type === "line" ? (
         <Line
           data={{
             labels,
@@ -191,12 +204,19 @@ export const TrendChart = ({
                 pointHoverRadius: 5,
                 borderWidth: 2,
                 tension: 0.4,
-                cubicInterpolationMode: 'monotone',
+                cubicInterpolationMode: "monotone",
                 fill: true,
               },
             ],
           }}
-          options={{ responsive: true, maintainAspectRatio: false, plugins, scales } satisfies ChartOptions<'line'>}
+          options={
+            {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins,
+              scales,
+            } satisfies ChartOptions<"line">
+          }
         />
       ) : (
         <Bar
@@ -219,7 +239,14 @@ export const TrendChart = ({
               },
             ],
           }}
-          options={{ responsive: true, maintainAspectRatio: false, plugins, scales } satisfies ChartOptions<'bar'>}
+          options={
+            {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins,
+              scales,
+            } satisfies ChartOptions<"bar">
+          }
         />
       )}
     </div>

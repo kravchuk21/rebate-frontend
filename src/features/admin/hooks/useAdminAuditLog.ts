@@ -1,6 +1,6 @@
-import '@/shared/api/instance';
+import "@/shared/api/instance";
 
-import { useGetAdminAuditLogQuery } from '@/shared/api/generated/hooks/admin/useGetAdminAuditLogQuery.gen';
+import { useGetAdminAuditLogQuery } from "@/shared/api/generated/hooks/admin/useGetAdminAuditLogQuery.gen";
 
 export const useAdminAuditLog = (params?: {
   action?: string;

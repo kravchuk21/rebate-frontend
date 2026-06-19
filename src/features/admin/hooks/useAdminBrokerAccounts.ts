@@ -1,6 +1,6 @@
-import '@/shared/api/instance';
+import "@/shared/api/instance";
 
-import { useGetBrokerAdminAccountsQuery } from '@/shared/api/generated/hooks/admin/useGetBrokerAdminAccountsQuery.gen';
+import { useGetBrokerAdminAccountsQuery } from "@/shared/api/generated/hooks/admin/useGetBrokerAdminAccountsQuery.gen";
 
 export const useAdminBrokerAccounts = (params?: {
   status?: string;

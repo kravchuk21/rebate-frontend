@@ -1,4 +1,4 @@
-import { Pagination, Table } from '@heroui/react';
+import { Pagination, Table } from "@heroui/react";
 
 interface TablePaginationProps {
   offset: number;
@@ -7,7 +7,12 @@ interface TablePaginationProps {
   onOffsetChange: (offset: number) => void;
 }
 
-export const TablePagination = ({ offset, limit, totalCount, onOffsetChange }: TablePaginationProps) => {
+export const TablePagination = ({
+  offset,
+  limit,
+  totalCount,
+  onOffsetChange,
+}: TablePaginationProps) => {
   const pageCount = Math.ceil(totalCount / limit);
   const pageIndex = Math.floor(offset / limit);
 

@@ -1,6 +1,6 @@
-import '@/shared/api/instance';
+import "@/shared/api/instance";
 
-import { useGetAdminWithdrawalsQuery } from '@/shared/api/generated/hooks/admin/useGetAdminWithdrawalsQuery.gen';
+import { useGetAdminWithdrawalsQuery } from "@/shared/api/generated/hooks/admin/useGetAdminWithdrawalsQuery.gen";
 
 export const useAdminWithdrawals = (params?: {
   status?: string;

@@ -1,28 +1,28 @@
-'use client';
+"use client";
 
-import '@/shared/api/instance';
+import "@/shared/api/instance";
 
-import { useEffect, useMemo, useState } from 'react';
-import { AlertDialog, Alert, Button, toast } from '@heroui/react';
-import { useLocale, useTranslations } from 'next-intl';
-import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { useEffect, useMemo, useState } from "react";
+import { AlertDialog, Alert, Button, toast } from "@heroui/react";
+import { useLocale, useTranslations } from "next-intl";
+import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
-import { getErrorMessage } from '@/features/auth/lib/getErrorMessage';
-import type { WithdrawalResponse } from '@/shared/api/generated/types.gen';
-import { DataTable } from '@/shared/components/DataTable';
+import { getErrorMessage } from "@/features/auth/lib/getErrorMessage";
+import type { WithdrawalResponse } from "@/shared/api/generated/types.gen";
+import { DataTable } from "@/shared/components/DataTable";
 
-import { useCancelWithdrawal } from '../hooks/useCancelWithdrawal';
-import { useWithdrawals } from '../hooks/useWithdrawals';
-import { formatAmount } from '../lib/formatAmount';
-import { truncateAddress } from '../lib/validateAddress';
-import { WithdrawalStatusChip } from './WithdrawalStatusChip';
+import { useCancelWithdrawal } from "../hooks/useCancelWithdrawal";
+import { useWithdrawals } from "../hooks/useWithdrawals";
+import { formatAmount } from "../lib/formatAmount";
+import { truncateAddress } from "../lib/validateAddress";
+import { WithdrawalStatusChip } from "./WithdrawalStatusChip";
 
 const LIMIT = 20;
 
 const columnHelper = createColumnHelper<WithdrawalResponse>();
 
 export const WithdrawalsTable = () => {
-  const t = useTranslations('withdrawal.history');
+  const t = useTranslations("withdrawal.history");
   const locale = useLocale();
   const [offset, setOffset] = useState(0);
   const { data, isError } = useWithdrawals(LIMIT, offset);
@@ -30,7 +30,7 @@ export const WithdrawalsTable = () => {
   const [cancelTarget, setCancelTarget] = useState<string | null>(null);
 
   useEffect(() => {
-    if (isError) toast.danger(t('errors.loadFailed'));
+    if (isError) toast.danger(t("errors.loadFailed"));
   }, [isError, t]);
 
   const responseData = data?.data as
@@ -40,7 +40,7 @@ export const WithdrawalsTable = () => {
   const totalCount = responseData?.total_count ?? 0;
 
   const dateFormatter = useMemo(
-    () => new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }),
+    () => new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short" }),
     [locale],
   );
 
@@ -56,61 +56,61 @@ export const WithdrawalsTable = () => {
   const columns = useMemo(
     () => [
       columnHelper.display({
-        id: 'method',
-        header: t('columns.method'),
+        id: "method",
+        header: t("columns.method"),
         cell: ({ row }) => {
           const { payout_method } = row.original;
-          return payout_method ? `${payout_method.name} (${payout_method.network})` : '—';
+          return payout_method ? `${payout_method.name} (${payout_method.network})` : "—";
         },
       }),
-      columnHelper.accessor('amount_requested', {
-        header: t('columns.amount'),
+      columnHelper.accessor("amount_requested", {
+        header: t("columns.amount"),
         cell: (info) => `${formatAmount(info.getValue())} USDT`,
       }),
-      columnHelper.accessor('network_fee', {
-        header: t('columns.fee'),
+      columnHelper.accessor("network_fee", {
+        header: t("columns.fee"),
         cell: (info) => {
           const v = info.getValue();
-          return v != null ? `${formatAmount(v)} USDT` : '—';
+          return v != null ? `${formatAmount(v)} USDT` : "—";
         },
       }),
-      columnHelper.accessor('amount_to_send', {
-        header: t('columns.youReceive'),
+      columnHelper.accessor("amount_to_send", {
+        header: t("columns.youReceive"),
         cell: (info) => {
           const v = info.getValue();
-          return v != null ? `${formatAmount(v)} USDT` : '—';
+          return v != null ? `${formatAmount(v)} USDT` : "—";
         },
       }),
-      columnHelper.accessor('status', {
-        header: t('columns.status'),
-        cell: (info) => <WithdrawalStatusChip status={info.getValue() ?? ''} />,
+      columnHelper.accessor("status", {
+        header: t("columns.status"),
+        cell: (info) => <WithdrawalStatusChip status={info.getValue() ?? ""} />,
       }),
-      columnHelper.accessor('requested_at', {
-        header: t('columns.date'),
+      columnHelper.accessor("requested_at", {
+        header: t("columns.date"),
         cell: (info) => {
           const v = info.getValue();
-          return v ? dateFormatter.format(new Date(v)) : '—';
+          return v ? dateFormatter.format(new Date(v)) : "—";
         },
       }),
-      columnHelper.accessor('tx_hash', {
-        header: t('columns.txHash'),
+      columnHelper.accessor("tx_hash", {
+        header: t("columns.txHash"),
         cell: (info) => {
           const v = info.getValue();
-          return v ? truncateAddress(v) : '—';
+          return v ? truncateAddress(v) : "—";
         },
       }),
       columnHelper.display({
-        id: 'cancel',
-        header: t('cancel'),
+        id: "cancel",
+        header: t("cancel"),
         cell: ({ row }) => {
           const withdrawal = row.original;
-          return withdrawal.status === 'pending' && withdrawal.id ? (
+          return withdrawal.status === "pending" && withdrawal.id ? (
             <Button
               variant="tertiary"
               size="sm"
               onPress={() => setCancelTarget(withdrawal.id ?? null)}
             >
-              {t('cancel')}
+              {t("cancel")}
             </Button>
           ) : null;
         },
@@ -133,25 +133,28 @@ export const WithdrawalsTable = () => {
     <>
       <DataTable
         table={table}
-        ariaLabel={t('title')}
-        emptyLabel={t('empty')}
+        ariaLabel={t("title")}
+        emptyLabel={t("empty")}
         rowHeaderColumnId="method"
         pagination={{ offset, limit: LIMIT, totalCount, onOffsetChange: setOffset }}
       />
 
-      <AlertDialog isOpen={cancelTarget !== null} onOpenChange={(open) => !open && setCancelTarget(null)}>
+      <AlertDialog
+        isOpen={cancelTarget !== null}
+        onOpenChange={(open) => !open && setCancelTarget(null)}
+      >
         <AlertDialog.Backdrop>
           <AlertDialog.Container>
             <AlertDialog.Dialog>
               <AlertDialog.Header>
-                <AlertDialog.Heading>{t('cancelConfirm')}</AlertDialog.Heading>
+                <AlertDialog.Heading>{t("cancelConfirm")}</AlertDialog.Heading>
               </AlertDialog.Header>
               <AlertDialog.Body className="flex flex-col gap-3">
                 {cancelWithdrawal.isError && (
                   <Alert status="danger">
                     <Alert.Content>
                       <Alert.Description>
-                        {getErrorMessage(cancelWithdrawal.error) ?? t('errors.cancelFailed')}
+                        {getErrorMessage(cancelWithdrawal.error) ?? t("errors.cancelFailed")}
                       </Alert.Description>
                     </Alert.Content>
                   </Alert>
@@ -159,14 +162,14 @@ export const WithdrawalsTable = () => {
               </AlertDialog.Body>
               <AlertDialog.Footer>
                 <Button variant="tertiary" slot="close">
-                  {t('cancel')}
+                  {t("cancel")}
                 </Button>
                 <Button
                   variant="primary"
                   onPress={() => cancelTarget && handleCancel(cancelTarget)}
                   isDisabled={cancelWithdrawal.isPending}
                 >
-                  {t('cancel')}
+                  {t("cancel")}
                 </Button>
               </AlertDialog.Footer>
             </AlertDialog.Dialog>

@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { Switch } from '@heroui/react';
-import { useTranslations } from 'next-intl';
+import { Switch } from "@heroui/react";
+import { useTranslations } from "next-intl";
 
-import type { TrendChartType } from '@/shared/components/charts';
+import type { TrendChartType } from "@/shared/components/charts";
 
 interface RebateChartTypeSwitchProps {
   value: TrendChartType;
@@ -11,15 +11,15 @@ interface RebateChartTypeSwitchProps {
 }
 
 export const RebateChartTypeSwitch = ({ value, onChange }: RebateChartTypeSwitchProps) => {
-  const t = useTranslations('rebate.stats');
+  const t = useTranslations("rebate.stats");
 
   return (
     <Switch
-      isSelected={value === 'bar'}
-      onChange={(isSelected) => onChange(isSelected ? 'bar' : 'line')}
+      isSelected={value === "bar"}
+      onChange={(isSelected) => onChange(isSelected ? "bar" : "line")}
     >
       <Switch.Content>
-        {t(value === 'bar' ? 'chartType.bar' : 'chartType.line')}
+        {t(value === "bar" ? "chartType.bar" : "chartType.line")}
         <Switch.Control>
           <Switch.Thumb />
         </Switch.Control>

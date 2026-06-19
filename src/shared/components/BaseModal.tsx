@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { Modal } from '@heroui/react';
-import type { ReactNode } from 'react';
+import { Modal } from "@heroui/react";
+import type { ReactNode } from "react";
 
 interface BaseModalProps {
   isOpen: boolean;
@@ -13,13 +13,13 @@ interface BaseModalProps {
 export const BaseModal = ({
   isOpen,
   onOpenChange,
-  dialogClassName = 'sm:max-w-[420px]',
+  dialogClassName = "sm:max-w-[420px]",
   children,
 }: BaseModalProps) => {
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <Modal.Backdrop>
-        <Modal.Container scroll='outside'>
+        <Modal.Container scroll="outside">
           <Modal.Dialog className={dialogClassName}>
             <Modal.CloseTrigger />
             {children}

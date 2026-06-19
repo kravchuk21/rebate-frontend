@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { memo, useMemo, type ComponentType, type SVGProps } from 'react';
-import { Chip } from '@heroui/react';
-import { useTranslations } from 'next-intl';
-import { useRouter, usePathname } from '@/i18n/navigation';
-import { SidebarButton } from './SidebarButton';
+import { memo, useMemo, type ComponentType, type SVGProps } from "react";
+import { Chip } from "@heroui/react";
+import { useTranslations } from "next-intl";
+import { useRouter, usePathname } from "@/i18n/navigation";
+import { SidebarButton } from "./SidebarButton";
 
 export interface SidebarNavItem {
   href: string;
   label: string;
   icon: ComponentType<SVGProps<SVGSVGElement>>;
-  tag?: 'new';
+  tag?: "new";
 }
 
 interface SidebarNavProps {
@@ -19,8 +19,12 @@ interface SidebarNavProps {
   onNavigate?: () => void;
 }
 
-export const SidebarNav = memo(function SidebarNav({ items, ariaLabel, onNavigate }: SidebarNavProps) {
-  const t = useTranslations('common');
+export const SidebarNav = memo(function SidebarNav({
+  items,
+  ariaLabel,
+  onNavigate,
+}: SidebarNavProps) {
+  const t = useTranslations("common");
   const pathname = usePathname();
   const router = useRouter();
 
@@ -35,7 +39,7 @@ export const SidebarNav = memo(function SidebarNav({ items, ariaLabel, onNavigat
   );
 
   return (
-    <nav aria-label={ariaLabel} className="w-full flex flex-col gap-1">
+    <nav aria-label={ariaLabel} className="flex w-full flex-col gap-1">
       {items.map((item) => {
         const Icon = item.icon;
         const isActive = item.href === activeHref;
@@ -43,7 +47,7 @@ export const SidebarNav = memo(function SidebarNav({ items, ariaLabel, onNavigat
         return (
           <SidebarButton
             key={item.href}
-            variant={isActive ? 'tertiary' : 'ghost'}
+            variant={isActive ? "tertiary" : "ghost"}
             onPress={() => {
               if (pathname !== item.href) {
                 router.push(item.href);
@@ -54,9 +58,9 @@ export const SidebarNav = memo(function SidebarNav({ items, ariaLabel, onNavigat
           >
             <Icon />
             <span className="flex-1 text-start">{item.label}</span>
-            {item.tag === 'new' && (
+            {item.tag === "new" && (
               <Chip size="sm" color="success" variant="soft">
-                {t('tagNew')}
+                {t("tagNew")}
               </Chip>
             )}
           </SidebarButton>

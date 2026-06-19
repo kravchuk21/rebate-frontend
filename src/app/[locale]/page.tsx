@@ -1,8 +1,8 @@
-import { Suspense } from 'react';
-import { redirect } from '@/i18n/navigation';
-import { getAccessToken } from '@/shared/lib/cookies';
-import { Routes } from '@/shared/lib/routes';
-import { LandingClient } from '@/features/landing/components/LandingClient';
+import { Suspense } from "react";
+import { redirect } from "@/i18n/navigation";
+import { getAccessToken } from "@/shared/lib/cookies";
+import { Routes } from "@/shared/lib/routes";
+import { LandingClient } from "@/features/landing/components/LandingClient";
 
 export default async function HomePage({
   params,

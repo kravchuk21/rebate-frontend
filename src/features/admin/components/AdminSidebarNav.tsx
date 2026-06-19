@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { useTranslations } from 'next-intl';
-import { Tab, TabIndicator, TabList, TabListContainer, TabsRoot } from '@heroui/react';
-import { useRouter, usePathname } from '@/i18n/navigation';
-import { Routes } from '@/shared/lib/routes';
+import { useTranslations } from "next-intl";
+import { Tab, TabIndicator, TabList, TabListContainer, TabsRoot } from "@heroui/react";
+import { useRouter, usePathname } from "@/i18n/navigation";
+import { Routes } from "@/shared/lib/routes";
 
 const adminNavItems = [
-  { href: Routes.Admin, labelKey: 'overview' },
-  { href: Routes.AdminUsers, labelKey: 'users' },
-  { href: Routes.AdminBrokerAccounts, labelKey: 'brokerAccounts' },
-  { href: Routes.AdminWithdrawals, labelKey: 'withdrawals' },
-  { href: Routes.AdminRebate, labelKey: 'rebate' },
-  { href: Routes.AdminConfig, labelKey: 'config' },
-  { href: Routes.AdminAuditLog, labelKey: 'auditLog' },
+  { href: Routes.Admin, labelKey: "overview" },
+  { href: Routes.AdminUsers, labelKey: "users" },
+  { href: Routes.AdminBrokerAccounts, labelKey: "brokerAccounts" },
+  { href: Routes.AdminWithdrawals, labelKey: "withdrawals" },
+  { href: Routes.AdminRebate, labelKey: "rebate" },
+  { href: Routes.AdminConfig, labelKey: "config" },
+  { href: Routes.AdminAuditLog, labelKey: "auditLog" },
 ] as const;
 
 interface AdminSidebarNavProps {
@@ -20,7 +20,7 @@ interface AdminSidebarNavProps {
 }
 
 export const AdminSidebarNav = ({ onNavigate }: AdminSidebarNavProps) => {
-  const t = useTranslations('admin.nav');
+  const t = useTranslations("admin.nav");
   const pathname = usePathname();
   const router = useRouter();
 
