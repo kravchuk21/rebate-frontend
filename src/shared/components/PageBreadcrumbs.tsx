@@ -9,7 +9,7 @@ export interface PageBreadcrumbItem {
 
 export function PageBreadcrumbs({ items }: { items: PageBreadcrumbItem[] }) {
   return (
-    <Breadcrumbs>
+    <Breadcrumbs className="overflow-x-auto whitespace-nowrap">
       {items.map((item) =>
         item.href ? (
           <Breadcrumbs.Item key={item.label} href={item.href}>
