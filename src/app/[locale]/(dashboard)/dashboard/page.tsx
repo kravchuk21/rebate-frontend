@@ -5,6 +5,7 @@ import { DashboardSummaryCards } from "@/features/broker/components/DashboardSum
 import { ReferralLinkCard } from "@/features/referral/components/ReferralLinkCard";
 import { RebateStatsWidget } from "@/features/rebate/components/RebateStatsWidget";
 import { DashboardLayout, DashboardItem } from "@/shared/components/layout";
+import { ReferralStatsWidget } from "@/features/referral/components/ReferralStatsWidget";
 
 export default async function DashboardPage() {
   const t = await getTranslations("dashboard");
@@ -21,6 +22,9 @@ export default async function DashboardPage() {
         </DashboardItem>
         <DashboardItem span={6}>
           <RebateStatsWidget />
+        </DashboardItem>
+        <DashboardItem span={6}>
+          <ReferralStatsWidget />
         </DashboardItem>
       </DashboardLayout>
     </>

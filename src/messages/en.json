@@ -555,6 +555,29 @@
       "totalEarned": "Total Earned",
       "pendingEarned": "Pending"
     },
+    "earnings": {
+      "title": "Referral Earnings",
+      "rangeLabel": "Range",
+      "viewAll": "View all referrals",
+      "ranges": {
+        "last_7_days": "Last 7 days",
+        "last_30_days": "Last month"
+      },
+      "summary": {
+        "allTime": "All time",
+        "last7Days": "Last 7 days",
+        "today": "Today",
+        "currentMonth": "Current month",
+        "lastMonth": "Last month"
+      },
+      "chartType": {
+        "bar": "Bar mode",
+        "line": "Line mode"
+      },
+      "errors": {
+        "loadFailed": "Failed to load referral earnings"
+      }
+    },
     "link": {
       "title": "Your Referral Link",
       "description": "Share this link to invite others. You earn a percentage of their trading rebates.",

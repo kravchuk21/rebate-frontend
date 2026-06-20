@@ -3673,6 +3673,55 @@
                 }
             }
         },
+        "/referrals/earnings-stats": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Returns today, last 7 days, current month, last month, all-time referral earnings totals, and daily breakdowns for the last 7 and 30 days (chart data).",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "referral"
+                ],
+                "summary": "Get my referral earnings statistics",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/SuccessResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/ReferralEarningsStatsResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/referrals/stats": {
             "get": {
                 "security": [
@@ -4555,6 +4604,49 @@
                 },
                 "total_referrals": {
                     "type": "integer"
+                }
+            }
+        },
+        "ReferralDailyStat": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "number"
+                },
+                "date": {
+                    "type": "string"
+                }
+            }
+        },
+        "ReferralEarningsStatsResponse": {
+            "type": "object",
+            "properties": {
+                "all_time": {
+                    "type": "number"
+                },
+                "current_month": {
+                    "type": "number"
+                },
+                "last_30_days_breakdown": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ReferralDailyStat"
+                    }
+                },
+                "last_7_days": {
+                    "type": "number"
+                },
+                "last_7_days_breakdown": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ReferralDailyStat"
+                    }
+                },
+                "last_month": {
+                    "type": "number"
+                },
+                "today": {
+                    "type": "number"
                 }
             }
         },

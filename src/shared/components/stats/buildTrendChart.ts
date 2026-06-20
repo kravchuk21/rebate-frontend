@@ -1,8 +1,4 @@
-import type { RebateStatsResponse } from "@/shared/api/generated/types.gen";
-
-export type RangeMode = "last_7_days" | "last_30_days";
-
-export const RANGE_MODES: RangeMode[] = ["last_7_days", "last_30_days"];
+import type { PeriodStatsResponse, RangeMode } from "./types";
 
 export interface TrendChartData {
   labels: string[];
@@ -10,9 +6,9 @@ export interface TrendChartData {
   max: number;
 }
 
-// Derive TrendChart-ready labels/data/max from rebate stats for the given range.
+// Derive TrendChart-ready labels/data/max from period stats for the given range.
 export const buildTrendChart = (
-  stats: RebateStatsResponse | undefined,
+  stats: PeriodStatsResponse | undefined,
   range: RangeMode,
   locale: string,
 ): TrendChartData => {

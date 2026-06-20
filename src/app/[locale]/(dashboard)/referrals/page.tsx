@@ -3,6 +3,7 @@ import { PageHeader } from "@/shared/components/dashboard/PageHeader";
 import { ReferralLinkCard } from "@/features/referral/components/ReferralLinkCard";
 import { ReferralsTable } from "@/features/referral/components/ReferralsTable";
 import { ReferralStatsCard } from "@/features/referral/components/ReferralStatsCard";
+import { ReferralStatsWidget } from "@/features/referral/components/ReferralStatsWidget";
 import { DashboardLayout, DashboardItem } from "@/shared/components/layout";
 
 export default async function ReferralsPage() {
@@ -18,6 +19,10 @@ export default async function ReferralsPage() {
 
         <DashboardItem span={6}>
           <ReferralLinkCard />
+        </DashboardItem>
+
+        <DashboardItem span={12}>
+          <ReferralStatsWidget fullMode={false} />
         </DashboardItem>
 
         <DashboardItem span={12}>

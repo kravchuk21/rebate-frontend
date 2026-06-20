@@ -238,6 +238,21 @@ export type ReferralAdminViewResponse = {
     total_referrals?: number;
 };
 
+export type ReferralDailyStat = {
+    amount?: number;
+    date?: string;
+};
+
+export type ReferralEarningsStatsResponse = {
+    all_time?: number;
+    current_month?: number;
+    last_30_days_breakdown?: Array<ReferralDailyStat>;
+    last_7_days?: number;
+    last_7_days_breakdown?: Array<ReferralDailyStat>;
+    last_month?: number;
+    today?: number;
+};
+
 export type ReferralEntryResponse = {
     email?: string;
     joined_at?: string;
@@ -2683,6 +2698,37 @@ export type GetReferralsResponses = {
 };
 
 export type GetReferralsResponse = GetReferralsResponses[keyof GetReferralsResponses];
+
+export type GetReferralsEarningsStatsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/referrals/earnings-stats';
+};
+
+export type GetReferralsEarningsStatsErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal Server Error
+     */
+    500: ErrorResponse;
+};
+
+export type GetReferralsEarningsStatsError = GetReferralsEarningsStatsErrors[keyof GetReferralsEarningsStatsErrors];
+
+export type GetReferralsEarningsStatsResponses = {
+    /**
+     * OK
+     */
+    200: SuccessResponse & {
+        data?: ReferralEarningsStatsResponse;
+    };
+};
+
+export type GetReferralsEarningsStatsResponse = GetReferralsEarningsStatsResponses[keyof GetReferralsEarningsStatsResponses];
 
 export type GetReferralsStatsData = {
     body?: never;
