@@ -59,7 +59,7 @@ export const SidebarNav = memo(function SidebarNav({
             <Icon />
             <span className="flex-1 text-start">{item.label}</span>
             {item.tag === "new" && (
-              <Chip size="sm" color="success" variant="soft">
+              <Chip color="success" variant="soft">
                 {t("tagNew")}
               </Chip>
             )}

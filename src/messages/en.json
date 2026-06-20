@@ -553,7 +553,14 @@
       "totalReferrals": "Total Referrals",
       "activeReferrals": "Active Referrals",
       "totalEarned": "Total Earned",
-      "pendingEarned": "Pending"
+      "pendingEarned": "Pending",
+      "table": {
+        "metric": "Metric",
+        "value": "Value"
+      },
+      "errors": {
+        "loadFailed": "Failed to load referral stats"
+      }
     },
     "earnings": {
       "title": "Referral Earnings",

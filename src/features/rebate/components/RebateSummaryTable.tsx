@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
-import { Skeleton, Table, toast } from "@heroui/react";
+import { Card, Skeleton, Typography } from "@heroui/react";
 import { useTranslations } from "next-intl";
 
 import type { RebateStatsResponse } from "@/shared/api/generated/types.gen";
 import { formatAmount } from "@/features/withdrawal/lib/formatAmount";
 
 import { useRebateStats } from "../hooks/useRebateStats";
+import { WidgetCard } from "@/shared/components/WidgetCard";
 
 type SummaryField = "all_time" | "last_7_days" | "today" | "current_month" | "last_month";
 
@@ -23,42 +23,37 @@ export const RebateSummaryTable = () => {
   const t = useTranslations("rebate.stats");
   const { data, isLoading, isError } = useRebateStats();
 
-  useEffect(() => {
-    if (isError) toast.danger(t("errors.loadFailed"));
-  }, [isError, t]);
-
   const stats = data?.data as RebateStatsResponse | undefined;
 
-  if (isError) return null;
-
   return (
-    <Table className="h-full">
-      <Table.ScrollContainer>
-        <Table.Content aria-label={t("summaryTable.title")}>
-          <Table.Header>
-            <Table.Column id="period" isRowHeader className="text-nowrap">
-              {t("summaryTable.period")}
-            </Table.Column>
-            <Table.Column id="sum" className="text-nowrap">
-              {t("summaryTable.sum")}
-            </Table.Column>
-          </Table.Header>
-          <Table.Body>
-            {SUMMARY_ROWS.map(({ labelKey, field }) => (
-              <Table.Row key={field}>
-                <Table.Cell>{t(`summary.${labelKey}`)}</Table.Cell>
-                <Table.Cell>
-                  {isLoading ? (
-                    <Skeleton className="h-5 w-24" />
-                  ) : (
-                    `${formatAmount(stats?.[field])} USDT`
-                  )}
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table.Content>
-      </Table.ScrollContainer>
-    </Table>
+    <WidgetCard>
+      <Card.Header>
+        <Card.Title>{t("summaryTable.title")}</Card.Title>
+      </Card.Header>
+      <Card.Content className="flex flex-col">
+        {isError ? (
+          <Typography.Paragraph size="sm" className="text-danger">
+            —
+          </Typography.Paragraph>
+        ) : isLoading ? (
+          <>
+            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full" />
+          </>
+        ) : (
+          SUMMARY_ROWS.map(({ labelKey, field }) => (
+            <div key={field} className="flex items-center justify-between">
+              <Typography.Paragraph size="sm" color="muted">
+                {t(`summary.${labelKey}`)}
+              </Typography.Paragraph>
+              <Typography type="body-sm">{formatAmount(stats?.[field])} USDT</Typography>
+            </div>
+          ))
+        )}
+      </Card.Content>
+    </WidgetCard>
   );
 };

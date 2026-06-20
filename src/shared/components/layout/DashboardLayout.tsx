@@ -20,9 +20,15 @@ type Props = {
 };
 
 export function DashboardLayout({ children, gap = 4, className }: Props) {
+  // The `@container` lives on a wrapper, not on the grid itself: a container
+  // query element can't query its own size, so the grid's `@3xl:grid-cols-12`
+  // and the children's `@3xl:col-span-*` must both resolve against this wrapper
+  // to stay in sync.
   return (
-    <div className={cn("grid grid-cols-1 md:grid-cols-12", GAP[gap] ?? "gap-4", className)}>
-      {children}
+    <div className="@container">
+      <div className={cn("grid grid-cols-1 @3xl:grid-cols-12", GAP[gap] ?? "gap-4", className)}>
+        {children}
+      </div>
     </div>
   );
 }

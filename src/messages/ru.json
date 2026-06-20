@@ -553,7 +553,14 @@
       "totalReferrals": "Всего рефералов",
       "activeReferrals": "Активных рефералов",
       "totalEarned": "Всего заработано",
-      "pendingEarned": "Ожидает"
+      "pendingEarned": "Ожидает",
+      "table": {
+        "metric": "Показатель",
+        "value": "Значение"
+      },
+      "errors": {
+        "loadFailed": "Не удалось загрузить статистику рефералов"
+      }
     },
     "earnings": {
       "title": "Доход от рефералов",
