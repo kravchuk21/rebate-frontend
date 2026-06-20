@@ -1,4 +1,3 @@
-import Script from "next/script";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -38,11 +37,9 @@ export default async function LocaleLayout({
     <html lang={locale} dir={isRTL(locale) ? "rtl" : "ltr"} data-theme="dark" suppressHydrationWarning>
       <body className="bg-background text-foreground" suppressHydrationWarning>
         {/* Resolve the persisted theme before first paint to avoid a flash of the
-            wrong theme. beforeInteractive injects this into <head> and runs it
-            before hydration. Logic lives in @/shared/lib/theme. */}
-        <Script id="theme-init" strategy="beforeInteractive">
-          {themeInitScript}
-        </Script>
+            wrong theme. Runs synchronously as the browser parses it — before the
+            body content renders. Logic lives in @/shared/lib/theme. */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AriaRouterProvider>
             <QueryProvider>

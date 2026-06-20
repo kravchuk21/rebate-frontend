@@ -19,8 +19,8 @@ export function applyTheme(theme: Theme): void {
 
 /**
  * Inline script that resolves the persisted theme before first paint to avoid a
- * flash of the wrong theme. Kept as a string so it can run via next/script
- * (strategy="beforeInteractive") and is intentionally self-contained — it must
- * not import anything, since it executes before the bundle loads.
+ * flash of the wrong theme. Kept as a string so it can be injected inline via
+ * a <script dangerouslySetInnerHTML> tag, and is intentionally self-contained —
+ * it must not import anything, since it executes before the bundle loads.
  */
 export const themeInitScript = `(function(){try{var t=localStorage.getItem('${THEME_STORAGE_KEY}')||'${DEFAULT_THEME}';var r=t==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):t;document.documentElement.setAttribute('data-theme',r);}catch(e){}})();`;
