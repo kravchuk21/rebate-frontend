@@ -2,10 +2,8 @@
 
 import { Card, Skeleton, Typography } from "@heroui/react";
 import { useTranslations } from "next-intl";
-
 import type { RebateStatsResponse } from "@/shared/api/generated/types.gen";
 import { formatAmount } from "@/features/withdrawal/lib/formatAmount";
-
 import { useRebateStats } from "../hooks/useRebateStats";
 import { WidgetCard } from "@/shared/components/WidgetCard";
 
