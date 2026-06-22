@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Toast, isRTL } from "@heroui/react";
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { themeInitScript } from "@/shared/lib/theme";
 import { routing } from "@/i18n/routing";
 import QueryProvider from "@/providers/QueryProvider";
@@ -50,6 +50,7 @@ export default async function LocaleLayout({
             </QueryProvider>
           </AriaRouterProvider>
         </NextIntlClientProvider>
+        <SpeedInsights/>
       </body>
     </html>
   );
