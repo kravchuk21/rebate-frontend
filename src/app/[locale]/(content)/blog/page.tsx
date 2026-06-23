@@ -7,6 +7,7 @@ import { PageIntro } from "@/shared/components/PageIntro";
 import { getAllPosts } from "@/features/blog/lib/posts";
 import { BlogList } from "@/features/blog/components/BlogList";
 import { Typography } from "@heroui/react";
+import { absoluteUrl } from "@/shared/lib/seo";
 
 export const dynamic = "force-static";
 
@@ -21,10 +22,17 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "blog" });
+  const tMeta = await getTranslations({ locale, namespace: "meta" });
+  const title = t("title");
+  const description = tMeta("blog.description");
+  const url = absoluteUrl(Routes.Blog, locale);
 
   return {
-    title: t("title"),
-    description: t("description"),
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { title, description, url, type: "website" },
+    twitter: { card: "summary", title, description },
   };
 }
 

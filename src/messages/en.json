@@ -866,5 +866,16 @@
         "loadFailed": "Failed to load audit log"
       }
     }
+  },
+  "meta": {
+    "home": {
+      "description": "Connect your broker account, keep trading as usual, and get paid daily rebates in crypto. No extra fees, no manual work, withdraw to your wallet anytime."
+    },
+    "blog": {
+      "description": "Read practical guides on trading rebates, crypto payout networks, fees, and how to maximize what you earn back from every trade you place."
+    },
+    "faq": {
+      "description": "Find answers about how trading rebates work, daily crypto payouts, supported brokers, withdrawal networks, fees, and the referral program."
+    }
   }
 }

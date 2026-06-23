@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { redirect } from "@/i18n/navigation";
 import { getAccessToken } from "@/shared/lib/cookies";
 import { decodeAccessToken } from "@/shared/lib/decodeToken";
@@ -5,6 +6,10 @@ import { Routes } from "@/shared/lib/routes";
 import { AdminSidebar } from "@/features/admin/components/AdminSidebar";
 import { SidebarProvider } from "@/shared/components/dashboard/SidebarContext";
 import { PageTransition } from "@/shared/components/PageTransition";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 export default async function AdminLayout({
   children,

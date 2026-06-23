@@ -1,6 +1,7 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, getTranslations } from "next-intl/server";
 import { Toast, isRTL } from "@heroui/react";
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { themeInitScript } from "@/shared/lib/theme";
@@ -10,10 +11,45 @@ import { AriaRouterProvider } from "@/providers/AriaRouterProvider";
 import { AuthProvider } from "@/features/auth/components/AuthProvider";
 import { getAccessToken } from "@/shared/lib/cookies";
 import { decodeAccessToken } from "@/shared/lib/decodeToken";
+import { SITE_URL, SITE_NAME } from "@/shared/lib/seo";
 import "../globals.css";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "landing" });
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: {
+      template: `%s | ${SITE_NAME}`,
+      default: `${SITE_NAME} — Crypto Trading Rebates Paid Daily`,
+    },
+    description: t("description"),
+    alternates: {
+      canonical: `/${locale}`,
+      languages: Object.fromEntries(routing.locales.map((l) => [l, `/${l}`])),
+    },
+    openGraph: {
+      siteName: SITE_NAME,
+      type: "website",
+      locale,
+    },
+    twitter: {
+      card: "summary",
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
 }
 
 export default async function LocaleLayout({
