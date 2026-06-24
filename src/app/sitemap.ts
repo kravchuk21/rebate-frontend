@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
 import { getAllSlugs, getPostBySlug } from "@/features/blog/lib/posts";
+import { getAllSlugs as getAllBrokerSlugs } from "@/features/brokers/lib/brokers";
 import { SITE_URL } from "@/shared/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -22,12 +23,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.6,
     });
+    entries.push({
+      url: `${SITE_URL}/${locale}/brokers`,
+      changeFrequency: "weekly",
+      priority: 0.6,
+    });
 
     for (const slug of getAllSlugs(locale)) {
       const post = getPostBySlug(locale, slug);
       entries.push({
         url: `${SITE_URL}/${locale}/blog/${slug}`,
         lastModified: post ? new Date(post.date) : undefined,
+        changeFrequency: "monthly",
+        priority: 0.7,
+      });
+    }
+
+    for (const slug of getAllBrokerSlugs(locale)) {
+      entries.push({
+        url: `${SITE_URL}/${locale}/brokers/${slug}`,
         changeFrequency: "monthly",
         priority: 0.7,
       });

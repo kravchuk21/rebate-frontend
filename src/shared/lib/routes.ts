@@ -16,6 +16,7 @@ export enum Routes {
   Profile = "/profile",
   Faq = "/faq",
   Blog = "/blog",
+  Brokers = "/brokers",
 }
 
 /**

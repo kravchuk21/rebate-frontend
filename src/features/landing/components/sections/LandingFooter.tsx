@@ -14,30 +14,37 @@ export const LandingFooter = () => {
   return (
     <footer>
       <DashboardLayout>
-        <DashboardItem span={6} className="flex flex-col gap-2">
-          <Typography.Paragraph className="font-semibold">
-            Sliceback
-          </Typography.Paragraph>
-          <Typography.Paragraph color="muted" size="sm">
-            {t("footer.tagline")}
-          </Typography.Paragraph>
-        </DashboardItem>
-
-        <DashboardItem span={6} className="flex flex-col gap-2 md:items-end">
-          <Typography.Paragraph size="sm" className="font-medium">
-            {t("footer.resources")}
-          </Typography.Paragraph>
-          <div className="flex gap-6">
-            <Link href={Routes.Blog}>
-              {t("blog")}
-              <Link.Icon />
-            </Link>
-            <Link href={Routes.Faq}>
-              {t("faq")}
-              <Link.Icon />
-            </Link>
+        <div className="flex flex-wrap justify-between gap-2">
+          <div className="flex flex-col gap-2">
+            <Typography.Paragraph className="font-semibold">
+              Sliceback
+            </Typography.Paragraph>
+            <Typography.Paragraph color="muted" size="sm">
+              {t("footer.tagline")}
+            </Typography.Paragraph>
           </div>
-        </DashboardItem>
+
+          <div className="flex flex-col gap-2 md:items-end">
+            <Typography.Paragraph size="sm" className="font-medium">
+              {t("footer.resources")}
+            </Typography.Paragraph>
+            <div className="flex gap-6">
+              <Link href={Routes.Blog}>
+                {t("blog")}
+                <Link.Icon />
+              </Link>
+              <Link href={Routes.Brokers}>
+                {t("brokers")}
+                <Link.Icon />
+              </Link>
+              <Link href={Routes.Faq}>
+                {t("faq")}
+                <Link.Icon />
+              </Link>
+            </div>
+          </div>
+        </div>
+
 
         <DashboardItem className="flex flex-col gap-4 border-t pt-6 sm:flex-row sm:items-center sm:justify-between">
           <Typography.Paragraph color="muted" size="xs">

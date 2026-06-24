@@ -7,6 +7,7 @@
     "signIn": "Sign In",
     "getStarted": "Get Started",
     "blog": "Blog",
+    "brokers": "Brokers",
     "faq": "FAQ",
     "stats": {
       "title": "Trusted by active traders",
@@ -66,6 +67,11 @@
     "description": "Guides and updates about trading rebates and crypto payouts.",
     "empty": "No posts yet.",
     "backToBlog": "← Back to blog"
+  },
+  "brokers": {
+    "title": "Brokers",
+    "description": "Supported brokers you can connect to start earning daily rebates.",
+    "empty": "No brokers yet."
   },
   "faq": {
     "title": "Frequently Asked Questions",
@@ -912,6 +918,9 @@
     },
     "blog": {
       "description": "Read practical guides on trading rebates, crypto payout networks, fees, and how to maximize what you earn back from every trade you place."
+    },
+    "brokers": {
+      "description": "Browse the brokers supported by Sliceback. Connect your account and earn daily crypto rebates on every trade — no extra fees, no change to how you trade."
     },
     "faq": {
       "description": "Find answers about how trading rebates work, daily crypto payouts, supported brokers, withdrawal networks, fees, and the referral program."
