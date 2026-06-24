@@ -127,12 +127,34 @@ export type BrokerAccountDetailResponse = {
     uid?: string;
 };
 
+export type BrokerAdminCreateRequest = {
+    name?: string;
+    rebate_rate?: string;
+    slug?: string;
+    uid_format_regex?: string;
+};
+
 export type BrokerAdminRejectRequest = {
     reason?: string;
 };
 
+export type BrokerAdminResponse = {
+    id?: string;
+    name?: string;
+    rebate_rate?: string;
+    slug?: string;
+    uid_format_regex?: string;
+};
+
 export type BrokerAdminRevokeRequest = {
     reason?: string;
+};
+
+export type BrokerAdminUpdateRequest = {
+    name?: string;
+    rebate_rate?: string;
+    slug?: string;
+    uid_format_regex?: string;
 };
 
 export type BrokerResponse = {
@@ -2059,6 +2081,155 @@ export type PostBrokerAdminAccountsByAccountIdRevokeResponses = {
      */
     204: unknown;
 };
+
+export type PostBrokerAdminBrokersData = {
+    /**
+     * Broker details
+     */
+    body: BrokerAdminCreateRequest;
+    path?: never;
+    query?: never;
+    url: '/broker/admin/brokers';
+};
+
+export type PostBrokerAdminBrokersErrors = {
+    /**
+     * Bad Request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Conflict
+     */
+    409: ErrorResponse;
+    /**
+     * Internal Server Error
+     */
+    500: ErrorResponse;
+};
+
+export type PostBrokerAdminBrokersError = PostBrokerAdminBrokersErrors[keyof PostBrokerAdminBrokersErrors];
+
+export type PostBrokerAdminBrokersResponses = {
+    /**
+     * Created
+     */
+    201: SuccessResponse & {
+        data?: BrokerAdminResponse;
+    };
+};
+
+export type PostBrokerAdminBrokersResponse = PostBrokerAdminBrokersResponses[keyof PostBrokerAdminBrokersResponses];
+
+export type DeleteBrokerAdminBrokersByBrokerIdData = {
+    body?: never;
+    path: {
+        /**
+         * Broker ID
+         */
+        brokerID: string;
+    };
+    query?: never;
+    url: '/broker/admin/brokers/{brokerID}';
+};
+
+export type DeleteBrokerAdminBrokersByBrokerIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Not Found
+     */
+    404: ErrorResponse;
+    /**
+     * Conflict
+     */
+    409: ErrorResponse;
+    /**
+     * Internal Server Error
+     */
+    500: ErrorResponse;
+};
+
+export type DeleteBrokerAdminBrokersByBrokerIdError = DeleteBrokerAdminBrokersByBrokerIdErrors[keyof DeleteBrokerAdminBrokersByBrokerIdErrors];
+
+export type DeleteBrokerAdminBrokersByBrokerIdResponses = {
+    /**
+     * No Content
+     */
+    204: unknown;
+};
+
+export type PutBrokerAdminBrokersByBrokerIdData = {
+    /**
+     * Broker details
+     */
+    body: BrokerAdminUpdateRequest;
+    path: {
+        /**
+         * Broker ID
+         */
+        brokerID: string;
+    };
+    query?: never;
+    url: '/broker/admin/brokers/{brokerID}';
+};
+
+export type PutBrokerAdminBrokersByBrokerIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Not Found
+     */
+    404: ErrorResponse;
+    /**
+     * Conflict
+     */
+    409: ErrorResponse;
+    /**
+     * Internal Server Error
+     */
+    500: ErrorResponse;
+};
+
+export type PutBrokerAdminBrokersByBrokerIdError = PutBrokerAdminBrokersByBrokerIdErrors[keyof PutBrokerAdminBrokersByBrokerIdErrors];
+
+export type PutBrokerAdminBrokersByBrokerIdResponses = {
+    /**
+     * OK
+     */
+    200: SuccessResponse & {
+        data?: BrokerAdminResponse;
+    };
+};
+
+export type PutBrokerAdminBrokersByBrokerIdResponse = PutBrokerAdminBrokersByBrokerIdResponses[keyof PutBrokerAdminBrokersByBrokerIdResponses];
 
 export type GetBrokerBrokersData = {
     body?: never;
