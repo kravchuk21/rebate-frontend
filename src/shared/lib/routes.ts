@@ -8,6 +8,7 @@ export enum Routes {
   Admin = "/admin",
   AdminUsers = "/admin/users",
   AdminBrokerAccounts = "/admin/broker-accounts",
+  AdminBrokers = "/admin/brokers",
   AdminWithdrawals = "/admin/withdrawals",
   AdminRebate = "/admin/rebate",
   AdminConfig = "/admin/config",
@@ -39,5 +40,6 @@ export enum Modals {
   TriggerCalculation = "trigger-calculation",
   ImportBrokerData = "import-broker-data",
   UpdateWithdrawalStatus = "update-withdrawal-status",
+  BrokerForm = "broker-form",
   AuditDetails = "audit-details",
 }

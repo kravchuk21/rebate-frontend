@@ -9,6 +9,7 @@ const adminNavItems = [
   { href: Routes.Admin, labelKey: "overview" },
   { href: Routes.AdminUsers, labelKey: "users" },
   { href: Routes.AdminBrokerAccounts, labelKey: "brokerAccounts" },
+  { href: Routes.AdminBrokers, labelKey: "brokers" },
   { href: Routes.AdminWithdrawals, labelKey: "withdrawals" },
   { href: Routes.AdminRebate, labelKey: "rebate" },
   { href: Routes.AdminConfig, labelKey: "config" },

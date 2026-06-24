@@ -617,6 +617,7 @@
       "overview": "Overview",
       "users": "Users",
       "brokerAccounts": "Broker Accounts",
+      "brokers": "Brokers",
       "withdrawals": "Withdrawals",
       "rebate": "Rebate",
       "config": "Config",
@@ -724,6 +725,44 @@
         "loadFailed": "Failed to load broker accounts",
         "rejectFailed": "Failed to reject broker account",
         "revokeFailed": "Failed to revoke broker account"
+      }
+    },
+    "brokers": {
+      "title": "Brokers",
+      "addBroker": "Add Broker",
+      "columns": {
+        "name": "Name",
+        "slug": "Slug",
+        "actions": "Actions"
+      },
+      "emptyDesc": "No brokers found",
+      "form": {
+        "createTitle": "Add Broker",
+        "editTitle": "Edit Broker",
+        "name": "Name",
+        "slug": "Slug",
+        "rebateRate": "Rebate Rate",
+        "uidFormatRegex": "UID Format Regex",
+        "uidFormatRegexPlaceholder": "Optional regex pattern",
+        "submit": "Save",
+        "cancel": "Cancel",
+        "validation": {
+          "name": "Name is required",
+          "slug": "Slug is required",
+          "rebateRate": "Rebate rate must be a number"
+        }
+      },
+      "delete": {
+        "confirmTitle": "Delete Broker",
+        "confirmDesc": "Are you sure you want to delete this broker? This action cannot be undone.",
+        "confirm": "Delete",
+        "cancel": "Cancel"
+      },
+      "errors": {
+        "loadFailed": "Failed to load brokers",
+        "createFailed": "Failed to create broker",
+        "updateFailed": "Failed to update broker",
+        "deleteFailed": "Failed to delete broker"
       }
     },
     "withdrawals": {

@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import {
   Persons,
   CreditCard,
+  Briefcase,
   ArrowUpFromLine,
   ListCheck,
   Gear,
@@ -17,6 +18,7 @@ import { Routes } from "@/shared/lib/routes";
 const ADMIN_NAV_KEYS = [
   { href: Routes.AdminUsers, labelKey: "users", icon: Persons },
   { href: Routes.AdminBrokerAccounts, labelKey: "brokerAccounts", icon: CreditCard },
+  { href: Routes.AdminBrokers, labelKey: "brokers", icon: Briefcase },
   { href: Routes.AdminWithdrawals, labelKey: "withdrawals", icon: ArrowUpFromLine },
   { href: Routes.AdminRebate, labelKey: "rebate", icon: ListCheck },
   { href: Routes.AdminConfig, labelKey: "config", icon: Gear },

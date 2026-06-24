@@ -3,7 +3,7 @@
 import "@/shared/api/instance";
 
 import { useEffect, useMemo, useState } from "react";
-import { Button, ButtonGroup, ToggleButton, ToggleButtonGroup, toast } from "@heroui/react";
+import { Button, ButtonGroup, Tabs, toast } from "@heroui/react";
 import { useLocale, useTranslations } from "next-intl";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
@@ -147,22 +147,25 @@ export const AdminBrokerAccountsTable = () => {
   return (
     <DashboardLayout>
       <DashboardItem>
-        <ToggleButtonGroup
-          fullWidth
-          aria-label={t("tabs.pending")}
-          selectionMode="single"
-          disallowEmptySelection
-          selectedKeys={[status ?? "all"]}
-          onSelectionChange={(keys) => handleStatusChange(String([...keys][0] ?? "all"))}
-          size="sm"
+        <Tabs
+          selectedKey={status ?? "all"}
+          onSelectionChange={(key) => handleStatusChange(String(key))}
         >
-          <ToggleButton id="all">{t("tabs.all")}</ToggleButton>
-          {STATUSES.map((s) => (
-            <ToggleButton key={s} id={s}>
-              {t(`tabs.${s}`)}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
+          <Tabs.ListContainer>
+            <Tabs.List>
+              <Tabs.Tab id="all">
+                {t("tabs.all")}
+                <Tabs.Indicator />
+              </Tabs.Tab>
+              {STATUSES.map((s) => (
+                <Tabs.Tab key={s} id={s}>
+                  {t(`tabs.${s}`)}
+                  <Tabs.Indicator />
+                </Tabs.Tab>
+              ))}
+            </Tabs.List>
+          </Tabs.ListContainer>
+        </Tabs>
       </DashboardItem>
 
       <DashboardItem>

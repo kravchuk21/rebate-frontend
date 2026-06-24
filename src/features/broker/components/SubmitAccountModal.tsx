@@ -26,10 +26,9 @@ export const SubmitAccountModal = () => {
   const t = useTranslations();
   const { isOpen, close } = useModal(Modals.SubmitAccount);
   const { data: brokersData } = useBrokers();
-  const brokers =
-    ((brokersData?.data as { data?: BrokerResponse[] } | undefined)?.data as
-      | BrokerResponse[]
-      | undefined) ?? [];
+  // The response interceptor in `@/shared/api/instance` unwraps the `{ data: ... }`
+  // envelope, so `brokersData.data` is already the broker array.
+  const brokers = (brokersData?.data as BrokerResponse[] | undefined) ?? [];
 
   const submitAccount = useSubmitAccount();
 

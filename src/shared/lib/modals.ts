@@ -31,6 +31,7 @@ export const MODAL_ACCESS: Record<Modals, ModalAccess> = {
   [Modals.ImportBrokerData]: "admin",
   [Modals.UpdateWithdrawalStatus]: "admin",
   [Modals.AuditDetails]: "admin",
+  [Modals.BrokerForm]: "admin",
 };
 
 /**
@@ -44,4 +45,5 @@ export const MODAL_PARAMS: Partial<Record<Modals, readonly string[]>> = {
   [Modals.AdjustCalculation]: ["calculationID", "gross"],
   [Modals.UpdateWithdrawalStatus]: ["withdrawalID"],
   [Modals.AuditDetails]: ["entryId"],
+  [Modals.BrokerForm]: ["brokerID", "name", "slug", "rebateRate", "uidFormatRegex"],
 };
