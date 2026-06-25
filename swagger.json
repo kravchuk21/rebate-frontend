@@ -3566,6 +3566,80 @@
                 }
             }
         },
+        "/rebate/admin/import/batch": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Batch import broker data",
+                "parameters": [
+                    {
+                        "description": "Batch broker data import",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/RebateAdminBatchImportBrokerDataRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/SuccessResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/RebateAdminBatchImportResult"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/rebate/admin/trigger": {
             "post": {
                 "security": [
@@ -4720,6 +4794,71 @@
                 },
                 "reason": {
                     "type": "string"
+                }
+            }
+        },
+        "RebateAdminBatchImportBrokerDataRequest": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "type": "string"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RebateAdminBatchImportItem"
+                    }
+                }
+            }
+        },
+        "RebateAdminBatchImportItem": {
+            "type": "object",
+            "properties": {
+                "broker_account_id": {
+                    "type": "string"
+                },
+                "gross_rebate": {
+                    "type": "string"
+                },
+                "volume": {
+                    "type": "string"
+                }
+            }
+        },
+        "RebateAdminBatchImportItemResult": {
+            "type": "object",
+            "properties": {
+                "broker_account_id": {
+                    "type": "string"
+                },
+                "error": {
+                    "type": "string"
+                },
+                "outcome": {
+                    "type": "string"
+                }
+            }
+        },
+        "RebateAdminBatchImportResult": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "type": "string"
+                },
+                "failed": {
+                    "type": "integer"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RebateAdminBatchImportItemResult"
+                    }
+                },
+                "success": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         },

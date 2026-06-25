@@ -194,6 +194,31 @@ export type RebateAdminAdjustCalculationRequest = {
     reason?: string;
 };
 
+export type RebateAdminBatchImportBrokerDataRequest = {
+    date?: string;
+    items?: Array<RebateAdminBatchImportItem>;
+};
+
+export type RebateAdminBatchImportItem = {
+    broker_account_id?: string;
+    gross_rebate?: string;
+    volume?: string;
+};
+
+export type RebateAdminBatchImportItemResult = {
+    broker_account_id?: string;
+    error?: string;
+    outcome?: string;
+};
+
+export type RebateAdminBatchImportResult = {
+    date?: string;
+    failed?: number;
+    items?: Array<RebateAdminBatchImportItemResult>;
+    success?: number;
+    total?: number;
+};
+
 export type RebateAdminImportBrokerDataRequest = {
     broker_account_id?: string;
     date?: string;
@@ -2654,6 +2679,48 @@ export type PostRebateAdminImportResponses = {
 };
 
 export type PostRebateAdminImportResponse = PostRebateAdminImportResponses[keyof PostRebateAdminImportResponses];
+
+export type PostRebateAdminImportBatchData = {
+    /**
+     * Batch broker data import
+     */
+    body: RebateAdminBatchImportBrokerDataRequest;
+    path?: never;
+    query?: never;
+    url: '/rebate/admin/import/batch';
+};
+
+export type PostRebateAdminImportBatchErrors = {
+    /**
+     * Bad Request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Internal Server Error
+     */
+    500: ErrorResponse;
+};
+
+export type PostRebateAdminImportBatchError = PostRebateAdminImportBatchErrors[keyof PostRebateAdminImportBatchErrors];
+
+export type PostRebateAdminImportBatchResponses = {
+    /**
+     * OK
+     */
+    200: SuccessResponse & {
+        data?: RebateAdminBatchImportResult;
+    };
+};
+
+export type PostRebateAdminImportBatchResponse = PostRebateAdminImportBatchResponses[keyof PostRebateAdminImportBatchResponses];
 
 export type PostRebateAdminTriggerData = {
     /**
