@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AlertDialog, Button, ButtonGroup, toast } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import { Pencil, Plus, TrashBin } from "@gravity-ui/icons";
+import { Pencil, TrashBin } from "@gravity-ui/icons";
 
 import type { BrokerResponse } from "@/shared/api/generated/types.gen";
 import { DataTable } from "@/shared/components/DataTable";
@@ -112,8 +112,7 @@ export const AdminBrokersTable = () => {
     <DashboardLayout>
       <DashboardItem>
         <div className="flex items-center justify-end">
-          <Button variant="outline" onPress={() => brokerForm.open()}>
-            <Plus />
+          <Button onPress={() => brokerForm.open()}>
             {t("addBroker")}
           </Button>
         </div>

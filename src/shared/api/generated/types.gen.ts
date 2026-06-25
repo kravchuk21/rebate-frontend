@@ -200,29 +200,46 @@ export type RebateAdminBatchImportBrokerDataRequest = {
 };
 
 export type RebateAdminBatchImportItem = {
-    broker_account_id?: string;
+    broker_id?: string;
     gross_rebate?: string;
+    uid?: string;
     volume?: string;
 };
 
 export type RebateAdminBatchImportItemResult = {
-    broker_account_id?: string;
+    broker_id?: string;
     error?: string;
     outcome?: string;
+    uid?: string;
 };
 
 export type RebateAdminBatchImportResult = {
+    /**
+     * a rebate was computed and credited
+     */
+    calculated?: number;
     date?: string;
+    /**
+     * item could not be processed
+     */
     failed?: number;
     items?: Array<RebateAdminBatchImportItemResult>;
-    success?: number;
+    /**
+     * no broker data available yet
+     */
+    pending?: number;
+    /**
+     * already finalized or account not approved
+     */
+    skipped?: number;
     total?: number;
 };
 
 export type RebateAdminImportBrokerDataRequest = {
-    broker_account_id?: string;
+    broker_id?: string;
     date?: string;
     gross_rebate?: string;
+    uid?: string;
     volume?: string;
 };
 

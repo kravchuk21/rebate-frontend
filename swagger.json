@@ -4814,10 +4814,13 @@
         "RebateAdminBatchImportItem": {
             "type": "object",
             "properties": {
-                "broker_account_id": {
+                "broker_id": {
                     "type": "string"
                 },
                 "gross_rebate": {
+                    "type": "string"
+                },
+                "uid": {
                     "type": "string"
                 },
                 "volume": {
@@ -4828,7 +4831,7 @@
         "RebateAdminBatchImportItemResult": {
             "type": "object",
             "properties": {
-                "broker_account_id": {
+                "broker_id": {
                     "type": "string"
                 },
                 "error": {
@@ -4836,16 +4839,24 @@
                 },
                 "outcome": {
                     "type": "string"
+                },
+                "uid": {
+                    "type": "string"
                 }
             }
         },
         "RebateAdminBatchImportResult": {
             "type": "object",
             "properties": {
+                "calculated": {
+                    "description": "a rebate was computed and credited",
+                    "type": "integer"
+                },
                 "date": {
                     "type": "string"
                 },
                 "failed": {
+                    "description": "item could not be processed",
                     "type": "integer"
                 },
                 "items": {
@@ -4854,7 +4865,12 @@
                         "$ref": "#/definitions/RebateAdminBatchImportItemResult"
                     }
                 },
-                "success": {
+                "pending": {
+                    "description": "no broker data available yet",
+                    "type": "integer"
+                },
+                "skipped": {
+                    "description": "already finalized or account not approved",
                     "type": "integer"
                 },
                 "total": {
@@ -4865,13 +4881,16 @@
         "RebateAdminImportBrokerDataRequest": {
             "type": "object",
             "properties": {
-                "broker_account_id": {
+                "broker_id": {
                     "type": "string"
                 },
                 "date": {
                     "type": "string"
                 },
                 "gross_rebate": {
+                    "type": "string"
+                },
+                "uid": {
                     "type": "string"
                 },
                 "volume": {

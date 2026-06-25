@@ -833,15 +833,25 @@
       "emptyDesc": "No calculations found",
       "import": {
         "title": "Import Broker Data",
-        "brokerAccount": "Broker Account ID",
+        "brokerId": "Broker ID",
+        "uid": "UID",
         "date": "Date",
         "volume": "Volume",
         "grossRebate": "Gross Rebate",
+        "paste": "Rows",
+        "pastePlaceholder": "broker_id,uid,volume,gross_rebate\n01H...,123456,1500000,42.5\n01H...,789012,980000,28.1",
+        "pasteHint": "Paste rows from a spreadsheet. One row per line: broker ID, UID, volume, gross rebate (tab, comma or semicolon separated). Volume is optional. A header row is detected automatically.",
+        "validCount": "Valid rows",
+        "invalidCount": "Errors",
         "submit": "Import",
+        "imported": "Imported {calculated} rows, {failed} failed",
         "validation": {
-          "brokerAccount": "Broker account ID is required",
+          "brokerId": "Broker ID is required",
+          "uid": "UID is required",
           "date": "Date is required",
-          "grossRebate": "Gross rebate is required"
+          "grossRebate": "Gross rebate is required",
+          "grossRebateNumber": "Gross rebate must be a number",
+          "volumeNumber": "Volume must be a number"
         }
       },
       "trigger": {

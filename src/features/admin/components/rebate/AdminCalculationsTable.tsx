@@ -7,6 +7,7 @@ import { Button, toast } from "@heroui/react";
 import { useLocale, useTranslations } from "next-intl";
 import { createColumnHelper, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { Pencil } from "@gravity-ui/icons";
+import { DashboardLayout, DashboardItem } from "@/shared/components/layout";
 
 import type { RebateCalculationResponse } from "@/shared/api/generated/types.gen";
 import { formatAmount } from "@/features/withdrawal/lib/formatAmount";
@@ -19,7 +20,6 @@ import { Modals } from "@/shared/lib/routes";
 import { useAdminCalculations } from "../../hooks/useAdminCalculations";
 import { AdjustCalculationModal } from "./AdjustCalculationModal";
 import { ImportBrokerDataModal } from "./ImportBrokerDataModal";
-import { TriggerCalculationModal } from "./TriggerCalculationModal";
 
 const LIMIT = 20;
 
@@ -30,7 +30,6 @@ export const AdminCalculationsTable = () => {
   const locale = useLocale();
   const [offset, setOffset] = useState(0);
   const { open: openImport } = useModal(Modals.ImportBrokerData);
-  const { open: openTrigger } = useModal(Modals.TriggerCalculation);
   const { open: openAdjust } = useModal(Modals.AdjustCalculation);
 
   const { data, isError } = useAdminCalculations({ limit: LIMIT, offset });
@@ -104,17 +103,16 @@ export const AdminCalculationsTable = () => {
   });
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-end gap-2">
-        <Button variant="outline" onPress={() => openImport()}>
-          {t("import.title")}
-        </Button>
-        <Button variant="outline" onPress={() => openTrigger()}>
-          {t("trigger.title")}
-        </Button>
-      </div>
+    <DashboardLayout>
+      <DashboardItem>
+        <div className="flex items-center justify-end">
+          <Button onPress={() => openImport()}>
+            {t("import.title")}
+          </Button>
+        </div>
+      </DashboardItem>
 
-      {!isError && (
+      <DashboardItem>
         <DataTable
           table={table}
           ariaLabel={t("title")}
@@ -122,11 +120,10 @@ export const AdminCalculationsTable = () => {
           rowHeaderColumnId="broker"
           pagination={{ offset, limit: LIMIT, totalCount, onOffsetChange: setOffset }}
         />
-      )}
+      </DashboardItem>
 
       <ImportBrokerDataModal />
-      <TriggerCalculationModal />
       <AdjustCalculationModal />
-    </div>
+    </DashboardLayout>
   );
 };
