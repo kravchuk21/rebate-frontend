@@ -68,12 +68,10 @@ const ConfigForm = ({ values }: { values: Partial<ConfigFormValues> }) => {
               <FormField control={control} name={key} label={t(`labels.${key}`)} />
             </DashboardItem>
           ))}
-          <DashboardItem span={12}>
-            <div className="flex justify-end">
-              <Button type="submit" variant="primary" isDisabled={setConfig.isPending}>
-                {t("save")}
-              </Button>
-            </div>
+          <DashboardItem span={6} className="flex items-end">
+            <Button fullWidth type="submit" variant="primary" isDisabled={setConfig.isPending}>
+              {t("save")}
+            </Button>
           </DashboardItem>
         </DashboardLayout>
       </Form>
