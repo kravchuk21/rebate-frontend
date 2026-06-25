@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { env } from "@/shared/lib/env";
 
-const API_URL = process.env.API_URL ?? "http://localhost:8080";
+const API_URL = env.API_URL;
 
 export async function POST(request: NextRequest) {
   const body = await request.json();

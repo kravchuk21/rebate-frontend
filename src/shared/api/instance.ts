@@ -1,9 +1,8 @@
 import type { ResponseError, RequestConfig } from "@siberiacancode/fetches";
-
 import { instance } from "@/shared/api/generated/instance.gen";
+import { clientEnv } from "@/shared/lib/env.client";
 
-(instance as { baseURL: string }).baseURL =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
+(instance as { baseURL: string }).baseURL = clientEnv.NEXT_PUBLIC_API_URL;
 
 const getAccessTokenFromCookie = (): string | undefined => {
   if (typeof document === "undefined") return undefined;

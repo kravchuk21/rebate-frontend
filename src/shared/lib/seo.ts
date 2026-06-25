@@ -1,4 +1,6 @@
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sliceback.trade";
+import { env } from "@/shared/lib/env";
+
+export const SITE_URL = env.NEXT_PUBLIC_SITE_URL;
 export const SITE_NAME = "Sliceback";
 
 export function absoluteUrl(path: string, locale: string): string {
