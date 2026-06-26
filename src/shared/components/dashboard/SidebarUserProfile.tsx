@@ -24,10 +24,10 @@ export const SidebarUserProfile = memo(function SidebarUserProfile({
         <Avatar.Fallback>{initial}</Avatar.Fallback>
       </Avatar>
       <div className="flex min-w-0 flex-col">
-        <Typography.Paragraph size="sm" truncate>
+        <Typography.Paragraph size="sm" truncate className="leading-tight">
           {email}
         </Typography.Paragraph>
-        <Typography.Paragraph size="xs" color="muted" className="capitalize">
+        <Typography.Paragraph size="xs" color="muted" className="capitalize leading-tight">
           {role}
         </Typography.Paragraph>
       </div>
