@@ -1,2 +1,3 @@
 export { TrendChart } from "./TrendChart";
-export type { TrendChartType } from "./TrendChart";
+export { LazyTrendChart } from "./LazyTrendChart";
+export type { TrendChartType, TrendChartProps } from "./TrendChart";

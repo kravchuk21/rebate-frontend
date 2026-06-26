@@ -5,7 +5,7 @@ import { Button, Card, Link, Skeleton } from "@heroui/react";
 import { useLocale } from "next-intl";
 
 import { useRouter } from "@/i18n/navigation";
-import { TrendChart, type TrendChartType } from "@/shared/components/charts";
+import { LazyTrendChart, type TrendChartType } from "@/shared/components/charts";
 import { DashboardLayout, DashboardItem } from "@/shared/components/layout";
 import { WidgetCard } from "@/shared/components/WidgetCard";
 
@@ -93,7 +93,7 @@ export const StatsWidget = ({
             {isLoading ? (
               <Skeleton className="h-48 w-full" />
             ) : (
-              <TrendChart
+              <LazyTrendChart
                 data={chart.data}
                 labels={chart.labels}
                 max={chart.max}

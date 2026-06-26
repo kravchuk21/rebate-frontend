@@ -33,7 +33,7 @@ const AXIS_FONT = {
 
 export type TrendChartType = "bar" | "line";
 
-interface TrendChartProps {
+export interface TrendChartProps {
   data: number[];
   labels?: string[];
   max?: number;
