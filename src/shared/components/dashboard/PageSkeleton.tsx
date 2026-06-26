@@ -2,6 +2,7 @@ import { Skeleton } from "@heroui/react";
 
 import { DashboardLayout, DashboardItem } from "@/shared/components/layout";
 import { WidgetCard } from "@/shared/components/WidgetCard";
+import { SidebarToggle } from "./SidebarToggle";
 
 /**
  * Route-level loading shell for the dashboard and admin groups.
@@ -15,7 +16,7 @@ import { WidgetCard } from "@/shared/components/WidgetCard";
 export const PageSkeleton = () => (
   <>
     <div className="flex items-center gap-4">
-      <Skeleton className="h-8 w-8 rounded-md" />
+      <SidebarToggle />
       <Skeleton className="h-7 w-48" />
     </div>
     <DashboardLayout>
