@@ -1,5 +1,6 @@
 export { StatsWidget } from "./StatsWidget";
 export { StatsSummary } from "./StatsSummary";
+export { StatsRows, type StatsRow } from "./StatsRows";
 export { StatsRangeSelect } from "./StatsRangeSelect";
 export { StatsChartTypeSwitch } from "./StatsChartTypeSwitch";
 export { buildTrendChart, type TrendChartData } from "./buildTrendChart";

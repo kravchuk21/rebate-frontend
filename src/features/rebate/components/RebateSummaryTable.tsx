@@ -1,11 +1,13 @@
 "use client";
 
-import { Card, Skeleton, Typography } from "@heroui/react";
+import { Card } from "@heroui/react";
 import { useTranslations } from "next-intl";
+
 import type { RebateStatsResponse } from "@/shared/api/generated/types.gen";
 import { formatAmount } from "@/features/withdrawal/lib/formatAmount";
-import { useRebateStats } from "../hooks/useRebateStats";
 import { WidgetCard } from "@/shared/components/WidgetCard";
+import { StatsRows } from "@/shared/components/stats";
+import { useRebateStats } from "../hooks/useRebateStats";
 
 type SummaryField = "all_time" | "last_7_days" | "today" | "current_month" | "last_month";
 
@@ -19,38 +21,24 @@ const SUMMARY_ROWS: { labelKey: string; field: SummaryField }[] = [
 
 export const RebateSummaryTable = () => {
   const t = useTranslations("rebate.stats");
-  const { data, isLoading, isError } = useRebateStats();
+  const { data, isLoading } = useRebateStats();
 
   const stats = data?.data as RebateStatsResponse | undefined;
+
+  const rows = SUMMARY_ROWS.map(({ labelKey, field }) => ({
+    label: t(`summary.${labelKey}`),
+    value: `${formatAmount(stats?.[field])} USDT`,
+  }));
 
   return (
     <WidgetCard>
       <Card.Header>
         <Card.Title>{t("summaryTable.title")}</Card.Title>
       </Card.Header>
-      <Card.Content className="flex flex-col">
-        {isError ? (
-          <Typography.Paragraph size="sm" className="text-danger">
-            —
-          </Typography.Paragraph>
-        ) : isLoading ? (
-          <>
-            <Skeleton className="h-6 w-full" />
-            <Skeleton className="h-6 w-full" />
-            <Skeleton className="h-6 w-full" />
-            <Skeleton className="h-6 w-full" />
-            <Skeleton className="h-6 w-full" />
-          </>
-        ) : (
-          SUMMARY_ROWS.map(({ labelKey, field }) => (
-            <div key={field} className="flex items-center justify-between">
-              <Typography.Paragraph size="sm" color="muted">
-                {t(`summary.${labelKey}`)}
-              </Typography.Paragraph>
-              <Typography type="body-sm">{formatAmount(stats?.[field])} USDT</Typography>
-            </div>
-          ))
-        )}
+      <Card.Content>
+        <div className="mt-auto">
+          <StatsRows rows={rows} isLoading={isLoading} />
+        </div>
       </Card.Content>
     </WidgetCard>
   );

@@ -1,9 +1,8 @@
 "use client";
 
-import { Skeleton, Typography } from "@heroui/react";
-
 import { formatAmount } from "@/features/withdrawal/lib/formatAmount";
 
+import { StatsRows } from "./StatsRows";
 import type { PeriodStatsResponse, StatsTranslator } from "./types";
 
 type SummaryField = "all_time" | "last_7_days" | "today" | "current_month" | "last_month";
@@ -22,21 +21,11 @@ interface StatsSummaryProps {
   isLoading: boolean;
 }
 
-export const StatsSummary = ({ t, stats, isLoading }: StatsSummaryProps) => (
-  <>
-    {SUMMARY_ROWS.map(({ labelKey, field }) => (
-      <div key={field} className="flex items-center justify-between gap-4">
-        <Typography.Paragraph className="flex-1" size="sm" color="muted">
-          {t(`summary.${labelKey}`)}
-        </Typography.Paragraph>
-        {isLoading ? (
-          <Skeleton className="h-7 flex-1" />
-        ) : (
-          <Typography.Paragraph className="flex-1 text-right" size="sm">
-            {`${formatAmount(stats?.[field])} USDT`}
-          </Typography.Paragraph>
-        )}
-      </div>
-    ))}
-  </>
-);
+export const StatsSummary = ({ t, stats, isLoading }: StatsSummaryProps) => {
+  const rows = SUMMARY_ROWS.map(({ labelKey, field }) => ({
+    label: t(`summary.${labelKey}`),
+    value: `${formatAmount(stats?.[field])} USDT`,
+  }));
+
+  return <StatsRows rows={rows} isLoading={isLoading} />;
+};
