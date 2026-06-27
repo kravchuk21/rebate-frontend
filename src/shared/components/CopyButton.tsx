@@ -8,9 +8,11 @@ interface CopyButtonProps {
   value: string;
   size?: ButtonProps["size"];
   variant?: ButtonProps["variant"];
+  isDisabled?: boolean;
+  label?: string;
 }
 
-export const CopyButton = ({ value, size = "sm", variant = "ghost" }: CopyButtonProps) => {
+export const CopyButton = ({ value, size = "sm", variant = "ghost", isDisabled, label }: CopyButtonProps) => {
   const t = useTranslations("common.copy");
 
   const handleCopy = async () => {
@@ -23,8 +25,8 @@ export const CopyButton = ({ value, size = "sm", variant = "ghost" }: CopyButton
   };
 
   return (
-    <Button isIconOnly size={size} variant={variant} onClick={() => handleCopy()}>
-      <Copy />
+    <Button isIconOnly={!label} size={size} variant={variant} isDisabled={isDisabled} onClick={() => handleCopy()}>
+      {label ?? <Copy />}
     </Button>
   );
 };
