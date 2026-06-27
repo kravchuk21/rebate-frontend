@@ -23,7 +23,7 @@ import { TypographySkeleton } from "@/shared/components/Skeletons";
 export const DashboardSummaryCards = () => {
   const t = useTranslations("dashboard.cards");
   const router = useRouter();
-  const { data } = useMyAccounts();
+  const { data, isLoading: isAccountsLoading } = useMyAccounts();
   const { data: balanceData, isLoading: isBalanceLoading } = useBalance();
 
   const accounts =
@@ -35,7 +35,7 @@ export const DashboardSummaryCards = () => {
   const summaryCards = [
     {
       title: t("accounts"),
-      isLoading: false,
+      isLoading: isAccountsLoading,
       value: approvedCount,
       actionLabel: t("manageAccounts"),
       href: Routes.Accounts,
