@@ -28,30 +28,32 @@ export const ReferralLinkCard = () => {
         <Card.Description>{t("description")}</Card.Description>
       </Card.Header>
       <Card.Content>
-        <DashboardLayout>
-          <DashboardItem className="flex gap-2">
-            {isLoading ? <InputSkeleton /> :
-              <Input
-                variant="secondary"
-                className="flex-1"
-                value={fullUrl ?? "—"}
-                disabled
-              />
-            }
-            <CopyButton variant="primary" value={fullUrl ?? ""} isDisabled={!fullUrl} label={t("copy")} size="md" />
-          </DashboardItem>
-          <DashboardItem className="flex gap-2">
-            {isLoading ? <InputSkeleton /> :
-              <Input
-                variant="secondary"
-                className="flex-1"
-                value={stats?.referral_code ?? "—"}
-                disabled
-              />
-            }
-            <CopyButton variant="primary" value={stats?.referral_code ?? ""} isDisabled={!stats?.referral_code} label={t("copy")} size="md" />
-          </DashboardItem>
-        </DashboardLayout>
+        <div className="mt-auto">
+          <DashboardLayout>
+            <DashboardItem className="flex gap-2">
+              {isLoading ? <InputSkeleton /> :
+                <Input
+                  variant="secondary"
+                  className="flex-1"
+                  value={fullUrl ?? "—"}
+                  disabled
+                />
+              }
+              <CopyButton variant="primary" value={fullUrl ?? ""} isDisabled={!fullUrl} label={t("copy")} size="md" />
+            </DashboardItem>
+            <DashboardItem className="flex gap-2">
+              {isLoading ? <InputSkeleton /> :
+                <Input
+                  variant="secondary"
+                  className="flex-1"
+                  value={stats?.referral_code ?? "—"}
+                  disabled
+                />
+              }
+              <CopyButton variant="primary" value={stats?.referral_code ?? ""} isDisabled={!stats?.referral_code} label={t("copy")} size="md" />
+            </DashboardItem>
+          </DashboardLayout>
+        </div>
       </Card.Content>
     </WidgetCard>
   );

@@ -3,7 +3,6 @@ import { HydrationBoundary } from "@tanstack/react-query";
 import { PageHeader } from "@/shared/components/dashboard/PageHeader";
 
 import { DashboardSummaryCards } from "@/features/broker/components/DashboardSummaryCards";
-import { ReferralLinkCard } from "@/features/referral/components/ReferralLinkCard";
 import { RebateStatsWidget } from "@/features/rebate/components/RebateStatsWidget";
 import { DashboardLayout, DashboardItem } from "@/shared/components/layout";
 import { ReferralStatsWidget } from "@/features/referral/components/ReferralStatsWidget";
@@ -35,9 +34,6 @@ export default async function DashboardPage() {
       <DashboardLayout>
         <DashboardItem>
           <DashboardSummaryCards />
-        </DashboardItem>
-        <DashboardItem>
-          <ReferralLinkCard />
         </DashboardItem>
         <DashboardItem span={6}>
           <RebateStatsWidget />
