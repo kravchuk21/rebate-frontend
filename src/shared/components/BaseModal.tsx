@@ -17,9 +17,9 @@ export const BaseModal = ({
   children,
 }: BaseModalProps) => {
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-      <Modal.Backdrop>
-        <Modal.Container scroll="outside">
+    <Modal>
+      <Modal.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Modal.Container>
           <Modal.Dialog className={dialogClassName}>
             <Modal.CloseTrigger />
             {children}

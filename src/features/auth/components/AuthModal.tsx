@@ -1,6 +1,7 @@
 "use client";
 
 import { Modal } from "@heroui/react";
+import { BaseModal } from "@/shared/components/BaseModal";
 import { useAuthModal } from "../hooks/useAuthModal";
 import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
@@ -22,21 +23,12 @@ export const AuthModal = ({ defaultReferralCode }: AuthModalProps) => {
   };
 
   return (
-    <Modal>
-      <Modal.Backdrop isOpen={isOpen} onOpenChange={handleOpenChange}>
-        <Modal.Container scroll="outside">
-          <Modal.Dialog className="w-full sm:max-w-[380px]">
-            <Modal.Body>
-              {currentModal === "login" && <LoginForm />}
-              {currentModal === "register" && (
-                <RegisterForm defaultReferralCode={defaultReferralCode} />
-              )}
-              {currentModal === "twoFa" && <TwoFAModal />}
-            </Modal.Body>
-            <Modal.CloseTrigger />
-          </Modal.Dialog>
-        </Modal.Container>
-      </Modal.Backdrop>
-    </Modal>
+    <BaseModal isOpen={isOpen} onOpenChange={handleOpenChange} dialogClassName="w-full sm:max-w-[380px]">
+      <Modal.Body>
+        {currentModal === "login" && <LoginForm />}
+        {currentModal === "register" && <RegisterForm defaultReferralCode={defaultReferralCode} />}
+        {currentModal === "twoFa" && <TwoFAModal />}
+      </Modal.Body>
+    </BaseModal>
   );
 };
