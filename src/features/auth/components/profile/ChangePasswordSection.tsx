@@ -46,7 +46,7 @@ export const ChangePasswordSection = () => {
         <Card.Description>{t("profile.password.description")}</Card.Description>
       </Card.Header>
       <Card.Content>
-        <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <DashboardLayout>
             <DashboardItem>
               <FormField
@@ -54,26 +54,29 @@ export const ChangePasswordSection = () => {
                 name="current"
                 type="password"
                 label={t("profile.password.current")}
+                placeholder={t("profile.password.placeholders.current")}
                 error={errors.current?.message}
               />
             </DashboardItem>
 
-            <DashboardItem span={6}>
+            <DashboardItem>
               <FormField
                 control={control}
                 name="newPassword"
                 type="password"
                 label={t("profile.password.new")}
+                placeholder={t("profile.password.placeholders.new")}
                 error={errors.newPassword?.message}
               />
             </DashboardItem>
 
-            <DashboardItem span={6}>
+            <DashboardItem>
               <FormField
                 control={control}
                 name="confirm"
                 type="password"
                 label={t("profile.password.confirm")}
+                placeholder={t("profile.password.placeholders.confirm")}
                 error={errors.confirm?.message}
               />
             </DashboardItem>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Card, Chip } from "@heroui/react";
+import { Button, Card, Chip, Typography } from "@heroui/react";
 import { useTranslations } from "next-intl";
 
 import { useModal } from "@/shared/hooks/useModal";
@@ -35,6 +35,11 @@ export const TwoFASection = ({ initialEnabled = false }: TwoFASectionProps) => {
       </Card.Header>
 
       <Card.Content>
+        {(["1", "2", "3"] as const).map((n) => (
+          <Typography.Paragraph color="muted" size="sm" key={n}>
+            {n}. {t(`steps.${n}`)}
+          </Typography.Paragraph>
+        ))}
         <div className="mt-auto">
           {enabled ? (
             <Button variant="danger" onPress={() => disableModal.open()}>

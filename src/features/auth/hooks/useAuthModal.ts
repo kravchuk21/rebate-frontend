@@ -19,7 +19,7 @@ export const useAuthModal = () => {
     if (extra) {
       Object.entries(extra).forEach(([key, value]) => params.set(key, value));
     }
-    router.push(`${pathname}?${params.toString()}`);
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   const close = () => {
@@ -27,7 +27,7 @@ export const useAuthModal = () => {
     params.delete("modal");
     params.delete("user_id");
     const qs = params.toString();
-    router.push(qs ? `${pathname}?${qs}` : pathname);
+    router.push(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
   };
 
   const switchTo = (modal: "login" | "register") => open(modal);

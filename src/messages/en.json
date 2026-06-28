@@ -235,6 +235,11 @@
       "disabled": "Disabled",
       "enableBtn": "Enable 2FA",
       "disableBtn": "Disable 2FA",
+      "steps": {
+        "1": "Install an authenticator app (Google Authenticator, Authy, etc.)",
+        "2": "Scan the QR code shown during setup",
+        "3": "Enter the 6-digit code on each login"
+      },
       "setup": {
         "step1Title": "Scan QR Code",
         "step1Desc": "Scan this QR code with your authenticator app (Google Authenticator, Authy, etc.)",
@@ -270,6 +275,11 @@
       "confirm": "Confirm New Password",
       "submit": "Change Password",
       "notAvailable": "Password change is not yet available. Please contact support.",
+      "placeholders": {
+        "current": "Enter your current password",
+        "new": "At least 8 characters",
+        "confirm": "Repeat new password"
+      },
       "validation": {
         "current": "Current password is required",
         "new": "New password must be at least 8 characters",

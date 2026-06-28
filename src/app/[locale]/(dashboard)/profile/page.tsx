@@ -32,11 +32,11 @@ export default async function ProfilePage({ params }: { params: Promise<{ locale
     <>
       <PageHeader title={t("title")} />
       <DashboardLayout>
-        <DashboardItem>
-          <ProfileAccountInfo email={claims.email} role={claims.role} />
+        <DashboardItem span={6}>
+          <ProfileAccountInfo email={claims.email} role={claims.role} twoFaEnabled={claims.two_fa_enabled ?? false} />
         </DashboardItem>
 
-        <DashboardItem>
+        <DashboardItem span={6}>
           <ReferralLinkCard />
         </DashboardItem>
 
