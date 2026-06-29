@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0B0B0F" />
+    <title>Offline · Sliceback</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0b0b0f;
+        color: #fff;
+        font-family: Helvetica, Arial, sans-serif;
+        text-align: center;
+        padding: 24px;
+      }
+      .card {
+        max-width: 22rem;
+      }
+      .mark {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 20px;
+        image-rendering: auto;
+      }
+      h1 {
+        font-size: 1.25rem;
+        margin: 0 0 0.5rem;
+      }
+      p {
+        color: #9b9ba5;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin: 0 0 1.5rem;
+      }
+      button {
+        background: #fff;
+        color: #0b0b0f;
+        border: 0;
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>You're offline</h1>
+      <p>We can't reach Sliceback right now. Check your connection and try again.</p>
+      <button onclick="location.reload()">Retry</button>
+    </div>
+    <script>
+      // Reload automatically the moment the browser regains connectivity, so the
+      // user lands back in the app without having to tap Retry.
+      window.addEventListener("online", () => location.reload());
+    </script>
+  </body>
+</html>

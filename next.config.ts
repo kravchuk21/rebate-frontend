@@ -14,6 +14,19 @@ const nextConfig: NextConfig = {
     // components it actually uses.
     optimizePackageImports: ["@heroui/react"],
   },
+  async headers() {
+    return [
+      {
+        // Never cache the service worker script so deploys ship a fresh worker.
+        source: "/sw.js",
+        headers: [
+          { key: "Content-Type", value: "application/javascript; charset=utf-8" },
+          { key: "Cache-Control", value: "no-cache, no-store, must-revalidate" },
+          { key: "Content-Security-Policy", value: "default-src 'self'; script-src 'self'" },
+        ],
+      },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);

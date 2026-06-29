@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
@@ -12,7 +12,12 @@ import { AuthProvider } from "@/features/auth/components/AuthProvider";
 import { getAccessToken } from "@/shared/lib/cookies";
 import { decodeAccessToken } from "@/shared/lib/decodeToken";
 import { SITE_URL, SITE_NAME } from "@/shared/lib/seo";
+import { ServiceWorkerRegister } from "@/providers/ServiceWorkerRegister";
 import "../globals.css";
+
+export const viewport: Viewport = {
+  themeColor: "#0B0B0F",
+};
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -28,6 +33,16 @@ export async function generateMetadata({
 
   return {
     metadataBase: new URL(SITE_URL),
+    manifest: "/manifest.webmanifest",
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: "black-translucent",
+      title: SITE_NAME,
+    },
+    icons: {
+      icon: "/favicon.ico",
+      apple: "/apple-touch-icon.png",
+    },
     title: {
       template: `%s | ${SITE_NAME}`,
       default: `${SITE_NAME} — Crypto Trading Rebates Paid Daily`,
@@ -87,6 +102,7 @@ export default async function LocaleLayout({
           </AriaRouterProvider>
         </NextIntlClientProvider>
         <SpeedInsights/>
+        <ServiceWorkerRegister />
       </body>
     </html>
   );
