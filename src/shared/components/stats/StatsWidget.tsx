@@ -5,12 +5,11 @@ import { Button, Card, Link, Skeleton } from "@heroui/react";
 import { useLocale } from "next-intl";
 
 import { useRouter } from "@/i18n/navigation";
-import { LazyTrendChart, type TrendChartType } from "@/shared/components/charts";
+import { LazyTrendChart } from "@/shared/components/charts";
 import { DashboardLayout, DashboardItem } from "@/shared/components/layout";
 import { WidgetCard } from "@/shared/components/WidgetCard";
 
 import { buildTrendChart } from "./buildTrendChart";
-import { StatsChartTypeSwitch } from "./StatsChartTypeSwitch";
 import { StatsRangeSelect } from "./StatsRangeSelect";
 import { StatsSummary } from "./StatsSummary";
 import type { PeriodStatsResponse, RangeMode, StatsTranslator } from "./types";
@@ -40,7 +39,6 @@ export const StatsWidget = ({
   const locale = useLocale();
   const router = useRouter();
   const [range, setRange] = useState<RangeMode>("last_7_days");
-  const [chartType, setChartType] = useState<TrendChartType>("line");
 
   useEffect(() => {
     if (isError) onError?.();
@@ -51,7 +49,6 @@ export const StatsWidget = ({
   if (isError) return null;
 
   const rangeSelect = <StatsRangeSelect t={t} value={range} onChange={setRange} />;
-  const chartSwitch = <StatsChartTypeSwitch t={t} value={chartType} onChange={setChartType} />;
 
   return (
     <WidgetCard>
@@ -63,10 +60,7 @@ export const StatsWidget = ({
               {rangeSelect}
             </>
           ) : (
-            <>
-              {rangeSelect}
-              {chartSwitch}
-            </>
+            rangeSelect
           )}
         </div>
       </Card.Header>
@@ -83,7 +77,6 @@ export const StatsWidget = ({
                     {t("viewAll")}
                     <Link.Icon />
                   </Button>
-                  {chartSwitch}
                 </DashboardItem>
               )}
             </>
@@ -93,13 +86,7 @@ export const StatsWidget = ({
             {isLoading ? (
               <Skeleton className="h-48 w-full" />
             ) : (
-              <LazyTrendChart
-                data={chart.data}
-                labels={chart.labels}
-                max={chart.max}
-                type={chartType}
-                className="h-48 w-full"
-              />
+              <LazyTrendChart data={chart.data} labels={chart.labels} className="h-48 w-full" />
             )}
           </DashboardItem>
         </DashboardLayout>
