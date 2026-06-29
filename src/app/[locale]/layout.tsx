@@ -11,12 +11,12 @@ import { AriaRouterProvider } from "@/providers/AriaRouterProvider";
 import { AuthProvider } from "@/features/auth/components/AuthProvider";
 import { getAccessToken } from "@/shared/lib/cookies";
 import { decodeAccessToken } from "@/shared/lib/decodeToken";
-import { SITE_URL, SITE_NAME } from "@/shared/lib/seo";
+import { SITE_URL, SITE_NAME, THEME_COLOR } from "@/shared/lib/seo";
 import { ServiceWorkerRegister } from "@/providers/ServiceWorkerRegister";
 import "../globals.css";
 
 export const viewport: Viewport = {
-  themeColor: "#0B0B0F",
+  themeColor: THEME_COLOR,
 };
 
 export function generateStaticParams() {

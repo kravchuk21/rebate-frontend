@@ -9,6 +9,9 @@ import { useEffect } from "react";
  */
 export function ServiceWorkerRegister() {
   useEffect(() => {
+    // Skip in development: the worker intercepts navigations and caches the
+    // offline page, which fights HMR and confuses local debugging.
+    if (process.env.NODE_ENV !== "production") return;
     if (!("serviceWorker" in navigator)) return;
 
     navigator.serviceWorker
