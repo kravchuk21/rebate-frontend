@@ -17,6 +17,10 @@ import "../globals.css";
 
 export const viewport: Viewport = {
   themeColor: THEME_COLOR,
+  // Let the webview run edge-to-edge under the iOS status bar so the
+  // `black-translucent` fullscreen effect actually reaches the top. See the
+  // standalone status-bar scrim in globals.css.
+  viewportFit: "cover",
 };
 
 export function generateStaticParams() {

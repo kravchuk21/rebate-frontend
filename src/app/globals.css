@@ -2,6 +2,22 @@
 @import "@heroui/styles";
 
 /*
+ * iOS PWA (standalone) safe-area handling.
+ *
+ * With `apple-mobile-web-app-status-bar-style: black-translucent` the webview
+ * runs fullscreen under the status bar / notch. We pad the content down by the
+ * top inset so controls don't sit under the clock; the padded strip shows the
+ * <body> background (`bg-background`), so the page background simply continues
+ * under the notch in one seamless colour and follows the active theme. Only
+ * applies once installed as a PWA.
+ */
+@media (display-mode: standalone) {
+  body {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/*
  * The browser captures the whole page under the `root` group by default and
  * crossfades it. We only want the content area (the keyed PageTransition
  * boundary) to animate, so the sidebar and page chrome stay put. Suppressing
