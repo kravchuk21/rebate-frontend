@@ -56,8 +56,11 @@ export const StatsWidget = ({
         <div className="flex items-center justify-between gap-4">
           {fullMode ? (
             <>
-              <Card.Title>{t("title")}</Card.Title>
-              {rangeSelect}
+              <Card.Title className="flex-1">{t("title")}</Card.Title>
+              <div className="flex-1">
+                {rangeSelect}
+
+              </div>
             </>
           ) : (
             rangeSelect
