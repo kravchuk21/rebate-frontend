@@ -2,9 +2,12 @@
 name: Bybit
 description: "Одна из крупнейших криптобирж деривативов: высокая ликвидность, низкие комиссии и ребейт с каждой сделки через Sliceback."
 order: 1
-website: https://www.bybit.com
+website: https://www.bybit.com/invite?ref=OKPRM4J&medium=referral&utm_campaign=evergreen
+code: OKPRM4J
 founded: 2018
 rebate: Ребейт до 50%
+logo: /brokers/bybit.svg
+logoWhite: /brokers/bybit-white.svg
 ---
 
 ## О Bybit

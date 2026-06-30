@@ -12,8 +12,14 @@ export interface BrokerMeta {
   /** Lower numbers are listed first. Defaults to 0. */
   order: number;
   website?: string;
+  /** Referral / promo code the user enters at the broker. */
+  code?: string;
   founded?: string;
   rebate?: string;
+  /** Path (under /public) to the broker logo for light backgrounds (used in social/SEO previews). */
+  logo?: string;
+  /** Path (under /public) to the white logo variant, shown on the dark UI. */
+  logoWhite?: string;
 }
 
 export interface Broker extends BrokerMeta {
@@ -43,8 +49,11 @@ const toMeta = (slug: string, data: Record<string, unknown>): BrokerMeta => ({
   description: data.description as string,
   order: typeof data.order === "number" ? data.order : 0,
   website: data.website as string | undefined,
+  code: data.code as string | undefined,
   founded: data.founded as string | undefined,
   rebate: data.rebate as string | undefined,
+  logo: data.logo as string | undefined,
+  logoWhite: data.logoWhite as string | undefined,
 });
 
 export const getAllBrokers = (locale: string): BrokerMeta[] =>

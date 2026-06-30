@@ -7,7 +7,7 @@ import { PageIntro } from "@/shared/components/PageIntro";
 import { getAllSlugs, getBrokerBySlug } from "@/features/brokers/lib/brokers";
 import { BrokerArticle } from "@/features/brokers/components/BrokerArticle";
 import { JsonLd } from "@/shared/components/JsonLd";
-import { SITE_NAME, absoluteUrl } from "@/shared/lib/seo";
+import { SITE_NAME, SITE_URL, absoluteUrl } from "@/shared/lib/seo";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -27,13 +27,14 @@ export async function generateMetadata({
   if (!broker) return {};
 
   const url = absoluteUrl(`${Routes.Brokers}/${slug}`, locale);
+  const images = broker.logo ? [new URL(broker.logo, SITE_URL).toString()] : undefined;
 
   return {
     title: broker.name,
     description: broker.description,
     alternates: { canonical: url },
-    openGraph: { title: broker.name, description: broker.description, url, type: "website" },
-    twitter: { card: "summary", title: broker.name, description: broker.description },
+    openGraph: { title: broker.name, description: broker.description, url, type: "website", images },
+    twitter: { card: "summary", title: broker.name, description: broker.description, images },
   };
 }
 
@@ -52,6 +53,7 @@ export default async function BrokerPage({
   const t = await getTranslations({ locale, namespace: "brokers" });
   const tCommon = await getTranslations({ locale, namespace: "common" });
   const url = absoluteUrl(`${Routes.Brokers}/${slug}`, locale);
+  const logoUrl = broker.logo ? new URL(broker.logo, SITE_URL).toString() : undefined;
 
   return (
     <>
@@ -62,7 +64,9 @@ export default async function BrokerPage({
           itemReviewed: {
             "@type": "FinancialService",
             name: broker.name,
-            ...(broker.website ? { url: broker.website } : {}),
+            url: broker.website,
+            logo: logoUrl,
+            image: logoUrl,
           },
           description: broker.description,
           url,
@@ -80,6 +84,9 @@ export default async function BrokerPage({
         ]}
         title={broker.name}
         description={broker.description}
+        logoSrc={broker.logo}
+        logoWhiteSrc={broker.logoWhite}
+        logoAlt={broker.name}
       />
       <BrokerArticle broker={broker} />
     </>

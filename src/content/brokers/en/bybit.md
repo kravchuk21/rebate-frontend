@@ -2,9 +2,12 @@
 name: Bybit
 description: One of the largest crypto derivatives exchanges, with deep liquidity, low fees, and a full rebate on every trade you make through Sliceback.
 order: 1
-website: https://www.bybit.com
+website: https://www.bybit.com/invite?ref=OKPRM4J&medium=referral&utm_campaign=evergreen
+code: OKPRM4J
 founded: 2018
 rebate: Up to 50% rebate
+logo: /brokers/bybit.svg
+logoWhite: /brokers/bybit-white.svg
 ---
 
 ## About Bybit

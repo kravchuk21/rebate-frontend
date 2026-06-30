@@ -2,6 +2,13 @@
 @import "@heroui/styles";
 
 /*
+ * `dark:` variant keyed off the app's `data-theme="dark"` attribute (not a
+ * `.dark` class and not `prefers-color-scheme`), matching how the rest of the
+ * app resolves the theme.
+ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/*
  * iOS PWA (standalone) safe-area handling.
  *
  * With `apple-mobile-web-app-status-bar-style: black-translucent` the webview
