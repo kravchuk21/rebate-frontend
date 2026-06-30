@@ -14,8 +14,8 @@ export const LandingFooter = () => {
   return (
     <footer>
       <DashboardLayout>
-        <div className="flex flex-wrap justify-between gap-2">
-          <div className="flex flex-col gap-2">
+        <div className="flex flex-col md:flex-row justify-between gap-2">
+          <div className="flex flex-1 flex-col gap-2">
             <Typography.Paragraph className="font-semibold">
               Sliceback
             </Typography.Paragraph>
@@ -24,7 +24,7 @@ export const LandingFooter = () => {
             </Typography.Paragraph>
           </div>
 
-          <div className="flex flex-col gap-2 md:items-end">
+          <div className="flex flex-1 flex-col gap-2 md:items-end">
             <Typography.Paragraph size="sm" className="font-medium">
               {t("footer.resources")}
             </Typography.Paragraph>
