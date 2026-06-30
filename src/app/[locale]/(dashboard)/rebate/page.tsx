@@ -13,10 +13,10 @@ export default async function RebatePage() {
       <PageHeader title={t("title")} />
       <DashboardLayout>
         <DashboardItem span={6}>
-          <RebateStatsWidget fullMode={false} />
+          <RebateSummaryTable />
         </DashboardItem>
         <DashboardItem span={6}>
-          <RebateSummaryTable />
+          <RebateStatsWidget fullMode={false} />
         </DashboardItem>
         <DashboardItem>
           <RebateTable />
