@@ -1,6 +1,6 @@
 "use client";
 
-import { Typography, Link } from "@heroui/react";
+import { Typography, Link, Separator } from "@heroui/react";
 import { buttonVariants } from "@heroui/styles";
 import { Icon } from "@iconify/react";
 import { useTranslations } from "next-intl";
@@ -39,7 +39,7 @@ const AI_PROVIDERS = [
   },
   {
     name: "Grok",
-    icon: "simple-icons:x",
+    icon: "bxl:grok",
     buildUrl: (prompt: string) => `https://grok.com/?q=${prompt}`,
   },
 ] as const;
@@ -54,7 +54,7 @@ export const LandingFooter = () => {
   return (
     <footer>
       <DashboardLayout>
-        <div className="flex flex-col md:flex-row justify-between gap-2">
+        <DashboardItem className="flex flex-col md:flex-row justify-between gap-2">
           <div className="flex flex-1 flex-col gap-2">
             <Typography.Paragraph className="font-semibold">
               Sliceback
@@ -83,9 +83,11 @@ export const LandingFooter = () => {
               </Link>
             </div>
           </div>
-        </div>
+        </DashboardItem>
 
-        <DashboardItem className="flex flex-col gap-2 border-t pt-6">
+        <Separator />
+
+        <DashboardItem className="flex flex-col gap-2">
           <Typography.Paragraph size="sm" className="font-medium">
             {t("footer.askAi.title")}
           </Typography.Paragraph>
@@ -112,7 +114,9 @@ export const LandingFooter = () => {
           </div>
         </DashboardItem>
 
-        <DashboardItem className="flex flex-col gap-2 border-t pt-6 sm:flex-row sm:items-center sm:justify-between">
+        <Separator />
+
+        <DashboardItem className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <Typography.Paragraph color="muted" size="xs">
             © {new Date().getFullYear()} Sliceback. {t("footer.rights")}
           </Typography.Paragraph>
