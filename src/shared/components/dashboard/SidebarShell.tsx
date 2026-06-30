@@ -49,7 +49,7 @@ export const SidebarShell = ({ email, role, items, ariaLabel }: SidebarShellProp
             transition={{ duration: 0.2, ease: "easeInOut" }}
             className="sticky top-0 hidden h-screen shrink-0 overflow-hidden border-r md:block"
           >
-            <div className="h-full w-72 p-4">{content()}</div>
+            <div className="h-screen w-72 overflow-y-auto p-4">{content()}</div>
           </motion.aside>
         )}
       </AnimatePresence>
