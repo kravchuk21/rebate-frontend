@@ -14,14 +14,14 @@ export const LandingCta = () => {
       <Card.Content>
         <DashboardLayout>
           <DashboardItem>
-            <Typography.Heading className="text-center">
+            <Typography.Heading level={4} className="text-center">
               {t("cta.title")}
             </Typography.Heading>
           </DashboardItem>
-          <DashboardItem className="text-center">
-            <Typography.Paragraph color="muted">
+          <DashboardItem>
+            <Card.Description className="text-center">
               {t("cta.description")}
-            </Typography.Paragraph>
+            </Card.Description>
           </DashboardItem>
           <DashboardItem>
             <AuthModalTrigger />

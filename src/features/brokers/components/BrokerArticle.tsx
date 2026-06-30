@@ -10,7 +10,7 @@ export const BrokerArticle = ({ broker }: BrokerArticleProps) => (
   <article className="flex flex-col gap-6">
     {(broker.rebate || broker.code || broker.website) && (
       <div className="flex flex-wrap items-center justify-center gap-2">
-        {broker.rebate && <Chip>{broker.rebate}</Chip>}
+        {broker.rebate && <Chip variant="soft" color="success">{broker.rebate}</Chip>}
         {broker.code && (
           <span className="inline-flex items-center gap-1">
             <Chip>{broker.code}</Chip>
