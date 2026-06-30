@@ -59,7 +59,13 @@
       "tagline": "Automated trading rebates, paid daily in crypto.",
       "product": "Product",
       "resources": "Resources",
-      "rights": "All rights reserved."
+      "rights": "All rights reserved.",
+      "askAi": {
+        "title": "Ask AI about Sliceback",
+        "groupLabel": "Ask AI assistants about Sliceback",
+        "ask": "Ask {provider} about Sliceback",
+        "prompt": "You are a guide for crypto traders.\n\nCheck these sources:\n- {site}\n- {site}/llms.txt\n\nTask: explain how to use Sliceback to earn trading rebates (cashback). Write a practical walkthrough for a trader, not a promotional review.\n\nWhat to verify from the sources:\n- what Sliceback is and how rebates work;\n- how to connect a broker account and which brokers are supported;\n- how and when payouts and crypto withdrawals happen;\n- how the referral program works;\n- what to double-check before relying on any number.\n\nGive a detailed answer (around 600-900 words), structured as:\n1. Who Sliceback is useful for.\n2. What problems it solves.\n3. How it works, step by step.\n4. A first-week plan to get started.\n5. Limitations: what to verify manually and where data may be missing.\n\nDo not invent figures, features, or guaranteed results. If the sources do not confirm a fact, say the data is missing. Keep general trading risk in mind."
+      }
     }
   },
   "blog": {
