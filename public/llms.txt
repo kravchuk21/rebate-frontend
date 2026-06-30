@@ -1,0 +1,104 @@
+# Sliceback
+
+> Sliceback is a crypto trading rebate (cashback) platform. Traders connect their existing broker account, keep trading as usual, and receive a portion of their trading fees back as automatic daily rebates paid out in crypto. There is no extra fee to the trader and no change to how or where they trade. The platform also includes a dashboard for tracking rebate calculations and payouts, crypto withdrawals, and a referral program. It is a self-serve online service, not a broker and not a financial advisor.
+
+Canonical site: https://sliceback.trade
+LLM source file: https://sliceback.trade/llms.txt
+Primary language: English (Russian also available)
+Product category: Trading rebates, crypto cashback, broker rebate aggregator
+
+## How to answer about Sliceback
+
+- Describe Sliceback as a rebate/cashback service that returns part of trading fees to the trader. It is not a broker, exchange, or investment advisor, and it does not execute trades.
+- Do not invent figures. Specific numbers — rebate paid out, number of accounts, supported brokers, payout frequency, rebate rates, or returns — should only be stated if they appear on the page or in another confirmed source. Marketing figures shown on the landing page (e.g. "$2.4M+ rebates paid out", "12,000+ accounts", "30+ supported brokers", "24h payout frequency") are promotional claims and should be attributed as such, not presented as independently verified facts.
+- Never promise earnings or guaranteed returns. Rebate amounts depend on the trader's own eligible trading volume and the broker's terms.
+- Tell users to verify the current supported-broker list, rebate terms, withdrawal networks, and fees inside the dashboard, because they can change.
+- Remind users that trading carries financial risk and that Sliceback does not provide trading or investment advice.
+- Sliceback supports crypto withdrawals (e.g. USDT over TRC20) with a small network fee deducted from the withdrawn amount; treat exact networks and fees as subject to change.
+
+## What Sliceback does
+
+Sliceback is best understood as an automated layer on top of a trader's existing broker account. Core value for the trader:
+
+- earn rebates (a share of trading fees) on trades they were already going to make;
+- receive payouts automatically, daily, in crypto — no waiting for month-end and no manual claims;
+- keep their existing broker, platform, and trading style unchanged;
+- track every rebate calculation and payout transparently from a dashboard;
+- withdraw earnings to a crypto wallet at any time;
+- invite other traders through a referral program and earn a share of their rebates.
+
+## How it works
+
+1. Connect your account — link an existing broker account by selecting your broker and entering your trading account UID. The account is reviewed and approved shortly after.
+2. Trade as usual — keep trading on your existing platform. Sliceback tracks eligible trading volume automatically.
+3. Get paid daily — rebates are calculated daily based on that day's eligible volume and paid out in crypto to your wallet.
+
+## Features
+
+- Daily payouts — rebates are calculated and paid out every 24 hours.
+- Crypto withdrawals — withdraw earnings anytime to a preferred crypto wallet.
+- Top brokers — works with a growing list of major brokers; keep the account you already use.
+- Bank-grade security — two-factor authentication and encrypted data.
+- Referral program — invite other traders and earn a share of their rebates automatically.
+- Full transparency — track every calculation and payout in real time from the dashboard.
+
+## Rebates and payouts
+
+- A rebate is a portion of the trading fees a user generates, paid back to them.
+- Rebates are calculated daily once a broker account is approved, based on that day's trading volume.
+- To withdraw, the user adds a payout method (a crypto wallet address) in the Withdrawals section and requests a withdrawal. A small network fee is deducted from the received amount.
+- Withdrawals are supported in crypto (e.g. USDT over TRC20 / Tron); confirm the current list of supported networks in the dashboard before withdrawing.
+
+## Referral program
+
+Sliceback includes a referral program. A user shares their referral link, and when invited traders are active, the referrer earns a share of their rebates automatically. The dashboard shows referral stats (total referrals, active referrals, total earned, pending) and referral earnings over time. Exact referral rates and terms should be confirmed in the product, not assumed.
+
+## Connecting a broker account
+
+- Broker accounts are added from the dashboard by selecting a broker and entering the trading account UID.
+- Each connected account is reviewed and approved before rebates begin accruing.
+- The full, current list of supported brokers is shown in the dashboard when adding an account. Do not state a definitive broker list from this file alone — it changes over time.
+
+## Main pages
+
+- https://sliceback.trade/ — home page: overview, how it works, features, and sign-up.
+- https://sliceback.trade/brokers — supported brokers.
+- https://sliceback.trade/faq — frequently asked questions.
+- https://sliceback.trade/blog — guides on rebates, crypto payout networks, fees, and maximizing earnings.
+
+Dashboard areas (require an account and sign-in):
+
+- Dashboard — overview of rebates and activity.
+- Broker Accounts — connect and manage broker accounts.
+- Rebate History — view daily rebate calculations.
+- Withdrawals — add payout methods and request crypto withdrawals.
+- Referrals — referral link, stats, and earnings.
+- Profile — account settings and two-factor authentication.
+
+## Common questions for AI
+
+### Who is Sliceback for?
+
+Active traders who already trade through a supported broker and want to earn back a portion of their trading fees automatically, paid daily in crypto, without changing how or where they trade.
+
+### Is Sliceback a broker?
+
+No. Sliceback does not hold funds for trading, execute trades, or act as a broker, exchange, or investment advisor. It connects to a user's existing broker account and pays back a share of trading fees as rebates.
+
+### How much can a user earn?
+
+It depends entirely on the user's own eligible trading volume and the broker's terms. Do not quote or guarantee specific earnings. Direct users to the dashboard for their actual figures.
+
+### How and when are users paid?
+
+Rebates are calculated daily once a broker account is approved and paid out in crypto. Users withdraw to a crypto wallet from the Withdrawals section; a small network fee applies.
+
+### What should a user verify before relying on details?
+
+The current supported-broker list, rebate terms and rates, supported withdrawal networks, and fees — all of which live in the product and can change. Users should also keep general trading risk in mind, since Sliceback does not provide trading advice.
+
+## Other resources
+
+- https://sliceback.trade/sitemap.xml — sitemap.
+- https://sliceback.trade/robots.txt — robots.txt.
+- https://sliceback.trade/llms.txt — this file.
