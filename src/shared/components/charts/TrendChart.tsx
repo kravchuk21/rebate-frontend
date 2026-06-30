@@ -1,5 +1,6 @@
 "use client";
 
+import { useMediaQuery } from "@siberiacancode/reactuse";
 import { useMemo } from "react";
 
 import { Bar } from "@/components/charts/bar";
@@ -15,6 +16,8 @@ export interface TrendChartProps {
 }
 
 export const TrendChart = ({ data, labels = [], className }: TrendChartProps) => {
+  const isMobile = useMediaQuery("(max-width: 640px)");
+
   const chartData = useMemo(
     () => labels.map((month, i) => ({ month, value: data[i] ?? 0 })),
     [labels, data],
@@ -31,7 +34,7 @@ export const TrendChart = ({ data, labels = [], className }: TrendChartProps) =>
       >
         <Grid horizontal />
         <Bar dataKey="value" lineCap="round" />
-        <BarXAxis />
+        <BarXAxis maxLabels={isMobile ? 7 : 12} />
         <ChartTooltip />
       </BarChart>
     </div>
