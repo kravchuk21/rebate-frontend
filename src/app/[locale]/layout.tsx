@@ -10,6 +10,7 @@ import { ThemeProvider } from "@/providers/ThemeProvider";
 import { AriaRouterProvider } from "@/providers/AriaRouterProvider";
 import { AuthProvider } from "@/features/auth/components/AuthProvider";
 import { getAccessToken } from "@/shared/lib/cookies";
+import { CookieConsent } from "@/shared/components/CookieConsent";
 import { decodeAccessToken } from "@/shared/lib/decodeToken";
 import { SITE_URL, SITE_NAME, THEME_COLOR } from "@/shared/lib/seo";
 import { ServiceWorkerRegister } from "@/providers/ServiceWorkerRegister";
@@ -98,6 +99,7 @@ export default async function LocaleLayout({
                 <AuthProvider claims={claims}>
                   <Toast.Provider />
                   {children}
+                  <CookieConsent />
                 </AuthProvider>
               </QueryProvider>
             </AriaRouterProvider>
