@@ -12,9 +12,7 @@ interface AuthModalProps {
 }
 
 export const AuthModal = ({ defaultReferralCode }: AuthModalProps) => {
-  const { currentModal, close } = useAuthModal();
-
-  const isOpen = currentModal !== null;
+  const { currentModal, isOpen, close } = useAuthModal();
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {

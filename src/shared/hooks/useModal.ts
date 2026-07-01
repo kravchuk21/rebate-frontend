@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { useAuth, type AuthState } from "@/features/auth/components/AuthProvider";
 import { usePathname, useRouter } from "@/i18n/navigation";
@@ -36,11 +36,23 @@ export const useModal = (id: Modals) => {
   const auth = useAuth();
 
   const allowed = canAccessModal(id, auth);
-  const isOpen = allowed && searchParams.get(MODAL_KEY) === id;
+  const urlOpen = allowed && searchParams.get(MODAL_KEY) === id;
+
+  // `open`/`close` mutate the URL via router.push, but the search params (and
+  // therefore `urlOpen`) only update once that navigation resolves. On heavy
+  // pages that lag makes the close button feel unresponsive, so we reflect the
+  // intended state locally and let the URL catch up in the background.
+  const [pendingClose, setPendingClose] = useState(false);
+  const isOpen = urlOpen && !pendingClose;
+
+  useEffect(() => {
+    if (!urlOpen) setPendingClose(false);
+  }, [urlOpen]);
 
   const open = useCallback(
     (params?: Record<string, string>) => {
       if (!canAccessModal(id, auth)) return;
+      setPendingClose(false);
       const next = new URLSearchParams(searchParams.toString());
       next.set(MODAL_KEY, id);
       if (params) {
@@ -52,6 +64,7 @@ export const useModal = (id: Modals) => {
   );
 
   const close = useCallback(() => {
+    setPendingClose(true);
     const next = new URLSearchParams(searchParams.toString());
     next.delete(MODAL_KEY);
     for (const key of MODAL_PARAMS[id] ?? []) next.delete(key);
