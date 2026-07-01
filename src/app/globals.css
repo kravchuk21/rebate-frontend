@@ -37,6 +37,23 @@
   animation: none;
 }
 
+/*
+ * The cookie banner is fixed chrome named out of the root snapshot so it
+ * stays put during navigation: no animation, only the new snapshot (the
+ * banner is translucent, stacking both doubles its opacity), and z-index
+ * restored — the element's own z-index doesn't carry into the group.
+ */
+::view-transition-group(cookie-consent) {
+  animation: none;
+  z-index: 50;
+}
+::view-transition-new(cookie-consent) {
+  animation: none;
+}
+::view-transition-old(cookie-consent) {
+  display: none;
+}
+
 ::view-transition-old(.dashboard-content-out) {
   animation:
     150ms ease-in both dashboard-fade-out,

@@ -17,6 +17,7 @@ export const CookieConsent = () => {
       {!accepted && (
         <motion.div
           className="fixed right-4 bottom-4 z-50 max-w-2xl max-sm:left-4"
+          style={{ viewTransitionName: "cookie-consent" }}
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 40 }}
