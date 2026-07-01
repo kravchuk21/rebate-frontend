@@ -37,7 +37,7 @@ export default async function AdminLayout({
     <SidebarProvider>
       <div className="flex min-h-screen flex-col md:flex-row">
         <AdminSidebar email={claims.email} role={claims.role} />
-        <main className="flex flex-1 flex-col gap-6 p-4">
+        <main className="flex flex-1 flex-col gap-4 p-4">
           <PageTransition>{children}</PageTransition>
         </main>
       </div>
