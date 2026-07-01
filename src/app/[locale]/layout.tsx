@@ -90,7 +90,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={isRTL(locale) ? "rtl" : "ltr"} suppressHydrationWarning>
-      <body className="bg-background text-foreground" suppressHydrationWarning>
+      <body className="bg-background text-foreground">
         <ThemeProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <AriaRouterProvider>
