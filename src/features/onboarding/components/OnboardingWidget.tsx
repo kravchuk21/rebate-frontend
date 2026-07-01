@@ -63,48 +63,50 @@ export const OnboardingWidget = () => {
   }
 
   return (
-    <WidgetCard variant="secondary">
-      <Card.Header>
-        <Card.Title>{t("title")}</Card.Title>
-        <Card.Description>
-          {t("subtitle")} · {t("progress", { done: doneCount, total: steps.length })}
-        </Card.Description>
-      </Card.Header>
-      <CloseButton className="absolute top-4 right-4" onClick={() => setDismissed(true)} />
-      <Card.Content>
-        <DashboardLayout>
-          {steps.map((step) => (
-            <DashboardItem key={step.key} className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <Checkbox isSelected={step.done}>
-                  <Checkbox.Content>
-                    <Checkbox.Control>
-                      <Checkbox.Indicator />
-                    </Checkbox.Control>
-                  </Checkbox.Content>
-                </Checkbox>
-                <div className="flex flex-col">
-                  <Typography.Paragraph className={cn(step.done && "line-through text-muted")}>
-                    {t(`steps.${step.key}.title`)}
-                  </Typography.Paragraph>
-                  <Typography.Paragraph color="muted" size="sm">
-                    {t(`steps.${step.key}.description`)}
-                  </Typography.Paragraph>
+    <DashboardItem>
+      <WidgetCard variant="secondary">
+        <Card.Header>
+          <Card.Title>{t("title")}</Card.Title>
+          <Card.Description>
+            {t("subtitle")} · {t("progress", { done: doneCount, total: steps.length })}
+          </Card.Description>
+        </Card.Header>
+        <CloseButton className="absolute top-4 right-4" onClick={() => setDismissed(true)} />
+        <Card.Content>
+          <DashboardLayout>
+            {steps.map((step) => (
+              <DashboardItem key={step.key} className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <Checkbox isSelected={step.done}>
+                    <Checkbox.Content>
+                      <Checkbox.Control>
+                        <Checkbox.Indicator />
+                      </Checkbox.Control>
+                    </Checkbox.Content>
+                  </Checkbox>
+                  <div className="flex flex-col">
+                    <Typography.Paragraph className={cn(step.done && "line-through text-muted")}>
+                      {t(`steps.${step.key}.title`)}
+                    </Typography.Paragraph>
+                    <Typography.Paragraph color="muted" size="sm">
+                      {t(`steps.${step.key}.description`)}
+                    </Typography.Paragraph>
+                  </div>
                 </div>
-              </div>
-              {!step.done && (
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  onPress={() => router.push(step.href)}
-                >
-                  {t(`steps.${step.key}.cta`)}
-                </Button>
-              )}
-            </DashboardItem>
-          ))}
-        </DashboardLayout>
-      </Card.Content>
-    </WidgetCard>
+                {!step.done && (
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    onPress={() => router.push(step.href)}
+                  >
+                    {t(`steps.${step.key}.cta`)}
+                  </Button>
+                )}
+              </DashboardItem>
+            ))}
+          </DashboardLayout>
+        </Card.Content>
+      </WidgetCard>
+    </DashboardItem>
   );
 };

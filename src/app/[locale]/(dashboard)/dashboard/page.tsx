@@ -20,9 +20,7 @@ export default async function DashboardPage() {
     <>
       <PageHeader title={t("title")} />
       <DashboardLayout>
-        <DashboardItem>
-          <OnboardingWidget />
-        </DashboardItem>
+        <OnboardingWidget />
         <DashboardItem>
           <DashboardSummaryCards />
         </DashboardItem>
