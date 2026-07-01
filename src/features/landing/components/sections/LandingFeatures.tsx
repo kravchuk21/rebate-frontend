@@ -49,8 +49,10 @@ export const LandingFeatures = () => {
             return (
               <Card key={feature.title} className="h-full">
                 <Card.Header>
-                  <Icon className="size-5 mb-2" />
-                  <Card.Title>{feature.title}</Card.Title>
+                  <div className="flex items-center gap-2">
+                    <Icon />
+                    <Card.Title>{feature.title}</Card.Title>
+                  </div>
                   <Card.Description>{feature.description}</Card.Description>
                 </Card.Header>
               </Card>
