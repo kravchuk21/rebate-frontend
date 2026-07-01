@@ -5,6 +5,7 @@ import { DashboardSummaryCards } from "@/features/broker/components/DashboardSum
 import { RebateStatsWidget } from "@/features/rebate/components/RebateStatsWidget";
 import { DashboardLayout, DashboardItem } from "@/shared/components/layout";
 import { ReferralStatsWidget } from "@/features/referral/components/ReferralStatsWidget";
+import { OnboardingWidget } from "@/features/onboarding/components/OnboardingWidget";
 
 export default async function DashboardPage() {
   const t = await getTranslations("dashboard");
@@ -19,6 +20,9 @@ export default async function DashboardPage() {
     <>
       <PageHeader title={t("title")} />
       <DashboardLayout>
+        <DashboardItem>
+          <OnboardingWidget />
+        </DashboardItem>
         <DashboardItem>
           <DashboardSummaryCards />
         </DashboardItem>

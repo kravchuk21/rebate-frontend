@@ -369,6 +369,29 @@
       "manageAccounts": "Manage accounts",
       "withdrawFunds": "Withdraw funds",
       "viewReferrals": "View referrals"
+    },
+    "onboarding": {
+      "title": "Get started",
+      "subtitle": "Finish setting up your account",
+      "progress": "{done} of {total} done",
+      "dismiss": "Dismiss",
+      "steps": {
+        "broker": {
+          "title": "Add a broker account",
+          "description": "Connect a broker account to start earning rebates.",
+          "cta": "Add broker"
+        },
+        "payout": {
+          "title": "Add a payout method",
+          "description": "Set up where you'd like to receive your withdrawals.",
+          "cta": "Add method"
+        },
+        "twofa": {
+          "title": "Enable two-factor authentication",
+          "description": "Add an extra layer of security to your account.",
+          "cta": "Enable 2FA"
+        }
+      }
     }
   },
   "accounts": {

@@ -8,17 +8,19 @@ export interface AuthState {
   isAuthenticated: boolean;
   role: string | null;
   email: string | null;
+  twoFaEnabled: boolean;
 }
 
 const AuthContext = createContext<AuthState>({
   isAuthenticated: false,
   role: null,
   email: null,
+  twoFaEnabled: false,
 });
 
 interface AuthProviderProps {
   /** JWT claims decoded server-side, or `null` for an anonymous visitor. */
-  claims: Pick<TokenClaims, "role" | "email"> | null;
+  claims: Pick<TokenClaims, "role" | "email" | "two_fa_enabled"> | null;
   children: ReactNode;
 }
 
@@ -34,6 +36,7 @@ export const AuthProvider = ({ claims, children }: AuthProviderProps) => {
       isAuthenticated: claims !== null,
       role: claims?.role ?? null,
       email: claims?.email ?? null,
+      twoFaEnabled: claims?.two_fa_enabled ?? false,
     }),
     [claims],
   );
