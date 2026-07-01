@@ -1,5 +1,3 @@
-"use client";
-
 import { Card, Typography } from "@heroui/react";
 import { useTranslations } from "next-intl";
 
@@ -14,7 +12,7 @@ export const LandingCta = () => {
       <Card.Content>
         <DashboardLayout>
           <DashboardItem>
-            <Typography.Heading level={4} className="text-center">
+            <Typography.Heading level={2} className="text-center">
               {t("cta.title")}
             </Typography.Heading>
           </DashboardItem>

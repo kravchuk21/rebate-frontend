@@ -20,7 +20,7 @@ export const LandingFaqPreview = () => {
   return (
     <DashboardLayout>
       <DashboardItem>
-        <Typography.Heading className="text-center text-3xl font-extrabold md:text-4xl">
+        <Typography.Heading level={2} className="text-center text-3xl font-extrabold md:text-4xl">
           {t("faqPreview.title")}
         </Typography.Heading>
       </DashboardItem>

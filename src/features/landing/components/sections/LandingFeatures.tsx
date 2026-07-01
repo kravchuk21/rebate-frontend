@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ArrowDownToLine,
   ChartLine,
@@ -34,7 +32,7 @@ export const LandingFeatures = () => {
   return (
     <DashboardLayout>
       <DashboardItem>
-        <Typography.Heading className="text-center text-3xl font-extrabold md:text-4xl">
+        <Typography.Heading level={2} className="text-center text-3xl font-extrabold md:text-4xl">
           {t("features.title")}
         </Typography.Heading>
       </DashboardItem>

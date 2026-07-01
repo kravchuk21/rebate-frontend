@@ -1,5 +1,3 @@
-"use client";
-
 import { AuthModal } from "@/features/auth/components/AuthModal";
 import { LandingHero } from "./sections/LandingHero";
 import { LandingStats } from "./sections/LandingStats";

@@ -1,5 +1,3 @@
-"use client";
-
 import { Card, Typography } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { DashboardLayout, DashboardItem } from "@/shared/components/layout";
@@ -16,7 +14,7 @@ export const LandingHowItWorks = () => {
   return (
     <section className="w-full">
       <div className="mb-12 flex flex-col items-center gap-2 text-center">
-        <Typography.Heading className="text-3xl font-extrabold tracking-tight md:text-4xl">
+        <Typography.Heading level={2} className="text-3xl font-extrabold tracking-tight md:text-4xl">
           {t("howItWorks.title")}
         </Typography.Heading>
         <Typography.Paragraph color="muted">{t("howItWorks.subtitle")}</Typography.Paragraph>

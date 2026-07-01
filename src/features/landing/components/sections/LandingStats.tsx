@@ -84,9 +84,9 @@ export const LandingStats = () => {
     <Card className="grid grid-cols-2 gap-8 md:grid-cols-4 items-center">
       {items.map((item) => (
         <div key={item.label} className="flex flex-col items-center">
-          <Typography.Heading className="text-3xl font-extrabold tracking-tight text-center">
+          <Typography.Paragraph className="text-3xl font-extrabold tracking-tight text-center">
             <AnimatedValue value={item.value} />
-          </Typography.Heading>
+          </Typography.Paragraph>
           <Typography.Paragraph color="muted" size="sm" className="text-center">
             {item.label}
           </Typography.Paragraph>

@@ -1,5 +1,3 @@
-"use client";
-
 import { Chip, Typography } from "@heroui/react";
 import { useTranslations } from "next-intl";
 
