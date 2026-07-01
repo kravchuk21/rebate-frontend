@@ -4,9 +4,9 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { Toast, isRTL } from "@heroui/react";
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import { themeInitScript } from "@/shared/lib/theme";
 import { routing } from "@/i18n/routing";
 import QueryProvider from "@/providers/QueryProvider";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 import { AriaRouterProvider } from "@/providers/AriaRouterProvider";
 import { AuthProvider } from "@/features/auth/components/AuthProvider";
 import { getAccessToken } from "@/shared/lib/cookies";
@@ -89,22 +89,20 @@ export default async function LocaleLayout({
   const claims = token ? decodeAccessToken(token) : null;
 
   return (
-    <html lang={locale} dir={isRTL(locale) ? "rtl" : "ltr"} data-theme="dark" suppressHydrationWarning>
+    <html lang={locale} dir={isRTL(locale) ? "rtl" : "ltr"} suppressHydrationWarning>
       <body className="bg-background text-foreground" suppressHydrationWarning>
-        {/* Resolve the persisted theme before first paint to avoid a flash of the
-            wrong theme. Runs synchronously as the browser parses it — before the
-            body content renders. Logic lives in @/shared/lib/theme. */}
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <AriaRouterProvider>
-            <QueryProvider>
-              <AuthProvider claims={claims}>
-                <Toast.Provider />
-                {children}
-              </AuthProvider>
-            </QueryProvider>
-          </AriaRouterProvider>
-        </NextIntlClientProvider>
+        <ThemeProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <AriaRouterProvider>
+              <QueryProvider>
+                <AuthProvider claims={claims}>
+                  <Toast.Provider />
+                  {children}
+                </AuthProvider>
+              </QueryProvider>
+            </AriaRouterProvider>
+          </NextIntlClientProvider>
+        </ThemeProvider>
         <SpeedInsights/>
         <ServiceWorkerRegister />
       </body>

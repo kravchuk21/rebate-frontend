@@ -3,55 +3,38 @@
 import { useEffect, useState } from "react";
 import { Button, ButtonGroup } from "@heroui/react";
 import { Sun, Moon, Display } from "@gravity-ui/icons";
-
-import {
-  DEFAULT_THEME,
-  THEME_STORAGE_KEY,
-  applyTheme,
-  type Theme,
-} from "@/shared/lib/theme";
+import { useTheme } from "next-themes";
 
 export const ThemeSwitcher = () => {
-  const [theme, setTheme] = useState<Theme>(DEFAULT_THEME);
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
 
+  // The active theme is unknown during SSR, so defer rendering until mount to
+  // avoid a hydration mismatch on the highlighted button.
   useEffect(() => {
-    const stored = (localStorage.getItem(THEME_STORAGE_KEY) as Theme | null) ?? DEFAULT_THEME;
-    setTheme(stored);
-    applyTheme(stored);
+    setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (theme !== "system") return;
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const handler = () => applyTheme("system");
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, [theme]);
-
-  const select = (next: Theme) => {
-    setTheme(next);
-    localStorage.setItem(THEME_STORAGE_KEY, next);
-    applyTheme(next);
-  };
+  if (!mounted) return null;
 
   return (
     <ButtonGroup variant="outline" size="sm" fullWidth>
       <Button
-        onPress={() => select("light")}
-        // variant={theme === 'light' ? 'secondary' : 'tertiary'}
+        onPress={() => setTheme("light")}
+        // variant={theme === "light" ? "secondary" : "tertiary"}
       >
         <Sun />
       </Button>
       <Button
-        onPress={() => select("dark")}
-        // variant={theme === 'dark' ? 'secondary' : 'tertiary'}
+        onPress={() => setTheme("dark")}
+        // variant={theme === "dark" ? "secondary" : "tertiary"}
       >
         <ButtonGroup.Separator />
         <Moon />
       </Button>
       <Button
-        onPress={() => select("system")}
-        // variant={theme === 'system' ? 'secondary' : 'tertiary'}
+        onPress={() => setTheme("system")}
+        // variant={theme === "system" ? "secondary" : "tertiary"}
       >
         <ButtonGroup.Separator />
         <Display />
