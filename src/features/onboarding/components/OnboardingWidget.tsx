@@ -77,7 +77,7 @@ export const OnboardingWidget = () => {
           {steps.map((step) => (
             <DashboardItem key={step.key} className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-4">
-                <Checkbox isDisabled isSelected={step.done}>
+                <Checkbox isSelected={step.done}>
                   <Checkbox.Content>
                     <Checkbox.Control>
                       <Checkbox.Indicator />
