@@ -3,7 +3,6 @@
 import "@/shared/api/instance";
 
 import { Button, Card, Typography, CloseButton, Checkbox } from "@heroui/react";
-import { Check, Circle } from "@gravity-ui/icons";
 import { useLocalStorage } from "@siberiacancode/reactuse";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
