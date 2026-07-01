@@ -21,7 +21,8 @@ export const BaseModal = ({
       <Modal.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
         <Modal.Container>
           <Modal.Dialog className={dialogClassName}>
-            <Modal.CloseTrigger />
+            {/* Default hit area is ~25px — too small for touch, first tap often misses on mobile. */}
+            <Modal.CloseTrigger className="after:absolute after:-inset-2.5 after:content-['']" />
             {children}
           </Modal.Dialog>
         </Modal.Container>
